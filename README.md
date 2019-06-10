@@ -1,7 +1,6 @@
 # auto-unit-test-plugin 
 
-自动测试代码生成工具  
-
+自动测试代码生成插件  
 项目需要依赖Jar包：
 ```xml
 
@@ -26,3 +25,5 @@
 </dependency>
 
 ```
+
+# 开发中
