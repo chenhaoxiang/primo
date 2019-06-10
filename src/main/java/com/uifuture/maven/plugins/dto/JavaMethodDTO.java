@@ -17,6 +17,10 @@ public class JavaMethodDTO {
      * 方法名称
      */
     private String methodName;
+    /**
+     * 测试方法名称
+     */
+    private String methodTestName;
 
     /**
      * 方法返回类型
@@ -31,6 +35,24 @@ public class JavaMethodDTO {
      * 方法异常
      */
     private List<JavaExceptionsDTO> javaExceptionsDTOList;
+
+    /**
+     * Getter method for property <tt>methodTestName</tt>.
+     *
+     * @return property value of methodTestName
+     */
+    public String getMethodTestName() {
+        return methodTestName;
+    }
+
+    /**
+     * Setter method for property <tt>methodTestName</tt>.
+     *
+     * @param methodTestName value to be assigned to property methodTestName
+     */
+    public void setMethodTestName(String methodTestName) {
+        this.methodTestName = methodTestName;
+    }
 
     /**
      * Getter method for property <tt>javaExceptionsDTOList</tt>.
@@ -108,6 +130,7 @@ public class JavaMethodDTO {
     public String toString() {
         return new StringJoiner(", ", JavaMethodDTO.class.getSimpleName() + "[", "]")
                 .add("methodName='" + methodName + "'")
+                .add("methodTestName='" + methodTestName + "'")
                 .add("methodReturnType='" + methodReturnType + "'")
                 .add("javaParameterDTOList=" + javaParameterDTOList)
                 .add("javaExceptionsDTOList=" + javaExceptionsDTOList)

@@ -4,12 +4,11 @@
  */
 package com.uifuture.maven.plugins;
 
-import com.thoughtworks.qdox.JavaProjectBuilder;
-import com.thoughtworks.qdox.model.JavaSource;
 import com.uifuture.maven.plugins.base.AbstractPlugin;
 import com.uifuture.maven.plugins.dto.JavaClassDTO;
 import com.uifuture.maven.plugins.util.JavaProjectBuilderUtil;
 import com.uifuture.maven.plugins.util.PackageUtil;
+import com.uifuture.maven.plugins.util.StringUtil;
 import freemarker.template.Configuration;
 import freemarker.template.TemplateExceptionHandler;
 import org.apache.commons.lang3.StringUtils;
@@ -19,7 +18,6 @@ import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -71,6 +69,7 @@ public class UnittestPlugin extends AbstractPlugin {
                 +"\nbasedir："+basedir
                 +"\nproject："+project
         );
+
         //获取该包下所有的类
         List<String> javaList = PackageUtil.getClassName(basedir.getPath(), testPackageName, childPackage);
         getLog().info( "获取的所有类名为："+javaList);
@@ -94,9 +93,11 @@ public class UnittestPlugin extends AbstractPlugin {
         try {
             //类名
             String className = javaName.substring(javaName.lastIndexOf("/")+1,javaName.lastIndexOf("."));
+
             Configuration cfg = getConfiguration();
-            String testJavaName =basedir + "/src/test/java/" +testPackageName.replace(".", "/")+ "/"+className +"Test.java";
-            getLog().info("生成的文件路径："+testJavaName+"className:"+className);
+
+            String testJavaName =basedir + "/src/test/java/" + testPackageName.replace(".", "/")+ "/"+className +"Test.java";
+            getLog().info("生成的文件路径："+testJavaName+", className:"+className);
             File file = new File(testJavaName);
             if (file.exists()) {
                 getLog().info(file+"已经存在，不进行生成");
@@ -111,9 +112,11 @@ public class UnittestPlugin extends AbstractPlugin {
             data.put("date", DATE);
             data.put("author", author);
             data.put("modelNameUpperCamel", className);
-            data.put("modelNameLowerCamel", classNameConvertLowerCamel(className));
+            data.put("modelNameLowerCamel", StringUtil.strConvertLowerCamel(className));
+
+            String mainJava = basedir + "/src/main/java/";
             //获取类中方法
-            JavaClassDTO javaClassDTO = JavaProjectBuilderUtil.buildTestMethod(javaName,testPackageName+"."+className,data);
+            JavaClassDTO javaClassDTO = JavaProjectBuilderUtil.buildTestMethod(javaName,testPackageName+"."+className ,mainJava);
             data.put("javaClassDTO", javaClassDTO);
 
             //获取mock的类
@@ -122,7 +125,7 @@ public class UnittestPlugin extends AbstractPlugin {
 
             getLog().info(file+"生成成功");
         } catch (Exception e) {
-            throw new RuntimeException("生成失败", e);
+            getLog().error("生成失败，出现异常",e);
         }
 
     }
@@ -147,19 +150,6 @@ public class UnittestPlugin extends AbstractPlugin {
         return cfg;
     }
 
-    /**
-     * 首字母转小写
-     * @param className
-     * @return
-     */
-    private String classNameConvertLowerCamel(String className) {
-        if(StringUtils.isEmpty(className)){
-            getLog().error("className为空");
-            return null;
-        }
-        String at = String.valueOf(className.charAt(0)).toLowerCase();
-        return at+className.substring(1);
-    }
 
 
 }

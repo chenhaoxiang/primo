@@ -5,6 +5,7 @@
 package com.uifuture.maven.plugins;
 
 import com.uifuture.maven.plugins.dto.JavaMethodDTO;
+import com.uifuture.maven.plugins.dto.JavaParameterDTO;
 import freemarker.template.utility.StringUtil;
 
 import java.util.ArrayList;
@@ -39,7 +40,7 @@ public class BuilderUtilsTest {
 //    public void testVoid(JavaMethodDTO javaMethodDTO, Integer age, Double price){
 //    }
 
-    public int fieldIdIsExist(Map<String, String> relationFiledMap) {
+    public int fieldIdIsExist(JavaParameterDTO javaParameterDTO) {
          return 1;
     }
 

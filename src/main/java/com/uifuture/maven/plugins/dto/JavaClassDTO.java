@@ -5,6 +5,7 @@
 package com.uifuture.maven.plugins.dto;
 
 import java.util.List;
+import java.util.Map;
 import java.util.StringJoiner;
 
 /**
@@ -26,6 +27,28 @@ public class JavaClassDTO {
      * 包名
      */
     private String packageName;
+    /**
+     * 包装类的内部属性
+     */
+    private Map<String,List<JavaParameterDTO>> javaParameterDTOMap;
+
+    /**
+     * Getter method for property <tt>javaParameterDTOMap</tt>.
+     *
+     * @return property value of javaParameterDTOMap
+     */
+    public Map<String, List<JavaParameterDTO>> getJavaParameterDTOMap() {
+        return javaParameterDTOMap;
+    }
+
+    /**
+     * Setter method for property <tt>javaParameterDTOMap</tt>.
+     *
+     * @param javaParameterDTOMap value to be assigned to property javaParameterDTOMap
+     */
+    public void setJavaParameterDTOMap(Map<String, List<JavaParameterDTO>> javaParameterDTOMap) {
+        this.javaParameterDTOMap = javaParameterDTOMap;
+    }
 
     /**
      * Getter method for property <tt>javaMethodDTOList</tt>.
@@ -87,6 +110,7 @@ public class JavaClassDTO {
                 .add("javaMethodDTOList=" + javaMethodDTOList)
                 .add("javaImplementsDTOList=" + javaImplementsDTOList)
                 .add("packageName='" + packageName + "'")
+                .add("javaParameterDTOMap=" + javaParameterDTOMap)
                 .toString();
     }
 }
