@@ -6,6 +6,8 @@ package com.uifuture.maven.plugins.util;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.File;
+
 /**
  * @author chenhx
  * @version StringUtil.java, v 0.1 2019-06-10 21:34 chenhx
@@ -35,5 +37,20 @@ public class StringUtil extends StringUtils{
         }
         String at = String.valueOf(name.charAt(0)).toUpperCase();
         return at+name.substring(1);
+    }
+
+    /**
+     * 添加前后分隔符
+     * @param configPath
+     * @return
+     */
+    public static String addSeparator(String configPath) {
+        if(!configPath.startsWith(File.separator)){
+            configPath = File.separator + configPath;
+        }
+        if(!configPath.endsWith(File.separator)){
+            configPath = configPath + File.separator;
+        }
+        return configPath;
     }
 }

@@ -5,6 +5,7 @@
 package com.uifuture.maven.plugins;
 
 import com.uifuture.maven.plugins.base.AbstractPlugin;
+import com.uifuture.maven.plugins.util.StringUtil;
 import com.uifuture.maven.plugins.util.UrlUtil;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -32,12 +33,7 @@ public class InitPlugin extends AbstractPlugin {
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
         //通过URL下载文件到本地
-        if(!configPath.startsWith(File.separator)){
-            configPath = File.separator + configPath;
-        }
-        if(!configPath.endsWith(File.separator)){
-            configPath = configPath + File.separator ;
-        }
+        configPath = StringUtil.addSeparator(configPath);
         String path = basedir.getPath() + configPath;
         try {
             UrlUtil.downLoadFromUrl(CONFIG_URL,configFileName,path);

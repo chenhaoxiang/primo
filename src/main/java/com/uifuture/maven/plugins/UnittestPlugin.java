@@ -160,13 +160,8 @@ public class UnittestPlugin extends AbstractPlugin {
 
     private freemarker.template.Configuration getConfiguration() throws IOException {
         freemarker.template.Configuration cfg = new freemarker.template.Configuration(freemarker.template.Configuration.VERSION_2_3_28);
-        if(configPackage.startsWith("/")){
-            configPackage = configPackage.substring(1);
-        }
-        if(configPackage.endsWith("/")){
-            configPackage = configPackage.substring(0,configPackage.length()-1);
-        }
-        File file = new File(basedir + "/" + configPackage);
+        configPath = StringUtil.addSeparator(configPath);
+        File file = new File(basedir + configPath);
         if(!file.exists()){
             getLog().error(file+"配置文件不存在");
             throw new RuntimeException("配置文件不存在");
