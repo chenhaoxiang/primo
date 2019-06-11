@@ -5,6 +5,7 @@
 package com.uifuture.maven.plugins.dto;
 
 import java.util.List;
+import java.util.Map;
 import java.util.StringJoiner;
 
 /**
@@ -35,6 +36,30 @@ public class JavaMethodDTO {
      * 方法异常
      */
     private List<JavaExceptionsDTO> javaExceptionsDTOList;
+
+    /**
+     * 被mock的方法信息
+     */
+    private Map<String,List<JavaMockMethodInfoDTO>>  javaMockMethodInfoMap;
+
+
+    /**
+     * Getter method for property <tt>javaMockMethodInfoMap</tt>.
+     *
+     * @return property value of javaMockMethodInfoMap
+     */
+    public Map<String, List<JavaMockMethodInfoDTO>> getJavaMockMethodInfoMap() {
+        return javaMockMethodInfoMap;
+    }
+
+    /**
+     * Setter method for property <tt>javaMockMethodInfoMap</tt>.
+     *
+     * @param javaMockMethodInfoMap value to be assigned to property javaMockMethodInfoMap
+     */
+    public void setJavaMockMethodInfoMap(Map<String, List<JavaMockMethodInfoDTO>> javaMockMethodInfoMap) {
+        this.javaMockMethodInfoMap = javaMockMethodInfoMap;
+    }
 
     /**
      * Getter method for property <tt>methodTestName</tt>.
@@ -134,6 +159,7 @@ public class JavaMethodDTO {
                 .add("methodReturnType='" + methodReturnType + "'")
                 .add("javaParameterDTOList=" + javaParameterDTOList)
                 .add("javaExceptionsDTOList=" + javaExceptionsDTOList)
+                .add("javaMockMethodInfoMap=" + javaMockMethodInfoMap)
                 .toString();
     }
 }

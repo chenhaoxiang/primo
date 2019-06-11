@@ -5,6 +5,7 @@
 package com.uifuture.maven.plugins;
 
 import com.uifuture.maven.plugins.base.AbstractPlugin;
+import com.uifuture.maven.plugins.common.BaseConstant;
 import com.uifuture.maven.plugins.dto.JavaClassDTO;
 import com.uifuture.maven.plugins.util.JavaProjectBuilderUtil;
 import com.uifuture.maven.plugins.util.PackageUtil;
@@ -73,6 +74,10 @@ public class UnittestPlugin extends AbstractPlugin {
         //获取该包下所有的类
         List<String> javaList = PackageUtil.getClassName(basedir.getPath(), testPackageName, childPackage);
         getLog().info( "获取的所有类名为："+javaList);
+
+        //初始化类源
+        initJavaProjectBuilder();
+
         //class文件绝对路径
         for (String javaName : javaList) {
             getLog().info("当前文件路径："+javaName);
@@ -88,6 +93,29 @@ public class UnittestPlugin extends AbstractPlugin {
         }
     }
 
+    /**
+     * 初始化类源
+     */
+    private void initJavaProjectBuilder() {
+        // 获取类库
+//        JavaProjectBuilder builder = new JavaProjectBuilder();
+        // 正在读取单个源文件
+//        builder.addSource(new File(javaNameFile));
+        //读取包下所有的java类文件
+        String mainJava = basedir + BaseConstant.JAVA_MAIN_SRC;
+        JavaProjectBuilderUtil.getBuilder().addSourceTree(new File(mainJava));
+
+        String mockJava = basedir + BaseConstant.JAVA_MAIN_SRC + mockPackage.replace(".","/");
+        //获取包下所有的类
+        List<String> javaList = PackageUtil.getClassNameByFile(mockJava, true);
+        for (String path : javaList) {
+            path = path.replace("/",".");
+            path =path.substring(path.indexOf(mockPackage), path.lastIndexOf("."));
+            BaseConstant.mockJavaSet.add(path);
+        }
+        getLog().info("需要mock的所有类："+BaseConstant.mockJavaSet);
+    }
+
 
     private void genTest(String javaName) {
         try {
@@ -96,12 +124,14 @@ public class UnittestPlugin extends AbstractPlugin {
 
             Configuration cfg = getConfiguration();
 
-            String testJavaName =basedir + "/src/test/java/" + testPackageName.replace(".", "/")+ "/"+className +"Test.java";
+            String testJavaName =basedir + BaseConstant.JAVA_TEST_SRC + testPackageName.replace(".", "/")+ "/"+className +"Test.java";
             getLog().info("生成的文件路径："+testJavaName+", className:"+className);
             File file = new File(testJavaName);
             if (file.exists()) {
-                getLog().info(file+"已经存在，不进行生成");
-                return;
+                //TODO 已经存在，不处理
+//                getLog().info(file+"已经存在，不进行生成");
+//                return;
+                file.delete();
             }
             if (!file.getParentFile().exists() && !file.getParentFile().mkdirs()) {
                 getLog().error(file.getParentFile()+"生成失败" );
@@ -114,9 +144,8 @@ public class UnittestPlugin extends AbstractPlugin {
             data.put("modelNameUpperCamel", className);
             data.put("modelNameLowerCamel", StringUtil.strConvertLowerCamel(className));
 
-            String mainJava = basedir + "/src/main/java/";
             //获取类中方法
-            JavaClassDTO javaClassDTO = JavaProjectBuilderUtil.buildTestMethod(javaName,testPackageName+"."+className ,mainJava);
+            JavaClassDTO javaClassDTO = JavaProjectBuilderUtil.buildTestMethod(javaName,testPackageName+"."+className);
             data.put("javaClassDTO", javaClassDTO);
 
             //获取mock的类

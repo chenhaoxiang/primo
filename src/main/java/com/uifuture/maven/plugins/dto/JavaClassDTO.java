@@ -33,6 +33,29 @@ public class JavaClassDTO {
     private Map<String,List<JavaParameterDTO>> javaParameterDTOMap;
 
     /**
+     * 需要引入的mcok类
+     */
+    private List<JavaMockClassInfoDTO> javaMockClassInfoDTOList;
+
+    /**
+     * Getter method for property <tt>javaMockClassInfoDTOList</tt>.
+     *
+     * @return property value of javaMockClassInfoDTOList
+     */
+    public List<JavaMockClassInfoDTO> getJavaMockClassInfoDTOList() {
+        return javaMockClassInfoDTOList;
+    }
+
+    /**
+     * Setter method for property <tt>javaMockClassInfoDTOList</tt>.
+     *
+     * @param javaMockClassInfoDTOList value to be assigned to property javaMockClassInfoDTOList
+     */
+    public void setJavaMockClassInfoDTOList(List<JavaMockClassInfoDTO> javaMockClassInfoDTOList) {
+        this.javaMockClassInfoDTOList = javaMockClassInfoDTOList;
+    }
+
+    /**
      * Getter method for property <tt>javaParameterDTOMap</tt>.
      *
      * @return property value of javaParameterDTOMap
@@ -111,6 +134,7 @@ public class JavaClassDTO {
                 .add("javaImplementsDTOList=" + javaImplementsDTOList)
                 .add("packageName='" + packageName + "'")
                 .add("javaParameterDTOMap=" + javaParameterDTOMap)
+                .add("javaMockClassInfoDTOList=" + javaMockClassInfoDTOList)
                 .toString();
     }
 }

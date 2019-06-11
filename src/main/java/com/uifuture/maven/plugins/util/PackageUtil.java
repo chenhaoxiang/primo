@@ -34,15 +34,6 @@ public class PackageUtil {
     private static Log log = new SystemStreamLog();
 
     /**
-     * 获取某包下（包括该包的所有子包）所有类
-     * @param packageName 包名
-     * @return 类的完整名称
-     */
-    public static List<String> getClassName(String packageName) {
-        return getClassName(packageName, true);
-    }
-
-    /**
      * 获取某包下所有类
      * @param packageName 包名
      * @param childPackage 是否遍历子包
@@ -51,36 +42,17 @@ public class PackageUtil {
     public static List<String> getClassName(String basedir,String packageName, boolean childPackage) {
         List<String> fileNames = null;
         String packagePath = basedir + "/src/main/java/"+ packageName.replace(".", "/");
-        log.info("packagePath:"+packagePath);
         fileNames = getClassNameByFile(packagePath, childPackage);
         return fileNames;
     }
-
-    public static List<String> getClassName(String packageName, boolean childPackage) {
-        List<String> fileNames = null;
-        ClassLoader loader = Thread.currentThread().getContextClassLoader();
-        String packagePath = packageName.replace(".", "/");
-        URL url = loader.getResource(packagePath);
-        if (url != null) {
-            String type = url.getProtocol();
-            if ("file".equals(type)) {
-                fileNames = getClassNameByFile(url.getPath(), childPackage);
-            } else if ("jar".equals(type)) {
-                fileNames = getClassNameByJar(url.getPath(), childPackage);
-            }
-        } else {
-            fileNames = getClassNameByJars(((URLClassLoader) loader).getURLs(), packagePath, childPackage);
-        }
-        return fileNames;
-    }
-
     /**
      * 从项目文件获取某包下所有类
      * @param filePath 文件路径
      * @param childPackage 是否遍历子包
      * @return 类的完整名称
      */
-    private static List<String> getClassNameByFile(String filePath, boolean childPackage) {
+    public static List<String> getClassNameByFile(String filePath, boolean childPackage) {
+        log.info("从项目文件获取某包下所有类filePath="+filePath);
         List<String> myClassName = new ArrayList<>();
         File file = new File(filePath);
         File[] childFiles = file.listFiles();
