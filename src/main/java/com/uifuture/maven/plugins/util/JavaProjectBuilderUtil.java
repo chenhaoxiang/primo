@@ -290,7 +290,7 @@ public class JavaProjectBuilderUtil {
         JavaMockMethodInfoDTO javaMockMethodInfoDTO = new JavaMockMethodInfoDTO();
         JavaClassModel javaClassModel = mockJavaClassModelMap.get(name);
         if (javaClassModel == null) {
-            log.error("获取的mock类数据为NULL，"
+            log.warn("获取的mock类数据为NULL，"
                     + "mockJavaClassModelMap=" + mockJavaClassModelMap
                     + ",name=" + name
                     + ",方法源码=" + methodCode);
@@ -375,20 +375,20 @@ public class JavaProjectBuilderUtil {
         //通过父类再进行获取
         JavaClass javaClass = builder.getClassByName(name);
         if (javaClass == null) {
-            log.error("没有找到该类，类名："
+            log.warn("没有找到该类，类名："
                     + name + "，javaClass=null");
             return null;
         }
         JavaClass superJavaClass = javaClass.getSuperJavaClass();
         if (superJavaClass == null) {
-            log.error("没有找到该类的父类，类名："
+            log.warn("没有找到该类的父类，类名："
                     + name + "，superJavaClass=null，javaClass=" + javaClass);
             return null;
         }
 
         JavaClassModel javaClassModel1 = BaseConstant.mockParentJavaClassModelMap.get(superJavaClass.toString());
         if (javaClassModel1 == null) {
-            log.error("没有找到该父类的JavaClassModel，superJavaClass：" + superJavaClass + "，javaClass："
+            log.warn("没有找到该父类的JavaClassModel，superJavaClass：" + superJavaClass + "，javaClass："
                     + javaClass + "，BaseConstant.mockParentJavaClassModelMap=" + BaseConstant.mockParentJavaClassModelMap);
             return null;
         }
@@ -400,7 +400,7 @@ public class JavaProjectBuilderUtil {
             }
         }
         if (javaMethodModel == null) {
-            log.error("在类中没有找到该方法，方法名：" + nameS + "，类名："
+            log.warn("在类中没有找到该方法，方法名：" + nameS + "，类名："
                     + name + "，mockJavaClassModelMap=" + mockJavaClassModelMap + "，BaseConstant.mockParentJavaClassModelMap=" + BaseConstant.mockParentJavaClassModelMap);
             return null;
         }

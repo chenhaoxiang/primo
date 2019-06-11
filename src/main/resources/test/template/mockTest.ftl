@@ -8,6 +8,7 @@ import org.mockito.Mock;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.modules.junit4.PowerMockRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.mockito.ArgumentMatchers.any;
 
@@ -16,6 +17,8 @@ import static org.mockito.ArgumentMatchers.any;
 * @author ${author!''}
 * @date ${date!''}
 */
+@RunWith(MockitoJUnitRunner.class)
+@PowerMockIgnore("javax.management.*")
 public class ${modelNameUpperCamel}Test {
     @InjectMocks
     private ${modelNameUpperCamel} ${modelNameLowerCamel};
