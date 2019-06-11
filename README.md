@@ -14,7 +14,7 @@
     <configuration>
         <testPackageName>com.jiaxuan.heaven.book.service.impl</testPackageName>
         <childPackage>true</childPackage>
-        <configPackage>/config/test/</configPackage>
+        <configPath>/config/test/</configPath>
         <mockPackage>com.jiaxuan.heaven.book.mapper</mockPackage>
     </configuration>
 </plugin>

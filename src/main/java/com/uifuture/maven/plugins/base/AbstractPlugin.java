@@ -37,6 +37,12 @@ public abstract class AbstractPlugin extends AbstractMojo {
      * 配置文件路径
      */
     @Parameter(defaultValue = "/src/main/resources/test/template")
-    protected String configPackage;
+    protected String configPath;
+
+    /**
+     * 配置文件名称
+     */
+    @Parameter(defaultValue = "test.ftl")
+    protected String configFileName;
 
 }
