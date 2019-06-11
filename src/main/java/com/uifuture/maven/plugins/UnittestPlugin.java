@@ -88,8 +88,6 @@ public class UnittestPlugin extends AbstractPlugin {
             }
             //文件路径
             genTest(javaName);
-            //先测试一个类
-            break;
         }
     }
 
