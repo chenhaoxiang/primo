@@ -103,15 +103,17 @@ public class UnittestPlugin extends AbstractPlugin {
         String mainJava = basedir + BaseConstant.JAVA_MAIN_SRC;
         JavaProjectBuilderUtil.getBuilder().addSourceTree(new File(mainJava));
 
-        String mockJava = basedir + BaseConstant.JAVA_MAIN_SRC + mockPackage.replace(".","/");
-        //获取包下所有的类
-        List<String> javaList = PackageUtil.getClassNameByFile(mockJava, true);
-        for (String path : javaList) {
-            path = path.replace("/",".");
-            path =path.substring(path.indexOf(mockPackage), path.lastIndexOf("."));
-            BaseConstant.mockJavaSet.add(path);
+        if(StringUtil.isNotEmpty(mockPackage)) {
+            String mockJava = basedir + BaseConstant.JAVA_MAIN_SRC + mockPackage.replace(".", "/");
+            //获取包下所有的类
+            List<String> javaList = PackageUtil.getClassNameByFile(mockJava, true);
+            for (String path : javaList) {
+                path = path.replace("/", ".");
+                path = path.substring(path.indexOf(mockPackage), path.lastIndexOf("."));
+                BaseConstant.mockJavaSet.add(path);
+            }
+            getLog().info("需要mock的所有类：" + BaseConstant.mockJavaSet);
         }
-        getLog().info("需要mock的所有类："+BaseConstant.mockJavaSet);
     }
 
 
@@ -148,7 +150,7 @@ public class UnittestPlugin extends AbstractPlugin {
 
             //获取mock的类
 
-            cfg.getTemplate("test.ftl").process(data, new FileWriter(file));
+            cfg.getTemplate(configFileName).process(data, new FileWriter(file));
 
             getLog().info(file+"生成成功");
         } catch (Exception e) {

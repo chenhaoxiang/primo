@@ -3,7 +3,7 @@
 ## 介绍  
 你还在为写大量mock测试而烦恼吗，你还在苦苦的构建包装类的值吗？这里有一款简单的mock测试代码自动生成插件，解决开发人员单元覆盖率低，浪费测试时间的问题，全面提高开发人员的测试效率和测试时间。 
 
-简称：MAGT-plugin  
+简称：MAGT-plugin    
 
 
 ## 使用  
@@ -13,24 +13,26 @@
 <plugin>
     <groupId>com.uifuture.maven.plugins</groupId>
     <artifactId>maven-auto-unit-test-plugin</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.0</version>
     <configuration>
         <testPackageName>com.jiaxuan.heaven.book.service.impl</testPackageName>
         <childPackage>true</childPackage>
         <configPath>/config/test/</configPath>
         <mockPackage>com.jiaxuan.heaven.book.mapper</mockPackage>
+        <configFileName>init.ftl</configFileName>
     </configuration>
 </plugin>
 ```  
-下载不了属于正常情况，还未上传至中央仓库...请耐心等待    
+**下载不了属于正常情况，还未上传至中央仓库...请耐心等待**    
 
 2. 下载配置文件  
-```xml
+配置好```<configPath></configPath>```填写路径，相对路径为当前运行项目的根路径。(默认下载路径：/src/main/resources/test/template)   
+运行插件的init命令，即可将配置文件下载到对应的路径。  
+  
+可设置配置文件的文件名，通过```<configFileName>init.ftl</configFileName>```设置配置文件的文件名称。（默认文件名称为test.ftl）  
 
-```
-
-3. 引入mock相关依赖
-自动测试代码生成插件  
+3. 引入mock相关依赖  
+自动测试代码生成插件   
 项目需要依赖Jar包：
 ```xml
 
@@ -56,16 +58,18 @@
 
 ``` 
 
-3. 插件配置说明 
-```xml
-
-```
+3. configuration中相关配置说明 
+  
+运行插件的test命令即可在对应的test路径下生成测试用例。    
+- ```<testPackageName>``` - 配置需要生成单元测试用例的包名（必填）  
+- ```<childPackage>``` - 配置testPackageName的包是否递归获取子包下的类    
+- ```<mockPackage>``` - 需要mock掉的类所在的包名   
+- ```<configPath>``` - 下载配置文件的路径  
+- ```<configFileName>``` - 下载下来的配置文件的名称   
 
 # 版本功能
 
-
-
-## V1.0.1  
+## V1.0.0    
 1. 支持包下所有类中公共非静态方法生成测试方法   
 2. 支持配置mock的包，将mock掉包下类的所有方法  
 3. 支持基础类型和包装类型自动赋值  
