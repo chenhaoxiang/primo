@@ -49,6 +49,10 @@ public class UrlUtil {
             saveDir.mkdir();
         }
         File file = new File(saveDir + File.separator + fileName);
+        if(file.exists()){
+            log.info("配置文件已经存在不进行下载，URL:" + url + ",路径：" + savePath + ",文件名：" + fileName);
+            return;
+        }
         FileOutputStream fos = new FileOutputStream(file);
         fos.write(getData);
         fos.close();
