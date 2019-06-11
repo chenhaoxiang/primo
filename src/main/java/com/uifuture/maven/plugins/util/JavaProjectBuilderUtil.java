@@ -54,7 +54,19 @@ public class JavaProjectBuilderUtil {
      * 对应类型的默认值
      */
     private static final Map<String, String> VALUE = new HashMap<>();
+    /**
+     * 需要跳过的包的类，不进行设置默认值
+     */
+    private static final Set<String> SKIP_PACKAGE = new HashSet<>();
 
+    /**
+     * Getter method for property <tt>SKIP_PACKAGE</tt>.
+     *
+     * @return property value of SKIP_PACKAGE
+     */
+    public static Set<String> getSkipPackage() {
+        return SKIP_PACKAGE;
+    }
 
     /**
      * 获取类库
@@ -75,6 +87,7 @@ public class JavaProjectBuilderUtil {
 
     private static void initMapping() {
         MAPPING.put("java.lang.Integer", "Integer");
+        MAPPING.put("java.lang.Class", "Class");
         MAPPING.put("java.lang.Long", "Long");
         MAPPING.put("java.lang.Double", "Double");
         MAPPING.put("java.lang.String", "String");
@@ -103,6 +116,7 @@ public class JavaProjectBuilderUtil {
         VALUE.put("Double", "0.0");
         VALUE.put("Float", "0.0f");
         VALUE.put("Boolean", "true");
+        VALUE.put("Class", "null");
 
         VALUE.put("int", "0");
         VALUE.put("long", "0L");
@@ -188,10 +202,10 @@ public class JavaProjectBuilderUtil {
         //获取方法集合
         List<JavaMethod> javaMethodList = javaClass.getMethods();
 
-        Map<String, Integer> methodMap = new HashMap<>();
-
-        Map<String, List<JavaParameterDTO>> javaParameterDTOMap = new HashMap<>();
         //构建类
+        Map<String, Integer> methodMap = new HashMap<>();
+        //包装类的内部属性 - 包含了父类的属性
+        Map<String, List<JavaParameterDTO>> javaParameterDTOMap = new HashMap<>();
         buildClass(mockJavaClassModelMap, javaMethodDTOList, javaMethodList, methodMap, javaParameterDTOMap);
 
         javaClassDTO.setJavaMethodDTOList(javaMethodDTOList);
@@ -208,9 +222,11 @@ public class JavaProjectBuilderUtil {
      * @param javaMethodDTOList
      * @param javaMethodList
      * @param methodMap
-     * @param javaParameterDTOMap
+     * @param javaParameterDTOMap 包装类的内部属性 - 包含了父类的属性
      */
-    private static void buildClass(Map<String, JavaClassModel> mockJavaClassModelMap, List<JavaMethodDTO> javaMethodDTOList, List<JavaMethod> javaMethodList, Map<String, Integer> methodMap, Map<String, List<JavaParameterDTO>> javaParameterDTOMap) {
+    private static void buildClass(Map<String, JavaClassModel> mockJavaClassModelMap, List<JavaMethodDTO> javaMethodDTOList,
+                                   List<JavaMethod> javaMethodList, Map<String, Integer> methodMap,
+                                   Map<String, List<JavaParameterDTO>> javaParameterDTOMap) {
         //遍历类中的方法
         for (JavaMethod javaMethod : javaMethodList) {
             Map<String, List<JavaMockMethodInfoDTO>> javaMockMethodInfoDTOMap = new HashMap<>();
@@ -229,7 +245,7 @@ public class JavaProjectBuilderUtil {
 
             //获取方法返回类型
             JavaClass returnValue = javaMethod.getReturns();
-            String returnValueStr = returnValue.toString();
+            String returnValueStr = returnValue.getFullyQualifiedName();
             returnValueStr = MAPPING.getOrDefault(returnValueStr, returnValueStr);
             javaMethodDTO.setMethodReturnType(returnValueStr);
 
@@ -237,7 +253,7 @@ public class JavaProjectBuilderUtil {
                 continue;
             }
 
-            //参数
+            //方法参数的设置，包装类设置属性 默认值
             List<JavaParameterDTO> javaParameterDTOS = getJavaParameterDTOList(javaMethod, javaParameterDTOMap, builder);
             javaMethodDTO.setJavaParameterDTOList(javaParameterDTOS);
 
@@ -386,7 +402,7 @@ public class JavaProjectBuilderUtil {
             return null;
         }
 
-        JavaClassModel javaClassModel1 = BaseConstant.mockParentJavaClassModelMap.get(superJavaClass.toString());
+        JavaClassModel javaClassModel1 = BaseConstant.mockParentJavaClassModelMap.get(superJavaClass.getFullyQualifiedName());
         if (javaClassModel1 == null) {
             log.warn("没有找到该父类的JavaClassModel，superJavaClass：" + superJavaClass + "，javaClass："
                     + javaClass + "，BaseConstant.mockParentJavaClassModelMap=" + BaseConstant.mockParentJavaClassModelMap);
@@ -430,7 +446,7 @@ public class JavaProjectBuilderUtil {
             JavaClassModel javaClassModel = new JavaClassModel();
             //属性名称
             javaClassModel.setName(javaField.getName());
-            String typeStr = javaField.getType().toString();
+            String typeStr = javaField.getType().getFullyQualifiedName();
             String type = MAPPING.getOrDefault(typeStr, typeStr);
             javaClassModel.setType(type);
             //获取类型中的方法 Java类
@@ -444,7 +460,6 @@ public class JavaProjectBuilderUtil {
             List<JavaMockMethodInfoDTO> javaMockMethodInfoDTOList = new ArrayList<>();
 
             //TODO 获取父类 - 暂时只支持两层 - 暂时也不支持其他jar包中的类
-            JavaClass javaClass1 = javaField.getType();
             JavaClass superClass = javaField.getType().getSuperJavaClass();
             if(superClass!=null) {
                 log.info("获取的父类：" + superClass);
@@ -456,10 +471,10 @@ public class JavaProjectBuilderUtil {
                 }
 
                 List<JavaMethod> superJavaMethod = superClass.getMethods();
-                if (!BaseConstant.mockParentJavaClassModelMap.containsKey(superClass.toString())) {
+                if (!BaseConstant.mockParentJavaClassModelMap.containsKey(superClass.getFullyQualifiedName())) {
                     JavaClassModel javaClassModel1 = new JavaClassModel();
                     javaClassModel1.setName(superClass.getName());
-                    javaClassModel1.setType(superClass.toString());
+                    javaClassModel1.setType(superClass.getFullyQualifiedName());
                     List<JavaMethodModel> javaMethodModelList1 = new ArrayList<>();
                     for (JavaMethod javaMethod : superJavaMethod) {
                         //存储父类信息
@@ -467,9 +482,9 @@ public class JavaProjectBuilderUtil {
                         javaMethodModelList1.add(javaMethodModel);
                     }
                     javaClassModel1.setJavaMethodModelList(javaMethodModelList1);
-                    BaseConstant.mockParentJavaClassModelMap.put(superClass.toString(), javaClassModel1);
+                    BaseConstant.mockParentJavaClassModelMap.put(superClass.getFullyQualifiedName(), javaClassModel1);
                 }
-                javaMockClassInfoDTO.setParentType(superClass.toString());
+                javaMockClassInfoDTO.setParentType(superClass.getFullyQualifiedName());
             }
 
             javaMockClassInfoDTO.setName(javaField.getName());
@@ -498,14 +513,14 @@ public class JavaProjectBuilderUtil {
         List<String> parameterTypeList = new ArrayList<>();
         for (JavaParameter javaParameter : javaParameterList) {
             parameterNameList.add(javaParameter.getName());
-            String typeS = javaParameter.getType().toString();
+            String typeS = javaParameter.getType().getFullyQualifiedName();
             String pType = MAPPING.getOrDefault(typeS, typeS);
             parameterTypeList.add(pType);
         }
         javaMethodModel.setParameterName(parameterNameList);
         javaMethodModel.setParameterType(parameterTypeList);
         javaMethodModel.setParameterNum(parameterNameList.size());
-        String rTypeStr = javaMethod.getReturnType().toString();
+        String rTypeStr = javaMethod.getReturnType().getFullyQualifiedName();
         String rType = MAPPING.getOrDefault(rTypeStr, rTypeStr);
         javaMethodModel.setReturnType(rType);
         return javaMethodModel;
@@ -533,7 +548,7 @@ public class JavaProjectBuilderUtil {
         javaMockMethodInfoDTO.setParameterType(javaMethodModel.getParameterType());
         javaMockMethodInfoDTO.setReturnType(javaMethodModel.getReturnType());
         //设置父类类型
-        javaMockMethodInfoDTO.setParentClassType(superClass.toString());
+        javaMockMethodInfoDTO.setParentClassType(superClass.getFullyQualifiedName());
         javaMockMethodInfoDTOList.add(javaMockMethodInfoDTO);
     }
 
@@ -548,7 +563,7 @@ public class JavaProjectBuilderUtil {
         List<JavaExceptionsDTO> javaExceptionsDTOS = new ArrayList<>();
         for (JavaClass exception : exceptions) {
             JavaExceptionsDTO javaExceptionsDTO = new JavaExceptionsDTO();
-            javaExceptionsDTO.setType(exception.toString());
+            javaExceptionsDTO.setType(exception.getFullyQualifiedName());
             javaExceptionsDTOS.add(javaExceptionsDTO);
         }
         return javaExceptionsDTOS;
@@ -556,48 +571,96 @@ public class JavaProjectBuilderUtil {
 
     /**
      * 获取的参数
-     *
+     * 参数组装
      * @param javaMethod
      * @param javaParameterDTOMap
      * @param builder
      * @return
      */
-    private static List<JavaParameterDTO> getJavaParameterDTOList(JavaMethod javaMethod, Map<String, List<JavaParameterDTO>> javaParameterDTOMap, JavaProjectBuilder builder) {
+    private static List<JavaParameterDTO> getJavaParameterDTOList(JavaMethod javaMethod,
+                                                                  Map<String, List<JavaParameterDTO>> javaParameterDTOMap,
+                                                                  JavaProjectBuilder builder) {
         List<JavaParameter> parameterList = javaMethod.getParameters();
         List<JavaParameterDTO> javaParameterDTOS = new ArrayList<>();
         //TODO 暂时未处理其他泛型,简单的使用Obj代替
         for (JavaParameter javaParameter : parameterList) {
             JavaParameterDTO javaParameterDTO = new JavaParameterDTO();
             javaParameterDTO.setName(javaParameter.getName());
-            String typeToStr = javaParameter.getType().toString();
+            String typeToStr = javaParameter.getType().getFullyQualifiedName();
             String type = MAPPING.getOrDefault(typeToStr, typeToStr);
             javaParameterDTO.setType(type);
             javaParameterDTO.setCustomType(false);
+
             //设置默认值
             javaParameterDTO.setValue(VALUE.getOrDefault(type, null));
+
+            for (String name : SKIP_PACKAGE) {
+                if(type.contains(name)){
+                    log.info("本类型在配置的包下，配置的包："+name+",类型："+type);
+                    javaParameterDTO.setValue("null");
+                }
+            }
 
             String keyName = UUIDUtil.getID();
             javaParameterDTO.setKeyName(keyName);
             if (type.equals(typeToStr)) {
                 //自定义类型 暂时处理一层包装类
-                JavaClass cls = builder.getClassByName(typeToStr);
-                log.info("自定义类型：" + typeToStr + "，cls：" + cls);
-                if (cls != null) {
-                    javaParameterDTO.setCustomType(true);
-                    List<JavaParameterDTO> javaParameterDTOList = new ArrayList<>();
-                    //获取属性
-                    addParameterToList(javaParameterDTOList, cls);
+                JavaClass javaClass = builder.getClassByName(typeToStr);
+                log.info("自定义类型：" + typeToStr + "，cls：" + (javaClass==null?"null":javaClass.getFullyQualifiedName()) );
+                if (javaClass != null) {
+                    //TODO 框架无法识别第三方Jar包中的类
+                    if(javaClass.isInterface()){
 
-                    //获取父类属性 - 暂时也只获取一层
-                    JavaClass superJavaClass = cls.getSuperJavaClass();
-                    if (!MAPPING.containsKey(superJavaClass.toString())) {
-                        addParameterToList(javaParameterDTOList, superJavaClass);
+                        //获取实现类
+                        List<JavaClass> javaClassList = javaClass.getDerivedClasses();
+                        log.info("javaClassList1:" + javaClassList + ",自定义类型" + typeToStr );
+                        if(!javaClassList.isEmpty()){
+                            //取第一个
+                            JavaClass javaClass1 = javaClassList.get(0);
+                            javaParameterDTO.setCustomType(true);
+                            List<JavaParameterDTO> javaParameterDTOList = new ArrayList<>();
+                            //获取属性
+                            addParameterToList(javaParameterDTOList, javaClass);
+                            javaParameterDTOMap.put(keyName, javaParameterDTOList);
+                        }else {
+                            //接口的实现类没有，设置为null
+                            javaParameterDTO.setValue("null");
+                        }
+
+                    }else if(javaClass.isEnum()){
+                        //枚举取值
+                        List<JavaField> javaFieldList = javaClass.getFields();
+                        log.info("获取的枚举值："+javaFieldList+"，javaClass="+javaClass);
+                        if(!javaFieldList.isEmpty()){
+                            JavaField javaField = javaFieldList.get(0);
+                            javaParameterDTO.setValue(javaField.getType().getFullyQualifiedName()+"."+javaField.getName());
+                        }else {
+                            javaParameterDTO.setValue("null");
+                        }
+
+                    }else {
+                        javaParameterDTO.setCustomType(true);
+                        List<JavaParameterDTO> javaParameterDTOList = new ArrayList<>();
+                        //获取属性
+                        addParameterToList(javaParameterDTOList, javaClass);
+
+                        //获取父类属性 - 暂时也只获取一层
+                        JavaClass superJavaClass = javaClass.getSuperJavaClass();
+
+                        if ( !MAPPING.containsKey(superJavaClass.getFullyQualifiedName()) ) {
+                            addParameterToList(javaParameterDTOList, superJavaClass);
+                        }
+                        log.info("superJavaClass:" + superJavaClass.getFullyQualifiedName() + ",自定义类型" + typeToStr + "，自定义类型中的类型：" + javaParameterDTOList);
+                        javaParameterDTOMap.put(keyName, javaParameterDTOList);
                     }
 
-                    log.info("superJavaClass:" + superJavaClass + ",自定义类型" + typeToStr + "，自定义类型中的类型：" + javaParameterDTOList);
-                    javaParameterDTOMap.put(keyName, javaParameterDTOList);
+                }else{
+                    //说明不是项目中的类 - 设置为null
+                    javaParameterDTO.setValue("null");
                 }
+
             }
+
             javaParameterDTOS.add(javaParameterDTO);
         }
         return javaParameterDTOS;
@@ -624,7 +687,7 @@ public class JavaProjectBuilderUtil {
             //遍历属性,属性名称
             String fieldName = javaField.getName();
             //获取属性类型
-            String fieldTypeStr = javaField.getType().toString();
+            String fieldTypeStr = javaField.getType().getFullyQualifiedName();
             String fieldType = MAPPING.getOrDefault(fieldTypeStr, fieldTypeStr);
             JavaParameterDTO javaParameterDTO1 = new JavaParameterDTO();
             javaParameterDTO1.setKeyName("");
@@ -648,9 +711,10 @@ public class JavaProjectBuilderUtil {
         List<JavaImplementsDTO> javaImplementsDTOList = new ArrayList<>();
         for (JavaType javaType : javaTypeList) {
             JavaImplementsDTO javaImplementsDTO = new JavaImplementsDTO();
-            javaImplementsDTO.setType(javaType.toString());
+            javaImplementsDTO.setType(javaType.getFullyQualifiedName());
             javaImplementsDTOList.add(javaImplementsDTO);
         }
         return javaImplementsDTOList;
     }
+
 }

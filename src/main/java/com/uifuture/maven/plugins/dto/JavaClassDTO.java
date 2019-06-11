@@ -27,8 +27,9 @@ public class JavaClassDTO {
      * 包名
      */
     private String packageName;
+
     /**
-     * 包装类的内部属性
+     * 包装类的内部属性 - 包含了父类的属性
      */
     private Map<String,List<JavaParameterDTO>> javaParameterDTOMap;
 

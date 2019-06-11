@@ -55,6 +55,18 @@ public class UnittestPlugin extends AbstractPlugin {
      */
     @Parameter
     private String mockPackage;
+    /**
+     * 不需要初始化默认值的类的包名
+     * 在参数初始化的时候，进行赋值为null的类，在该包下的类不会进行赋值
+     */
+    @Parameter
+    private String skipPackages;
+
+    /**
+     * 其他的项目名称，一个项目下多个项目模块。项目模块的路径
+     */
+    @Parameter
+    private String otherProjectName;
 
     /**
      * @date
@@ -69,7 +81,16 @@ public class UnittestPlugin extends AbstractPlugin {
                 +"\ntarget："+target
                 +"\nbasedir："+basedir
                 +"\nproject："+project
+                +"\nskipPackages："+skipPackages
+                +"\notherProjectName："+otherProjectName
         );
+
+        if(StringUtil.isNotEmpty(skipPackages)) {
+            //设置参数值为null
+            for (String skipPackage : skipPackages.split(";")) {
+                JavaProjectBuilderUtil.getSkipPackage().add(skipPackage);
+            }
+        }
 
         //获取该包下所有的类
         List<String> javaList = PackageUtil.getClassName(basedir.getPath(), testPackageName, childPackage);
@@ -100,8 +121,18 @@ public class UnittestPlugin extends AbstractPlugin {
         // 正在读取单个源文件
 //        builder.addSource(new File(javaNameFile));
         //读取包下所有的java类文件
-        String mainJava = basedir + BaseConstant.JAVA_MAIN_SRC;
+        String mainJava = basedir.getPath() + BaseConstant.JAVA_MAIN_SRC;
         JavaProjectBuilderUtil.getBuilder().addSourceTree(new File(mainJava));
+        getLog().info("加载当前模块的类："+mainJava);
+
+        //加载其他模块的类
+        if(StringUtil.isNotEmpty(otherProjectName)){
+            for (String name : otherProjectName.split(";")) {
+                String fileName = basedir.getPath().substring(0,basedir.getPath().lastIndexOf("/")+1)+name + BaseConstant.JAVA_MAIN_SRC;
+                JavaProjectBuilderUtil.getBuilder().addSourceTree(new File(fileName));
+                getLog().info("加载其他模块的类："+fileName);
+            }
+        }
 
         if(StringUtil.isNotEmpty(mockPackage)) {
             String mockJava = basedir + BaseConstant.JAVA_MAIN_SRC + mockPackage.replace(".", "/");

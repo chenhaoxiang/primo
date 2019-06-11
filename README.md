@@ -20,6 +20,8 @@
         <configPath>/config/test/</configPath>
         <mockPackage>com.jiaxuan.heaven.book.mapper</mockPackage>
         <configFileName>init.ftl</configFileName>
+        <skipPackages>com.baomidou.mybatisplus.core.metadata;com.baomidou.mybatisplus.core.conditions</skipPackages>
+        <otherProjectName>api;</otherProjectName>
     </configuration>
 </plugin>
 ```  
@@ -66,6 +68,8 @@
 - ```<mockPackage>``` - 需要mock掉的类所在的包名   
 - ```<configPath>``` - 下载配置文件的路径  
 - ```<configFileName>``` - 下载下来的配置文件的名称   
+- ```<skipPackages>``` - 在方法参数初始化的时候，需要进行赋值为null的类（例如，适合接口或者没有空参构造的类），在该包下的类不会进行赋值。可配置多个，使用英文分号隔开。       
+- ```<otherProjectName>``` - 适合多项目，配置其他的项目名称，可以使MAGT-plugin解析到该模块下的所有类。一个项目下多个项目模块。项目模块的路径名称。可配置多个，使用英文分号隔开。         
 
 # 版本功能
 
@@ -73,3 +77,5 @@
 1. 支持包下所有类中公共非静态方法生成测试方法   
 2. 支持配置mock的包，将mock掉包下类的所有方法  
 3. 支持基础类型和包装类型自动赋值  
+4. 增加枚举参数的支持 
+5. 可进行配置需要跳过的参数类型，直接配置包名，会进行跳过包内所有类的构造（用于跳过接口的构造，直接赋值为null）    
