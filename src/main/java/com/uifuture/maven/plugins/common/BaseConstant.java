@@ -8,6 +8,7 @@ import com.uifuture.maven.plugins.model.JavaClassModel;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -29,4 +30,9 @@ public class BaseConstant {
      * 需要mock的类的信息 父类的信息
      */
     public static Map<String, JavaClassModel> mockParentJavaClassModelMap = new HashMap<>();
+
+    /**
+     * 需要导入的包，string-类简称，value-全称限定类名的，如果有多个，后面的使用全限定名
+     */
+    public static Map<String, String> implementsJavaPackageMap = new HashMap<>();
 }

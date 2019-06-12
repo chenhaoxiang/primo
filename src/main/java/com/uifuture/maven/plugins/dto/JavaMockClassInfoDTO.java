@@ -28,6 +28,9 @@ public class JavaMockClassInfoDTO {
      */
     private String parentType;
 
+    /**
+     * 需要mock的方法
+     */
     private List<JavaMockMethodInfoDTO> javaMockMethodInfoDTOList;
 
     /**

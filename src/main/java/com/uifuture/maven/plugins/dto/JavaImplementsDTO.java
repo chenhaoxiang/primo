@@ -4,6 +4,7 @@
  */
 package com.uifuture.maven.plugins.dto;
 
+import java.util.Objects;
 import java.util.StringJoiner;
 
 /**

@@ -1,7 +1,6 @@
 package ${javaClassDTO.packageName};
 
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -9,6 +8,9 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.modules.junit4.PowerMockRunner;
 import org.mockito.junit.MockitoJUnitRunner;
+<#list javaClassDTO.javaImplementsDTOList as implements>
+import ${implements.type};
+</#list>
 
 import static org.mockito.ArgumentMatchers.any;
 

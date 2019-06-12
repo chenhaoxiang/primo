@@ -5,6 +5,7 @@
 package com.uifuture.maven.plugins.util;
 
 import com.uifuture.maven.plugins.common.BaseConstant;
+import com.uifuture.maven.plugins.common.InitConstant;
 import com.uifuture.maven.plugins.dto.JavaMockClassInfoDTO;
 import com.uifuture.maven.plugins.dto.JavaMockMethodInfoDTO;
 import com.uifuture.maven.plugins.model.JavaMethodModel;
@@ -28,6 +29,7 @@ import org.apache.maven.plugin.logging.SystemStreamLog;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -45,15 +47,6 @@ public class JavaProjectBuilderUtil {
 
     public static String baseDir;
 
-    /**
-     * 对应类型转换
-     */
-    private static final Map<String, String> MAPPING = new HashMap<>();
-
-    /**
-     * 对应类型的默认值
-     */
-    private static final Map<String, String> VALUE = new HashMap<>();
     /**
      * 需要跳过的包的类，不进行设置默认值
      */
@@ -78,66 +71,8 @@ public class JavaProjectBuilderUtil {
         return builder;
     }
 
-    static {
-        //初始化类型转换
-        initMapping();
-        //初始化默认值
-        initValue();
-    }
-
-    private static void initMapping() {
-        MAPPING.put("java.lang.Integer", "Integer");
-        MAPPING.put("java.lang.Class", "Class");
-        MAPPING.put("java.lang.Long", "Long");
-        MAPPING.put("java.lang.Double", "Double");
-        MAPPING.put("java.lang.String", "String");
-        MAPPING.put("java.lang.Boolean", "Boolean");
-        MAPPING.put("java.lang.Byte", "Byte");
-        MAPPING.put("java.lang.Float", "Float");
-        MAPPING.put("java.lang.Object", "Object");
-        MAPPING.put("java.lang.Short", "Short");
-        MAPPING.put("java.lang.StringBuffer", "StringBuffer");
-        MAPPING.put("java.lang.StringBuilder", "StringBuilder");
-        MAPPING.put("java.lang.Void", "Void");
-
-        MAPPING.put("java.util.Map", "java.util.HashMap");
-        MAPPING.put("java.util.List", "java.util.ArrayList");
-        MAPPING.put("java.util.set", "java.util.HashSet");
-        MAPPING.put("T", "Object");
-        MAPPING.put("B", "Object");
-        MAPPING.put("M", "Object");
-        MAPPING.put("F", "Object");
-    }
-
-    private static void initValue() {
-        VALUE.put("String", "\"\"");
-        VALUE.put("Integer", "0");
-        VALUE.put("Long", "0L");
-        VALUE.put("Double", "0.0");
-        VALUE.put("Float", "0.0f");
-        VALUE.put("Boolean", "true");
-        VALUE.put("Class", "null");
-
-        VALUE.put("int", "0");
-        VALUE.put("long", "0L");
-        VALUE.put("double", "0.0");
-        VALUE.put("float", "0.0f");
-        VALUE.put("boolean", "true");
-        VALUE.put("char", "'0'");
-        VALUE.put("byte", "0");
-        VALUE.put("short", "0");
-
-        VALUE.put("StringBuffer", "new StringBuffer(\"\")");
-        VALUE.put("StringBuilder", "new StringBuilder(\"\")");
-
-        VALUE.put("java.util.HashMap", "new java.util.HashMap()");
-        VALUE.put("java.util.ArrayList", "new java.util.ArrayList()");
-        VALUE.put("java.util.HashSet", "new java.util.HashSet()");
-        VALUE.put("java.util.Date", "new java.util.Date()");
-    }
 
     public static void main(String[] args) throws IOException {
-
         String javaName = "/Users/chenhx/Desktop/github/auto-unit-test-plugin/src/main/java/com/uifuture/maven/plugins/BuilderUtilsTest.java";
         String mainJava = "/Users/chenhx/Desktop/github/auto-unit-test-plugin/src/main/java/";
 
@@ -190,10 +125,6 @@ public class JavaProjectBuilderUtil {
         //获取mock的信息
         getMockClass(javaClass, javaMockClassInfoDTOList, javaFieldList, mockJavaClassModelMap);
 
-        //获取导入的包
-        List<JavaImplementsDTO> javaImplementsDTOList = getJavaImplementsDTOList(javaClass);
-        javaClassDTO.setJavaImplementsDTOList(javaImplementsDTOList);
-
         //设置包名
         JavaPackage pkg = javaClass.getPackage();
         javaClassDTO.setPackageName(pkg.getName());
@@ -208,12 +139,31 @@ public class JavaProjectBuilderUtil {
         Map<String, List<JavaParameterDTO>> javaParameterDTOMap = new HashMap<>();
         buildClass(mockJavaClassModelMap, javaMethodDTOList, javaMethodList, methodMap, javaParameterDTOMap);
 
+
+        //获取导入的包
+        List<JavaImplementsDTO> javaImplementsDTOList = new ArrayList<>();
+        //全称限定名称
+        for (String key : BaseConstant.implementsJavaPackageMap.keySet()) {
+            JavaImplementsDTO javaImplementsDTO = new JavaImplementsDTO();
+            String type = BaseConstant.implementsJavaPackageMap.get(key);
+            if(InitConstant.EXCLUDE_IMPORT_TYPE.contains(type)){
+                continue;
+            }
+            //获取导入
+            javaImplementsDTO.setType(type);
+            javaImplementsDTOList.add(javaImplementsDTO);
+        }
+//        List<JavaImplementsDTO> javaImplementsDTOList = getJavaImplementsDTOList(javaClass);
+        javaClassDTO.setJavaImplementsDTOList(javaImplementsDTOList);
+
+
         javaClassDTO.setJavaMethodDTOList(javaMethodDTOList);
         javaClassDTO.setJavaParameterDTOMap(javaParameterDTOMap);
         javaClassDTO.setJavaMockClassInfoDTOList(javaMockClassInfoDTOList);
         log.info("构建的类信息：" + javaClassDTO);
         return javaClassDTO;
     }
+
 
     /**
      * 核心方法
@@ -246,7 +196,7 @@ public class JavaProjectBuilderUtil {
             //获取方法返回类型
             JavaClass returnValue = javaMethod.getReturns();
             String returnValueStr = returnValue.getFullyQualifiedName();
-            returnValueStr = MAPPING.getOrDefault(returnValueStr, returnValueStr);
+            returnValueStr = InitConstant.MAPPING.getOrDefault(returnValueStr, returnValueStr);
             javaMethodDTO.setMethodReturnType(returnValueStr);
 
             if (excludeMethod(javaMethod)) {
@@ -255,18 +205,20 @@ public class JavaProjectBuilderUtil {
 
             //方法参数的设置，包装类设置属性 默认值
             List<JavaParameterDTO> javaParameterDTOS = getJavaParameterDTOList(javaMethod, javaParameterDTOMap, builder);
+            //处理全称限定名称 - 简称
+            handleQualifiedName(javaParameterDTOS);
+
+
             javaMethodDTO.setJavaParameterDTOList(javaParameterDTOS);
 
             //方法抛出的异常
             List<JavaExceptionsDTO> javaExceptionsDTOS = getJavaExceptionsDTOList(javaMethod);
             javaMethodDTO.setJavaExceptionsDTOList(javaExceptionsDTOS);
 
-
             //Mock方法模拟
             List<JavaMockMethodInfoDTO> javaMockMethodInfoDTOList = new ArrayList<>();
             //获取方法的源码
             String methodCode = javaMethod.getSourceCode();
-            log.info("方法源码：" + methodCode);
 
             Set<String> methodNameSet = new HashSet<>();
             //判断方法中是否有需要mock的方法
@@ -286,6 +238,28 @@ public class JavaProjectBuilderUtil {
             javaMockMethodInfoDTOMap.put(methodName, javaMockMethodInfoDTOList);
             javaMethodDTO.setJavaMockMethodInfoMap(javaMockMethodInfoDTOMap);
             javaMethodDTOList.add(javaMethodDTO);
+        }
+    }
+
+    /**
+     * 处理全称限定名称 - 简称
+     * @param javaParameterDTOS
+     */
+    private static void handleQualifiedName(List<JavaParameterDTO> javaParameterDTOS) {
+        //处理全限定名称
+        for (JavaParameterDTO javaParameterDTO : javaParameterDTOS) {
+            String type = javaParameterDTO.getType();
+            //获取类型 简称
+            String abbType = type.substring(type.lastIndexOf(".")+1);
+            if(BaseConstant.implementsJavaPackageMap.containsKey(abbType)){
+                String t = BaseConstant.implementsJavaPackageMap.get(abbType);
+                if(t.equals(type)){
+                    javaParameterDTO.setType(abbType);
+                }
+            }else {
+                BaseConstant.implementsJavaPackageMap.put(abbType, type);
+                javaParameterDTO.setType(abbType);
+            }
         }
     }
 
@@ -447,7 +421,7 @@ public class JavaProjectBuilderUtil {
             //属性名称
             javaClassModel.setName(javaField.getName());
             String typeStr = javaField.getType().getFullyQualifiedName();
-            String type = MAPPING.getOrDefault(typeStr, typeStr);
+            String type = InitConstant.MAPPING.getOrDefault(typeStr, typeStr);
             javaClassModel.setType(type);
             //获取类型中的方法 Java类
 
@@ -514,14 +488,14 @@ public class JavaProjectBuilderUtil {
         for (JavaParameter javaParameter : javaParameterList) {
             parameterNameList.add(javaParameter.getName());
             String typeS = javaParameter.getType().getFullyQualifiedName();
-            String pType = MAPPING.getOrDefault(typeS, typeS);
+            String pType = InitConstant.MAPPING.getOrDefault(typeS, typeS);
             parameterTypeList.add(pType);
         }
         javaMethodModel.setParameterName(parameterNameList);
         javaMethodModel.setParameterType(parameterTypeList);
         javaMethodModel.setParameterNum(parameterNameList.size());
         String rTypeStr = javaMethod.getReturnType().getFullyQualifiedName();
-        String rType = MAPPING.getOrDefault(rTypeStr, rTypeStr);
+        String rType = InitConstant.MAPPING.getOrDefault(rTypeStr, rTypeStr);
         javaMethodModel.setReturnType(rType);
         return javaMethodModel;
     }
@@ -571,7 +545,7 @@ public class JavaProjectBuilderUtil {
 
     /**
      * 获取的参数
-     * 参数组装
+     * 参数组装-方法参数
      * @param javaMethod
      * @param javaParameterDTOMap
      * @param builder
@@ -587,12 +561,12 @@ public class JavaProjectBuilderUtil {
             JavaParameterDTO javaParameterDTO = new JavaParameterDTO();
             javaParameterDTO.setName(javaParameter.getName());
             String typeToStr = javaParameter.getType().getFullyQualifiedName();
-            String type = MAPPING.getOrDefault(typeToStr, typeToStr);
+            String type = InitConstant.MAPPING.getOrDefault(typeToStr, typeToStr);
             javaParameterDTO.setType(type);
             javaParameterDTO.setCustomType(false);
 
             //设置默认值
-            javaParameterDTO.setValue(VALUE.getOrDefault(type, null));
+            javaParameterDTO.setValue(InitConstant.VALUE.getOrDefault(type, null));
 
             for (String name : SKIP_PACKAGE) {
                 if(type.contains(name)){
@@ -647,7 +621,7 @@ public class JavaProjectBuilderUtil {
                         //获取父类属性 - 暂时也只获取一层
                         JavaClass superJavaClass = javaClass.getSuperJavaClass();
 
-                        if ( !MAPPING.containsKey(superJavaClass.getFullyQualifiedName()) ) {
+                        if ( !InitConstant.MAPPING.containsKey(superJavaClass.getFullyQualifiedName()) ) {
                             addParameterToList(javaParameterDTOList, superJavaClass);
                         }
                         log.info("superJavaClass:" + superJavaClass.getFullyQualifiedName() + ",自定义类型" + typeToStr + "，自定义类型中的类型：" + javaParameterDTOList);
@@ -688,13 +662,13 @@ public class JavaProjectBuilderUtil {
             String fieldName = javaField.getName();
             //获取属性类型
             String fieldTypeStr = javaField.getType().getFullyQualifiedName();
-            String fieldType = MAPPING.getOrDefault(fieldTypeStr, fieldTypeStr);
+            String fieldType = InitConstant.MAPPING.getOrDefault(fieldTypeStr, fieldTypeStr);
             JavaParameterDTO javaParameterDTO1 = new JavaParameterDTO();
             javaParameterDTO1.setKeyName("");
             javaParameterDTO1.setCustomType(false);
             javaParameterDTO1.setName(fieldName);
             javaParameterDTO1.setType(fieldType);
-            javaParameterDTO1.setValue(VALUE.getOrDefault(fieldType, null));
+            javaParameterDTO1.setValue(InitConstant.VALUE.getOrDefault(fieldType, null));
             javaParameterDTO1.setUpName(StringUtil.strConvertUpperCamel(fieldName));
             javaParameterDTOList.add(javaParameterDTO1);
         }
