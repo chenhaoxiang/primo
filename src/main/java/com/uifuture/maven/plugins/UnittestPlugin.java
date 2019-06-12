@@ -75,7 +75,7 @@ public class UnittestPlugin extends AbstractPlugin {
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
-        getLog().info( "开始构建自动化测试代码" +
+        getLog().info( "开始生成自动化测试代码" +
                 "\ntestPackageName:"+ testPackageName
                 +"\nchildPackage："+childPackage
                 +"\ntarget："+target
