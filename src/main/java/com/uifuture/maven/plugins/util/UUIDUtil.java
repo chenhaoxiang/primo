@@ -14,8 +14,7 @@ public class UUIDUtil {
 
     /**
      * 生成10位UUID
-     *
-     * @return
+     * @return 生成10位UUID
      */
     public static String getID() {
         UUID uuid = UUID.randomUUID();
