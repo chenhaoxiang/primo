@@ -88,6 +88,12 @@ public class JavaProjectBuilderUtil {
      * @param javaName     java类的全限定名称
      */
     public static JavaClassDTO buildTestMethod(String javaNameFile, String javaName) throws IOException {
+
+        /*
+         * 需要导入的包，string-类简称，value-全称限定类名的，如果有多个，后面的使用全限定名
+         */
+        Map<String, String> implementsJavaPackageMap = new HashMap<>();
+
         JavaClassDTO javaClassDTO = new JavaClassDTO();
 
         //获取Java类
@@ -137,15 +143,14 @@ public class JavaProjectBuilderUtil {
         Map<String, Integer> methodMap = new HashMap<>();
         //包装类的内部属性 - 包含了父类的属性
         Map<String, List<JavaParameterDTO>> javaParameterDTOMap = new HashMap<>();
-        buildClass(mockJavaClassModelMap, javaMethodDTOList, javaMethodList, methodMap, javaParameterDTOMap);
-
+        buildClass(mockJavaClassModelMap, javaMethodDTOList, javaMethodList, methodMap, javaParameterDTOMap,implementsJavaPackageMap);
 
         //获取导入的包
         List<JavaImplementsDTO> javaImplementsDTOList = new ArrayList<>();
         //全称限定名称
-        for (String key : BaseConstant.implementsJavaPackageMap.keySet()) {
+        for (String key : implementsJavaPackageMap.keySet()) {
             JavaImplementsDTO javaImplementsDTO = new JavaImplementsDTO();
-            String type = BaseConstant.implementsJavaPackageMap.get(key);
+            String type = implementsJavaPackageMap.get(key);
             if(InitConstant.EXCLUDE_IMPORT_TYPE.contains(type)){
                 continue;
             }
@@ -176,7 +181,8 @@ public class JavaProjectBuilderUtil {
      */
     private static void buildClass(Map<String, JavaClassModel> mockJavaClassModelMap, List<JavaMethodDTO> javaMethodDTOList,
                                    List<JavaMethod> javaMethodList, Map<String, Integer> methodMap,
-                                   Map<String, List<JavaParameterDTO>> javaParameterDTOMap) {
+                                   Map<String, List<JavaParameterDTO>> javaParameterDTOMap,
+                                    Map<String,String> implementsJavaPackageMap) {
         //遍历类中的方法
         for (JavaMethod javaMethod : javaMethodList) {
             Map<String, List<JavaMockMethodInfoDTO>> javaMockMethodInfoDTOMap = new HashMap<>();
@@ -206,7 +212,7 @@ public class JavaProjectBuilderUtil {
             //方法参数的设置，包装类设置属性 默认值
             List<JavaParameterDTO> javaParameterDTOS = getJavaParameterDTOList(javaMethod, javaParameterDTOMap, builder);
             //处理全称限定名称 - 简称
-            handleQualifiedName(javaParameterDTOS);
+            handleQualifiedName(javaParameterDTOS,implementsJavaPackageMap);
 
 
             javaMethodDTO.setJavaParameterDTOList(javaParameterDTOS);
@@ -245,19 +251,19 @@ public class JavaProjectBuilderUtil {
      * 处理全称限定名称 - 简称
      * @param javaParameterDTOS
      */
-    private static void handleQualifiedName(List<JavaParameterDTO> javaParameterDTOS) {
+    private static void handleQualifiedName(List<JavaParameterDTO> javaParameterDTOS,Map<String,String> implementsJavaPackageMap) {
         //处理全限定名称
         for (JavaParameterDTO javaParameterDTO : javaParameterDTOS) {
             String type = javaParameterDTO.getType();
             //获取类型 简称
             String abbType = type.substring(type.lastIndexOf(".")+1);
-            if(BaseConstant.implementsJavaPackageMap.containsKey(abbType)){
-                String t = BaseConstant.implementsJavaPackageMap.get(abbType);
+            if(implementsJavaPackageMap.containsKey(abbType)){
+                String t = implementsJavaPackageMap.get(abbType);
                 if(t.equals(type)){
                     javaParameterDTO.setType(abbType);
                 }
             }else {
-                BaseConstant.implementsJavaPackageMap.put(abbType, type);
+                implementsJavaPackageMap.put(abbType, type);
                 javaParameterDTO.setType(abbType);
             }
         }

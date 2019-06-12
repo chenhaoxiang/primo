@@ -31,8 +31,4 @@ public class BaseConstant {
      */
     public static Map<String, JavaClassModel> mockParentJavaClassModelMap = new HashMap<>();
 
-    /**
-     * 需要导入的包，string-类简称，value-全称限定类名的，如果有多个，后面的使用全限定名
-     */
-    public static Map<String, String> implementsJavaPackageMap = new HashMap<>();
 }

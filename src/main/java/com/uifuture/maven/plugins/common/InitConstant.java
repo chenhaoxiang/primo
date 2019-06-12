@@ -121,10 +121,10 @@ public class InitConstant {
         VALUE.put("StringBuffer", "new StringBuffer(\"\")");
         VALUE.put("StringBuilder", "new StringBuilder(\"\")");
 
-        VALUE.put("java.util.HashMap", "new HashMap()");
-        VALUE.put("java.util.ArrayList", "new ArrayList()");
-        VALUE.put("java.util.HashSet", "new HashSet()");
-        VALUE.put("java.util.Date", "new Date()");
+        VALUE.put("java.util.HashMap", "new java.util.HashMap()");
+        VALUE.put("java.util.ArrayList", "new java.util.ArrayList()");
+        VALUE.put("java.util.HashSet", "new java.util.HashSet()");
+        VALUE.put("java.util.Date", "new java.util.Date()");
     }
 
 }
