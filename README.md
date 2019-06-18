@@ -10,10 +10,10 @@
 
 1. 首先依赖插件：
 ```xml
-<plugin>
-    <groupId>com.uifuture.maven.plugins</groupId>
-    <artifactId>maven-auto-unit-test-plugin</artifactId>
-    <version>1.0.0</version>
+<plugin> 
+  <groupId>com.uifuture.maven.plugins</groupId>
+  <artifactId>maven-auto-generate-test-plugin</artifactId>
+  <version>1.0.0</version> 
     <configuration>
         <testPackageName>com.jiaxuan.heaven.book.service.impl</testPackageName>
         <childPackage>true</childPackage>
@@ -25,7 +25,7 @@
     </configuration>
 </plugin>
 ```  
-**下载不了属于正常情况，还未上传至中央仓库...请耐心等待**    
+**1.0.0版本已上传至中央仓库.**    
 
 2. 下载配置文件  
 配置好```<configPath></configPath>```填写路径，相对路径为当前运行项目的根路径。(默认下载路径：/src/main/resources/test/template)   
