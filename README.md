@@ -81,3 +81,17 @@
 5. 可进行配置需要跳过的参数类型，直接配置包名，会进行跳过包内所有类的构造（用于跳过接口的构造，直接赋值为null） 
 6. 优化全限定名称为简称，使用import导入包，名称存在重复的类，使用全限定名称  
 
+## V1.0.1 - 开发中
+1. 支持配置选择是否自动mock掉父类的方法
+2. 支持配置静态方法mock  
+
+### 注意 
+配置mock静态方法：
+默认使用@RunWith(MockitoJUnitRunner.class)，如果配置了mock静态方法，将使用@RunWith(PowerMockRunner.class)使用PowerMockRunner类，无法支持父类中的属性自动注入的mock（例如mybatis中service层的泛型父类中的泛型baseMapper）。这个为PowerMock的缺陷。
+目前可以在service层的实现类中将baseMapper再次注入，则使用PowerMockRunner.class也可以进行mock  
+
+service层的实现类不推荐使用泛型基类service父类进行调用泛型mapper操作数据库层！
+  
+后期将会支持单个类生成多个测试类。这样可以使用不同的@RunWith。  
+
+
