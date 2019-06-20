@@ -84,14 +84,80 @@
 ## V1.0.1 - 开发中
 1. 支持配置选择是否自动mock掉父类的方法
 2. 支持配置静态方法mock  
+3. 支持配置实体基础类型随机设置/使用默认值空值  
+4. 每个测试类使用统一的before注解进行mock方法 
+5. 私有方法专门开类进行生成mock测试    
+6. 测试类中的私有方法通通mock 
+
+
+## V1.0.2 - 开发中
+1. 支持if-else生成多个mock分支方法  
 
 ### 注意 
 配置mock静态方法：
-默认使用@RunWith(MockitoJUnitRunner.class)，如果配置了mock静态方法，将使用@RunWith(PowerMockRunner.class)使用PowerMockRunner类，无法支持父类中的属性自动注入的mock（例如mybatis中service层的泛型父类中的泛型baseMapper）。这个为PowerMock的缺陷。
+默认使用@RunWith(MockitoJUnitRunner.class)，如果配置了mock静态方法，将使用@RunWith(PowerMockRunner.class)。
+
+使用PowerMockRunner与MockitoJUnitRunner类，都无法支持父类中的属性（service的实现类中又同时注入了该类）自动注入的mock（例如mybatis中service层的泛型父类中的泛型baseMapper）。这是由于Mock类会将这两个类作为不同的实例来进行处理，只会mock掉你注入service实现类的基类，而无法注入service实现类的父类中的mapper。  
+例如： 
+service实现类  
+```java
+
+public class WorkFlowServiceImpl extends ServiceImpl<WorkFlowMapper, WorkFlowEntity> implements IWorkFlowService {
+    @Autowired
+    private WorkFlowMapper workFlowMapper;
+    //...
+}
+```
+父类ServiceImpl：
+```java
+public class ServiceImpl<M extends BaseMapper<T>, T> implements IService<T> {
+    @Autowired
+    protected M baseMapper;
+    //...
+}
+```
+在WorkFlowServiceImpl中使用时：
+```java
+baseMapper.deleteById("1");
+```
+在mock测试类中：
+```java
+
+@RunWith(PowerMockRunner.class)
+@PowerMockIgnore("javax.management.*")
+@PrepareForTest({BeanConvertUtil.class, FieldBaseDto.class})
+public class WorkFlowServiceImplTest {
+    @InjectMocks
+    private WorkFlowServiceImpl workFlowServiceImpl;
+    @Mock
+    private WorkFlowMapper workFlowMapper;
+    //...
+}
+```
+无法进行mock掉baseMapper实例，这是由于baseMapper与workFlowMapper并不是同一个实例！这里仅仅只能mock掉workFlowMapper。  
+
+
 目前可以在service层的实现类中将baseMapper再次注入，则使用PowerMockRunner.class也可以进行mock  
 
-service层的实现类不推荐使用泛型基类service父类进行调用泛型mapper操作数据库层！
-  
-后期将会支持单个类生成多个测试类。这样可以使用不同的@RunWith。  
+service层的实现类不推荐使用泛型基类service父类进行调用泛型mapper操作数据库层！可以选择注入Mapper再进行调用。  
+   
+   
 
+# 使用体验  
+199个测试方法，一共覆盖309个被测试方法，使用magt生成后，仅仅只使用了3个多小时进行mock优化。    
+
+按照我以前的经验，如果全部由自己写，一切顺利的情况下，199个方法的mock测试，至少要多出几倍的时间。  
+（此测试项目为使用mybatis-plus的项目，service层的实现类非常多的方法直接使用了父类方法，导致mock很麻烦，耽搁了一些时间，其他项目相对而言会节省更多时间）      
+
+## 测试类：  
+![测试类](https://raw.githubusercontent.com/chenhaoxiang/maven-auto-generate-test-plugin/master/src/main/resources/images/20190619221913.jpg)
+## 测试方法：
+![测试方法](https://raw.githubusercontent.com/chenhaoxiang/maven-auto-generate-test-plugin/master/src/main/resources/images/20190619223834.jpg)   
+## 单元覆盖数据：  
+![总覆盖率](https://raw.githubusercontent.com/chenhaoxiang/maven-auto-generate-test-plugin/master/src/main/resources/images/20190620151913.jpg)   
+--- 
+
+![单元覆盖数据](https://raw.githubusercontent.com/chenhaoxiang/maven-auto-generate-test-plugin/master/src/main/resources/images/20190620151630.jpg)   
+
+目前1.0.0版本不支持分支的覆盖，导致覆盖率不高，将在1.0.2版本推出分支的多方法mock。大大提高分支覆盖率。      
 
