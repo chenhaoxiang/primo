@@ -6,7 +6,9 @@ package com.uifuture.maven.plugins;
 
 import com.uifuture.maven.plugins.base.AbstractPlugin;
 import com.uifuture.maven.plugins.common.BaseConstant;
+import com.uifuture.maven.plugins.common.ConfigConstant;
 import com.uifuture.maven.plugins.dto.JavaClassDTO;
+import com.uifuture.maven.plugins.entity.ConfigEntity;
 import com.uifuture.maven.plugins.util.JavaProjectBuilderUtil;
 import com.uifuture.maven.plugins.util.PackageUtil;
 import com.uifuture.maven.plugins.util.StringUtil;
@@ -68,21 +70,19 @@ public class UnittestPlugin extends AbstractPlugin {
     @Parameter
     private String otherProjectName;
 
-    /**
-     * @date
-     */
-    private static final String DATE = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
+        //设置配置值
+        super.execute();
+        ConfigConstant.CONFIG_ENTITY.setTestPackageName(testPackageName);
+        ConfigConstant.CONFIG_ENTITY.setAuthor(author);
+        ConfigConstant.CONFIG_ENTITY.setChildPackage(childPackage);
+        ConfigConstant.CONFIG_ENTITY.setMockPackage(mockPackage);
+        ConfigConstant.CONFIG_ENTITY.setSkipPackages(skipPackages);
+        ConfigConstant.CONFIG_ENTITY.setOtherProjectName(otherProjectName);
+
         getLog().info( "开始生成自动化测试代码" +
-                "\ntestPackageName:"+ testPackageName
-                +"\nchildPackage："+childPackage
-                +"\ntarget："+target
-                +"\nbasedir："+basedir
-                +"\nproject："+project
-                +"\nskipPackages："+skipPackages
-                +"\notherProjectName："+otherProjectName
+                "\n"+ ConfigConstant.CONFIG_ENTITY
         );
 
         if(StringUtil.isNotEmpty(skipPackages)) {
@@ -170,7 +170,7 @@ public class UnittestPlugin extends AbstractPlugin {
             }
 
             Map<String, Object> data = new HashMap<>();
-            data.put("date", DATE);
+            data.put("date", BaseConstant.DATE);
             data.put("author", author);
             data.put("modelNameUpperCamel", className);
             data.put("modelNameLowerCamel", StringUtil.strConvertLowerCamel(className));
@@ -180,7 +180,6 @@ public class UnittestPlugin extends AbstractPlugin {
             data.put("javaClassDTO", javaClassDTO);
 
             //获取mock的类
-
             cfg.getTemplate(configFileName).process(data, new FileWriter(file));
 
             getLog().info(file+"生成成功");

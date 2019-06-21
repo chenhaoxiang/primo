@@ -4,7 +4,10 @@
  */
 package com.uifuture.maven.plugins.base;
 
+import com.uifuture.maven.plugins.common.ConfigConstant;
 import org.apache.maven.plugin.AbstractMojo;
+import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.Parameter;
 
 import java.io.File;
@@ -45,4 +48,12 @@ public abstract class AbstractPlugin extends AbstractMojo {
     @Parameter(defaultValue = "test.ftl")
     protected String configFileName;
 
+    @Override
+    public void execute() throws MojoExecutionException, MojoFailureException {
+        ConfigConstant.CONFIG_ENTITY.setBasedir(basedir);
+        ConfigConstant.CONFIG_ENTITY.setTarget(target);
+        ConfigConstant.CONFIG_ENTITY.setProject(project);
+        ConfigConstant.CONFIG_ENTITY.setConfigPath(configPath);
+        ConfigConstant.CONFIG_ENTITY.setConfigFileName(configFileName);
+    }
 }

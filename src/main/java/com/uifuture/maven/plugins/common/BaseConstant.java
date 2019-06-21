@@ -6,6 +6,8 @@ package com.uifuture.maven.plugins.common;
 
 import com.uifuture.maven.plugins.model.JavaClassModel;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -30,5 +32,10 @@ public class BaseConstant {
      * 需要mock的类的信息 父类的信息
      */
     public static Map<String, JavaClassModel> mockParentJavaClassModelMap = new HashMap<>();
+
+    /**
+     * @date
+     */
+    public static final String DATE = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 
 }

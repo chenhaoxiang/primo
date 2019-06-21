@@ -5,6 +5,8 @@
 package com.uifuture.maven.plugins;
 
 import com.uifuture.maven.plugins.base.AbstractPlugin;
+import com.uifuture.maven.plugins.common.ConfigConstant;
+import com.uifuture.maven.plugins.entity.ConfigEntity;
 import com.uifuture.maven.plugins.util.StringUtil;
 import com.uifuture.maven.plugins.util.UrlUtil;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -32,6 +34,12 @@ public class InitPlugin extends AbstractPlugin {
      */
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
+        //设置配置值
+        super.execute();
+
+        getLog().info( "开始下载配置文件" + "\n"+ ConfigConstant.CONFIG_ENTITY
+        );
+
         //通过URL下载文件到本地
         configPath = StringUtil.addSeparator(configPath);
         String path = basedir.getPath() + configPath;
