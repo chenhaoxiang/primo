@@ -20,7 +20,7 @@
     <dependencies>
         <dependency>
             <groupId>com.uifuture.maven.plugins</groupId>
-            <artifactId>magt-core</artifactId>
+            <artifactId>agt-core</artifactId>
             <version>1.0.1</version>
         </dependency>
 
