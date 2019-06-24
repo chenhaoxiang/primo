@@ -155,14 +155,14 @@ service层的实现类不推荐使用泛型基类service父类进行调用泛型
 （此测试项目为使用mybatis-plus的项目，service层的实现类非常多的方法直接使用了父类方法，导致mock很麻烦，耽搁了一些时间，其他项目相对而言会节省更多时间）      
 
 ## 测试类：  
-![测试类](https://raw.githubusercontent.com/chenhaoxiang/maven-auto-generate-test-plugin/master/src/main/resources/images/20190619221913.jpg)
+![测试类](https://raw.githubusercontent.com/chenhaoxiang/maven-auto-generate-test-plugin/master/doc/images/20190619221913.jpg)
 ## 测试方法：
-![测试方法](https://raw.githubusercontent.com/chenhaoxiang/maven-auto-generate-test-plugin/master/src/main/resources/images/20190619223834.jpg)   
+![测试方法](https://raw.githubusercontent.com/chenhaoxiang/maven-auto-generate-test-plugin/master/doc/images/20190619223834.jpg)   
 ## 单元覆盖数据：  
-![总覆盖率](https://raw.githubusercontent.com/chenhaoxiang/maven-auto-generate-test-plugin/master/src/main/resources/images/20190620151913.jpg)   
+![总覆盖率](https://raw.githubusercontent.com/chenhaoxiang/maven-auto-generate-test-plugin/master/doc/images/20190620151913.jpg)   
 --- 
 
-![单元覆盖数据](https://raw.githubusercontent.com/chenhaoxiang/maven-auto-generate-test-plugin/master/src/main/resources/images/20190620151630.jpg)   
+![单元覆盖数据](https://raw.githubusercontent.com/chenhaoxiang/maven-auto-generate-test-plugin/master/doc/images/20190620151630.jpg)   
 
 目前1.0.0版本不支持分支的覆盖，导致覆盖率不高，将在1.0.2版本推出分支的多方法mock。大大提高分支覆盖率。      
 
