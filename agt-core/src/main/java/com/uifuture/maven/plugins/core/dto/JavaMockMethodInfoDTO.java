@@ -39,7 +39,6 @@ public class JavaMockMethodInfoDTO {
      */
     private Integer parameterNum;
 
-
     /**
      * 方法参数名称
      */

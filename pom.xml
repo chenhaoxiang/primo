@@ -26,6 +26,21 @@
 
     <packaging>pom</packaging>
 
+    <dependencies>
+
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-plugin-api</artifactId>
+            <version>3.6.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.6</version>
+        </dependency>
+
+    </dependencies>
     <!-- 在工程的pom.xml文件中，引入Sonatype官方的一个通用配置oss-parent，这样做的好处是很多pom.xml的发布配置不需要自己配置了 -->
     <parent>
         <groupId>org.sonatype.oss</groupId>
@@ -141,6 +156,12 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-plugin-plugin</artifactId>
+                <version>3.5</version>
             </plugin>
         </plugins>
     </build>

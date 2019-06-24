@@ -34,5 +34,4 @@ public class JavaClassModel {
      * 类中方法
      */
     private List<JavaMethodModel> javaMethodModelList;
-
 }

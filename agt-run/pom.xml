@@ -15,7 +15,9 @@
     <packaging>maven-plugin</packaging>
 
     <url>https://github.com/chenhaoxiang/maven-auto-generate-test-plugin/magt-run</url>
-    <description>MAGT-plugin,基于Java的自动测试代码生成Maven插件,项目地址:https://github.com/chenhaoxiang/maven-auto-generate-test-plugin</description>
+    <description>
+        MAGT-plugin,基于Java的自动测试代码生成Maven插件,项目地址:https://github.com/chenhaoxiang/maven-auto-generate-test-plugin
+    </description>
 
     <dependencies>
         <dependency>
@@ -30,12 +32,8 @@
             <version>3.6.0</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>org.apache.maven</groupId>
-            <artifactId>maven-plugin-api</artifactId>
-            <version>3.6.0</version>
-        </dependency>
 
     </dependencies>
+
 
 </project>

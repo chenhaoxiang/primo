@@ -58,7 +58,7 @@ public class JavaClassDTO {
     private Map<String,List<JavaParameterDTO>> javaParameterDTOMap;
 
     /**
-     * 需要引入的mcok类
+     * 需要引入的mcok类 - 普通Mock方法
      */
     private List<JavaMockClassInfoDTO> javaMockClassInfoDTOList;
 

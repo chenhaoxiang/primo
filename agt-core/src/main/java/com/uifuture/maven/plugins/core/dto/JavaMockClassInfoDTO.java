@@ -20,20 +20,16 @@ public class JavaMockClassInfoDTO {
      * 属性名称
      */
     private String name;
-
     /**
      * 全限定名称，类型
      */
     private String type;
-
     /**
      * 父类类型
      */
     private String parentType;
-
     /**
      * 需要mock的方法
      */
     private List<JavaMockMethodInfoDTO> javaMockMethodInfoDTOList;
-
 }
