@@ -3,40 +3,40 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>maven-auto-generate-test-plugin</artifactId>
+        <artifactId>agt-parent</artifactId>
         <groupId>com.uifuture.maven.plugins</groupId>
         <version>1.0.1</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>magt-core</artifactId>
-    <version>${project.verstion}</version>
+    <artifactId>agt-core</artifactId>
+    <version>1.0.1</version>
 
     <dependencies>
         <!--java源码解析-->
         <dependency>
             <groupId>com.thoughtworks.qdox</groupId>
             <artifactId>qdox</artifactId>
-            <version>${qdox.verstion}</version>
+            <version>${qdox.version}</version>
         </dependency>
 
         <!--代码生成器依赖-->
         <dependency>
             <groupId>org.freemarker</groupId>
             <artifactId>freemarker</artifactId>
-            <version>${freemarker.verstion}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.maven</groupId>
-            <artifactId>maven-plugin-api</artifactId>
-            <version>${maven-plugin-api.verstion}</version>
+            <version>${freemarker.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>${commons-lang3.verstion}</version>
+            <version>${commons-lang3.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-plugin-api</artifactId>
+            <version>3.6.0</version>
         </dependency>
 
     </dependencies>

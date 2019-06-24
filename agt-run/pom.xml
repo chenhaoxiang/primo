@@ -3,30 +3,37 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>maven-auto-generate-test-plugin</artifactId>
+        <artifactId>agt-parent</artifactId>
         <groupId>com.uifuture.maven.plugins</groupId>
         <version>1.0.1</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>magt-run</artifactId>
-    <version>${project.verstion}</version>
+    <artifactId>maven-agt-plugin</artifactId>
+    <version>1.0.1</version>
 
-    <name>maven-auto-generate-test-plugin</name>
+    <packaging>maven-plugin</packaging>
+
+    <url>https://github.com/chenhaoxiang/maven-auto-generate-test-plugin/magt-run</url>
     <description>MAGT-plugin,基于Java的自动测试代码生成Maven插件,项目地址:https://github.com/chenhaoxiang/maven-auto-generate-test-plugin</description>
 
     <dependencies>
         <dependency>
             <groupId>com.uifuture.maven.plugins</groupId>
             <artifactId>magt-core</artifactId>
-            <version>${project.verstion}</version>
+            <version>1.0.1</version>
         </dependency>
 
         <dependency>
             <groupId>org.apache.maven.plugin-tools</groupId>
             <artifactId>maven-plugin-annotations</artifactId>
-            <version>${maven-plugin-annotations.verstion}</version>
+            <version>3.6.0</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-plugin-api</artifactId>
+            <version>3.6.0</version>
         </dependency>
 
     </dependencies>
