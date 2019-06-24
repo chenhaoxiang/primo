@@ -1,5 +1,5 @@
 /*
- * souche.com
+ * uifuture.com
  * Copyright (C) 2013-2019 All Rights Reserved.
  */
 package com.uifuture.maven.plugins;
@@ -21,6 +21,8 @@ import org.apache.maven.plugins.annotations.Parameter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -82,10 +84,8 @@ public class UnittestPlugin extends AbstractPlugin {
         );
 
         if(StringUtil.isNotEmpty(skipPackages)) {
-            //设置参数值为null
-            for (String skipPackage : skipPackages.split(";")) {
-                JavaProjectBuilderUtil.getSkipPackage().add(skipPackage);
-            }
+            //无法进行预加载的类，设置参数值为null
+            Collections.addAll(BaseConstant.skipPackage, skipPackages.split(";"));
         }
 
         //获取该包下所有的类
@@ -118,14 +118,14 @@ public class UnittestPlugin extends AbstractPlugin {
 //        builder.addSource(new File(javaNameFile));
         //读取包下所有的java类文件
         String mainJava = basedir.getPath() + BaseConstant.JAVA_MAIN_SRC;
-        JavaProjectBuilderUtil.getBuilder().addSourceTree(new File(mainJava));
+        BaseConstant.javaProjectBuilder.addSourceTree(new File(mainJava));
         getLog().info("加载当前模块的类："+mainJava);
 
         //加载其他模块的类
         if(StringUtil.isNotEmpty(otherProjectName)){
             for (String name : otherProjectName.split(";")) {
                 String fileName = basedir.getPath().substring(0,basedir.getPath().lastIndexOf("/")+1)+name + BaseConstant.JAVA_MAIN_SRC;
-                JavaProjectBuilderUtil.getBuilder().addSourceTree(new File(fileName));
+                BaseConstant.javaProjectBuilder.addSourceTree(new File(fileName));
                 getLog().info("加载其他模块的类："+fileName);
             }
         }
@@ -156,9 +156,8 @@ public class UnittestPlugin extends AbstractPlugin {
             File file = new File(testJavaName);
             if (file.exists()) {
                 //TODO 已经存在，不处理
-//                getLog().info(file+"已经存在，不进行生成");
-//                return;
-                file.delete();
+                getLog().info(file+"已经存在，不进行生成");
+                return;
             }
             if (!file.getParentFile().exists() && !file.getParentFile().mkdirs()) {
                 getLog().error(file.getParentFile()+"生成失败" );

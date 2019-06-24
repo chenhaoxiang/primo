@@ -1,5 +1,5 @@
 /*
- * souche.com
+ * uifuture.com
  * Copyright (C) 2013-2019 All Rights Reserved.
  */
 package com.uifuture.maven.plugins.core.entity;
@@ -44,27 +44,27 @@ public class ConfigEntity {
     /**
      * 运行项目的target路径
      */
-    protected String target;
+    private String target;
 
     /**
      * 运行项目的跟路径
      */
-    protected File basedir;
+    private File basedir;
 
     /**
      * 运行项目名
      */
-    protected String project;
+    private String project;
 
     /**
      * 配置文件路径
      */
-    protected String configPath;
+    private String configPath;
 
     /**
      * 配置文件名称
      */
-    protected String configFileName;
+    private String configFileName;
 
     /**
      * Getter method for property <tt>testPackageName</tt>.

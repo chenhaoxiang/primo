@@ -1,5 +1,5 @@
 /*
- * souche.com
+ * uifuture.com
  * Copyright (C) 2013-2019 All Rights Reserved.
  */
 package com.uifuture.maven.plugins.core.util;
@@ -43,39 +43,13 @@ import java.util.regex.Pattern;
 public class JavaProjectBuilderUtil {
     private static Log log = new SystemStreamLog();
 
-    public static String baseDir;
-
-    /**
-     * 需要跳过的包的类，不进行设置默认值
-     */
-    private static final Set<String> SKIP_PACKAGE = new HashSet<>();
-
-    /**
-     * Getter method for property <tt>SKIP_PACKAGE</tt>.
-     *
-     * @return property value of SKIP_PACKAGE
-     */
-    public static Set<String> getSkipPackage() {
-        return SKIP_PACKAGE;
-    }
-
-    /**
-     * 获取类库
-     */
-    private static JavaProjectBuilder builder = new JavaProjectBuilder();
-
-
-    public static JavaProjectBuilder getBuilder() {
-        return builder;
-    }
-
 
     public static void main(String[] args) throws IOException {
         String javaName = "/Users/chenhx/Desktop/github/auto-unit-test-plugin/src/main/java/com/uifuture/maven/plugins/BuilderUtilsTest.java";
         String mainJava = "/Users/chenhx/Desktop/github/auto-unit-test-plugin/src/main/java/";
 
         String name = "com.uifuture.maven.plugins.BuilderUtilsTest";
-        builder.addSourceTree(new File(mainJava));
+        BaseConstant.javaProjectBuilder.addSourceTree(new File(mainJava));
         buildTestMethod(javaName, name);
     }
 
@@ -95,7 +69,7 @@ public class JavaProjectBuilderUtil {
         JavaClassDTO javaClassDTO = new JavaClassDTO();
 
         //获取Java类
-        JavaClass javaClass = builder.getClassByName(javaName);
+        JavaClass javaClass = BaseConstant.javaProjectBuilder.getClassByName(javaName);
         log.info("正在构建类：" + javaClass);
         if (javaClass == null) {
             log.error("未查询到该类，请确保项目包中有该类，类名：" + javaName);
@@ -208,7 +182,7 @@ public class JavaProjectBuilderUtil {
             }
 
             //方法参数的设置，包装类设置属性 默认值
-            List<JavaParameterDTO> javaParameterDTOS = getJavaParameterDTOList(javaMethod, javaParameterDTOMap, builder);
+            List<JavaParameterDTO> javaParameterDTOS = getJavaParameterDTOList(javaMethod, javaParameterDTOMap, BaseConstant.javaProjectBuilder);
             //处理全称限定名称 - 简称
             handleQualifiedName(javaParameterDTOS,implementsJavaPackageMap);
 
@@ -367,7 +341,7 @@ public class JavaProjectBuilderUtil {
      */
     private static JavaMethodModel getJavaMethodModelByParent(Map<String, JavaClassModel> mockJavaClassModelMap, String name, String nameS, JavaMethodModel javaMethodModel) {
         //通过父类再进行获取
-        JavaClass javaClass = builder.getClassByName(name);
+        JavaClass javaClass = BaseConstant.javaProjectBuilder.getClassByName(name);
         if (javaClass == null) {
             log.warn("没有找到该类，类名："
                     + name + "，javaClass=null");
@@ -442,7 +416,7 @@ public class JavaProjectBuilderUtil {
             if(superClass!=null) {
                 log.info("获取的父类：" + superClass);
                 //获取类中方法
-                JavaClass fieldClass = builder.getClassByName(typeStr);
+                JavaClass fieldClass = BaseConstant.javaProjectBuilder.getClassByName(typeStr);
                 List<JavaMethod> fieldMethodList = fieldClass.getMethods();
                 for (JavaMethod javaMethod : fieldMethodList) {
                     setMockMethodInfo(javaField, type, javaMockMethodInfoDTOList, javaMethod, superClass);
@@ -572,7 +546,7 @@ public class JavaProjectBuilderUtil {
             //设置默认值
             javaParameterDTO.setValue(InitConstant.VALUE.getOrDefault(type, null));
 
-            for (String name : SKIP_PACKAGE) {
+            for (String name : BaseConstant.skipPackage) {
                 if(type.contains(name)){
                     log.info("本类型在配置的包下，配置的包："+name+",类型："+type);
                     javaParameterDTO.setValue("null");
