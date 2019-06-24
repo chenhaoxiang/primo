@@ -4,6 +4,8 @@
  */
 package com.uifuture.maven.plugins.core.dto;
 
+import lombok.Data;
+
 import java.util.List;
 import java.util.Map;
 import java.util.StringJoiner;
@@ -13,7 +15,29 @@ import java.util.StringJoiner;
  * @author chenhx
  * @version JavaClassDTO.java, v 0.1 2019-06-10 17:03 chenhx
  */
+@Data
 public class JavaClassDTO {
+
+    /**
+     * 被测试的类名
+     */
+    private String modelNameUpperCamel;
+
+    /**
+     * 被测试的类名 - 首字母小写
+     */
+    private String modelNameLowerCamel;
+
+    /**
+     * 当前日期
+     */
+    private String date;
+
+    /**
+     * 作者
+     */
+    private String author;
+
     /**
      * 类方法
      */
@@ -24,7 +48,7 @@ public class JavaClassDTO {
     private List<JavaImplementsDTO> javaImplementsDTOList;
 
     /**
-     * 包名
+     * 被测试类包名
      */
     private String packageName;
 
@@ -38,104 +62,5 @@ public class JavaClassDTO {
      */
     private List<JavaMockClassInfoDTO> javaMockClassInfoDTOList;
 
-    /**
-     * Getter method for property <tt>javaMockClassInfoDTOList</tt>.
-     *
-     * @return property value of javaMockClassInfoDTOList
-     */
-    public List<JavaMockClassInfoDTO> getJavaMockClassInfoDTOList() {
-        return javaMockClassInfoDTOList;
-    }
 
-    /**
-     * Setter method for property <tt>javaMockClassInfoDTOList</tt>.
-     *
-     * @param javaMockClassInfoDTOList value to be assigned to property javaMockClassInfoDTOList
-     */
-    public void setJavaMockClassInfoDTOList(List<JavaMockClassInfoDTO> javaMockClassInfoDTOList) {
-        this.javaMockClassInfoDTOList = javaMockClassInfoDTOList;
-    }
-
-    /**
-     * Getter method for property <tt>javaParameterDTOMap</tt>.
-     *
-     * @return property value of javaParameterDTOMap
-     */
-    public Map<String, List<JavaParameterDTO>> getJavaParameterDTOMap() {
-        return javaParameterDTOMap;
-    }
-
-    /**
-     * Setter method for property <tt>javaParameterDTOMap</tt>.
-     *
-     * @param javaParameterDTOMap value to be assigned to property javaParameterDTOMap
-     */
-    public void setJavaParameterDTOMap(Map<String, List<JavaParameterDTO>> javaParameterDTOMap) {
-        this.javaParameterDTOMap = javaParameterDTOMap;
-    }
-
-    /**
-     * Getter method for property <tt>javaMethodDTOList</tt>.
-     *
-     * @return property value of javaMethodDTOList
-     */
-    public List<JavaMethodDTO> getJavaMethodDTOList() {
-        return javaMethodDTOList;
-    }
-
-    /**
-     * Setter method for property <tt>javaMethodDTOList</tt>.
-     *
-     * @param javaMethodDTOList value to be assigned to property javaMethodDTOList
-     */
-    public void setJavaMethodDTOList(List<JavaMethodDTO> javaMethodDTOList) {
-        this.javaMethodDTOList = javaMethodDTOList;
-    }
-
-    /**
-     * Getter method for property <tt>javaImplementsDTOList</tt>.
-     *
-     * @return property value of javaImplementsDTOList
-     */
-    public List<JavaImplementsDTO> getJavaImplementsDTOList() {
-        return javaImplementsDTOList;
-    }
-
-    /**
-     * Setter method for property <tt>javaImplementsDTOList</tt>.
-     *
-     * @param javaImplementsDTOList value to be assigned to property javaImplementsDTOList
-     */
-    public void setJavaImplementsDTOList(List<JavaImplementsDTO> javaImplementsDTOList) {
-        this.javaImplementsDTOList = javaImplementsDTOList;
-    }
-
-    /**
-     * Getter method for property <tt>packageName</tt>.
-     *
-     * @return property value of packageName
-     */
-    public String getPackageName() {
-        return packageName;
-    }
-
-    /**
-     * Setter method for property <tt>packageName</tt>.
-     *
-     * @param packageName value to be assigned to property packageName
-     */
-    public void setPackageName(String packageName) {
-        this.packageName = packageName;
-    }
-
-    @Override
-    public String toString() {
-        return new StringJoiner(", ", JavaClassDTO.class.getSimpleName() + "[", "]")
-                .add("javaMethodDTOList=" + javaMethodDTOList)
-                .add("javaImplementsDTOList=" + javaImplementsDTOList)
-                .add("packageName='" + packageName + "'")
-                .add("javaParameterDTOMap=" + javaParameterDTOMap)
-                .add("javaMockClassInfoDTOList=" + javaMockClassInfoDTOList)
-                .toString();
-    }
 }

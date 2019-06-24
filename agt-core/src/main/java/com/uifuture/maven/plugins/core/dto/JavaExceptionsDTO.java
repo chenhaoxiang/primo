@@ -4,6 +4,8 @@
  */
 package com.uifuture.maven.plugins.core.dto;
 
+import lombok.Data;
+
 import java.util.StringJoiner;
 
 /**
@@ -11,34 +13,11 @@ import java.util.StringJoiner;
  * @author chenhx
  * @version JavaExceptionsDTO.java, v 0.1 2019-06-10 16:57 chenhx
  */
+@Data
 public class JavaExceptionsDTO {
     /**
      * 异常类型
      */
     private String type;
 
-    /**
-     * Getter method for property <tt>type</tt>.
-     *
-     * @return property value of type
-     */
-    public String getType() {
-        return type;
-    }
-
-    /**
-     * Setter method for property <tt>type</tt>.
-     *
-     * @param type value to be assigned to property type
-     */
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    @Override
-    public String toString() {
-        return new StringJoiner(", ", JavaExceptionsDTO.class.getSimpleName() + "[", "]")
-                .add("type='" + type + "'")
-                .toString();
-    }
 }

@@ -15,15 +15,15 @@ import ${implements.type};
 import static org.mockito.ArgumentMatchers.any;
 
 /**
-* ${modelNameUpperCamel}Test
-* @author ${author!''}
-* @date ${date!''}
+* ${javaClassDTO.modelNameUpperCamel}Test
+* @author ${javaClassDTO.author!''}
+* @date ${javaClassDTO.date!''}
 */
 @RunWith(PowerMockRunner.class)
 @PowerMockIgnore("javax.management.*")
-public class ${modelNameUpperCamel}Test {
+public class ${javaClassDTO.modelNameUpperCamel}Test {
     @InjectMocks
-    private ${modelNameUpperCamel} ${modelNameLowerCamel};
+    private ${javaClassDTO.modelNameUpperCamel} ${javaClassDTO.modelNameLowerCamel};
     <#--遍历mock的类-->
 <#list javaClassDTO.javaMockClassInfoDTOList as mockClass>
     @Mock
@@ -59,7 +59,7 @@ public class ${modelNameUpperCamel}Test {
 </#list>
 
     //调用方法
-    ${modelNameLowerCamel}.${method.methodName}(<#list method.javaParameterDTOList as parameter><#if parameter_index==0>${parameter.name}<#else>,${parameter.name}</#if></#list>);
+    ${javaClassDTO.modelNameLowerCamel}.${method.methodName}(<#list method.javaParameterDTOList as parameter><#if parameter_index==0>${parameter.name}<#else>,${parameter.name}</#if></#list>);
     }
 
 

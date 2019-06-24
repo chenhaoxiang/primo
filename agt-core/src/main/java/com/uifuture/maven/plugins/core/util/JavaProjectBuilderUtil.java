@@ -20,6 +20,7 @@ import com.uifuture.maven.plugins.core.dto.JavaMethodDTO;
 import com.uifuture.maven.plugins.core.dto.JavaMockClassInfoDTO;
 import com.uifuture.maven.plugins.core.dto.JavaMockMethodInfoDTO;
 import com.uifuture.maven.plugins.core.dto.JavaParameterDTO;
+import com.uifuture.maven.plugins.core.gen.MockClassInfo;
 import com.uifuture.maven.plugins.core.model.JavaClassModel;
 import com.uifuture.maven.plugins.core.model.JavaMethodModel;
 import org.apache.maven.plugin.logging.Log;
@@ -60,52 +61,43 @@ public class JavaProjectBuilderUtil {
      * @param javaName     java类的全限定名称
      */
     public static JavaClassDTO buildTestMethod(String javaNameFile, String javaName) throws IOException {
-
-        /*
-         * 需要导入的包，string-类简称，value-全称限定类名的，如果有多个，后面的使用全限定名
-         */
-        Map<String, String> implementsJavaPackageMap = new HashMap<>();
-
-        JavaClassDTO javaClassDTO = new JavaClassDTO();
-
         //获取Java类
         JavaClass javaClass = BaseConstant.javaProjectBuilder.getClassByName(javaName);
         log.info("正在构建类：" + javaClass);
+        //防御性编程
         if (javaClass == null) {
             log.error("未查询到该类，请确保项目包中有该类，类名：" + javaName);
             return null;
         }
 
         if (javaClass.isInterface()) {
-            log.info("跳过接口：" + javaClass);
+            log.info("跳过接口，" + javaClass);
             return null;
         }
         if (javaClass.isEnum()) {
-            log.info("跳过枚举：" + javaClass);
+            log.info("跳过枚举，" + javaClass);
             return null;
         }
         if (javaClass.isAbstract()) {
-            log.info("跳过抽象类：" + javaClass);
+            log.info("跳过抽象类，" + javaClass);
             return null;
         }
         if (javaClass.isPrivate()) {
-            log.info("跳过私有类：" + javaClass);
+            log.info("跳过私有类，" + javaClass);
+            return null;
+        }
+        if(javaClass.getLineNumber()==0){
+            log.info("源码行数为0，" + javaClass);
             return null;
         }
 
+        JavaClassDTO javaClassDTO = new JavaClassDTO();
 
-        //获取类的属性
-        List<JavaField> javaFieldList = javaClass.getFields();
+
         //TODO 暂时未考虑重名方法！！！
         Map<String, JavaClassModel> mockJavaClassModelMap = new HashMap<>();
-        //需要mock的类
-        List<JavaMockClassInfoDTO> javaMockClassInfoDTOList = new ArrayList<>();
-        //获取mock的信息
-        getMockClass(javaClass, javaMockClassInfoDTOList, javaFieldList, mockJavaClassModelMap);
-
-        //设置包名
-        JavaPackage pkg = javaClass.getPackage();
-        javaClassDTO.setPackageName(pkg.getName());
+        //设置mock的信息
+        MockClassInfo.getMockClass(javaClassDTO,javaClass, javaClass.getFields(), mockJavaClassModelMap);
 
         List<JavaMethodDTO> javaMethodDTOList = new ArrayList<>();
         //获取方法集合
@@ -115,6 +107,11 @@ public class JavaProjectBuilderUtil {
         Map<String, Integer> methodMap = new HashMap<>();
         //包装类的内部属性 - 包含了父类的属性
         Map<String, List<JavaParameterDTO>> javaParameterDTOMap = new HashMap<>();
+
+        /*
+         * 需要导入的包，string-类简称，value-全称限定类名的，如果有多个，后面的使用全限定名
+         */
+        Map<String, String> implementsJavaPackageMap = new HashMap<>();
         buildClass(mockJavaClassModelMap, javaMethodDTOList, javaMethodList, methodMap, javaParameterDTOMap,implementsJavaPackageMap);
 
         //获取导入的包
@@ -136,7 +133,10 @@ public class JavaProjectBuilderUtil {
 
         javaClassDTO.setJavaMethodDTOList(javaMethodDTOList);
         javaClassDTO.setJavaParameterDTOMap(javaParameterDTOMap);
-        javaClassDTO.setJavaMockClassInfoDTOList(javaMockClassInfoDTOList);
+        //设置包名
+        JavaPackage pkg = javaClass.getPackage();
+        javaClassDTO.setPackageName(pkg.getName());
+
         log.info("构建的类信息：" + javaClassDTO);
         return javaClassDTO;
     }
@@ -375,134 +375,6 @@ public class JavaProjectBuilderUtil {
         return javaMethodModel;
     }
 
-    /**
-     * 获取mock的信息，
-     * 遍历类中属性，以及属性名称，设置到需要mock的类的信息
-     *
-     * @param javaClass
-     * @param javaMockClassInfoDTOList
-     * @param javaFieldList
-     * @param mockJavaClassModelMap
-     */
-    private static void getMockClass(JavaClass javaClass, List<JavaMockClassInfoDTO> javaMockClassInfoDTOList,
-                                     List<JavaField> javaFieldList, Map<String, JavaClassModel> mockJavaClassModelMap) {
-        for (JavaField javaField : javaFieldList) {
-            JavaMockClassInfoDTO javaMockClassInfoDTO = new JavaMockClassInfoDTO();
-
-            if (javaField.isStatic()) {
-                continue;
-            }
-            if (javaField.isFinal()) {
-                continue;
-            }
-            JavaClassModel javaClassModel = new JavaClassModel();
-            //属性名称
-            javaClassModel.setName(javaField.getName());
-            String typeStr = javaField.getType().getFullyQualifiedName();
-            String type = InitConstant.MAPPING.getOrDefault(typeStr, typeStr);
-            javaClassModel.setType(type);
-            //获取类型中的方法 Java类
-
-            //排除不需要mock的类
-            if (!BaseConstant.mockJavaSet.contains(typeStr)) {
-                continue;
-            }
-
-            List<JavaMethodModel> javaMethodModelList = new ArrayList<>();
-            List<JavaMockMethodInfoDTO> javaMockMethodInfoDTOList = new ArrayList<>();
-
-            //TODO 获取父类 - 暂时只支持两层 - 暂时也不支持其他jar包中的类
-            JavaClass superClass = javaField.getType().getSuperJavaClass();
-            if(superClass!=null) {
-                log.info("获取的父类：" + superClass);
-                //获取类中方法
-                JavaClass fieldClass = BaseConstant.javaProjectBuilder.getClassByName(typeStr);
-                List<JavaMethod> fieldMethodList = fieldClass.getMethods();
-                for (JavaMethod javaMethod : fieldMethodList) {
-                    setMockMethodInfo(javaField, type, javaMockMethodInfoDTOList, javaMethod, superClass);
-                }
-
-                List<JavaMethod> superJavaMethod = superClass.getMethods();
-                if (!BaseConstant.mockParentJavaClassModelMap.containsKey(superClass.getFullyQualifiedName())) {
-                    JavaClassModel javaClassModel1 = new JavaClassModel();
-                    javaClassModel1.setName(superClass.getName());
-                    javaClassModel1.setType(superClass.getFullyQualifiedName());
-                    List<JavaMethodModel> javaMethodModelList1 = new ArrayList<>();
-                    for (JavaMethod javaMethod : superJavaMethod) {
-                        //存储父类信息
-                        JavaMethodModel javaMethodModel = saveJavaMethodModel(javaMethod);
-                        javaMethodModelList1.add(javaMethodModel);
-                    }
-                    javaClassModel1.setJavaMethodModelList(javaMethodModelList1);
-                    BaseConstant.mockParentJavaClassModelMap.put(superClass.getFullyQualifiedName(), javaClassModel1);
-                }
-                javaMockClassInfoDTO.setParentType(superClass.getFullyQualifiedName());
-            }
-
-            javaMockClassInfoDTO.setName(javaField.getName());
-            javaMockClassInfoDTO.setType(type);
-            javaMockClassInfoDTO.setJavaMockMethodInfoDTOList(javaMockMethodInfoDTOList);
-            //获取类型中的方法 Java类 - 排除不需要mock的java类
-            if (BaseConstant.mockJavaSet.contains(type)) {
-                //说明该属性类需要mock
-                javaMockClassInfoDTOList.add(javaMockClassInfoDTO);
-            }
-
-            javaClassModel.setJavaMethodModelList(javaMethodModelList);
-            mockJavaClassModelMap.put(javaClassModel.getName(), javaClassModel);
-
-        }
-        //属性的相关信息
-        log.info("本类属性相关信息，类：" + javaClass.getName() + ", mock属性类相关信息：" + mockJavaClassModelMap);
-    }
-
-    private static JavaMethodModel saveJavaMethodModel(JavaMethod javaMethod) {
-        JavaMethodModel javaMethodModel = new JavaMethodModel();
-        javaMethodModel.setName(javaMethod.getName());
-        //方法参数
-        List<JavaParameter> javaParameterList = javaMethod.getParameters();
-        List<String> parameterNameList = new ArrayList<>();
-        List<String> parameterTypeList = new ArrayList<>();
-        for (JavaParameter javaParameter : javaParameterList) {
-            parameterNameList.add(javaParameter.getName());
-            String typeS = javaParameter.getType().getFullyQualifiedName();
-            String pType = InitConstant.MAPPING.getOrDefault(typeS, typeS);
-            parameterTypeList.add(pType);
-        }
-        javaMethodModel.setParameterName(parameterNameList);
-        javaMethodModel.setParameterType(parameterTypeList);
-        javaMethodModel.setParameterNum(parameterNameList.size());
-        String rTypeStr = javaMethod.getReturnType().getFullyQualifiedName();
-        String rType = InitConstant.MAPPING.getOrDefault(rTypeStr, rTypeStr);
-        javaMethodModel.setReturnType(rType);
-        return javaMethodModel;
-    }
-
-    /**
-     * 设置mock方法的信息
-     *
-     * @param javaField
-     * @param type
-     * @param javaMockMethodInfoDTOList
-     * @param javaMethod
-     * @param superClass
-     */
-    private static void setMockMethodInfo(JavaField javaField, String type, List<JavaMockMethodInfoDTO> javaMockMethodInfoDTOList, JavaMethod javaMethod, JavaClass superClass) {
-        JavaMockMethodInfoDTO javaMockMethodInfoDTO = new JavaMockMethodInfoDTO();
-
-        JavaMethodModel javaMethodModel = saveJavaMethodModel(javaMethod);
-
-        javaMockMethodInfoDTO.setClassName(javaField.getName());
-        javaMockMethodInfoDTO.setClassType(type);
-        javaMockMethodInfoDTO.setName(javaMethod.getName());
-        javaMockMethodInfoDTO.setParameterNum(javaMethodModel.getParameterNum());
-        javaMockMethodInfoDTO.setParameterName(javaMethodModel.getParameterName());
-        javaMockMethodInfoDTO.setParameterType(javaMethodModel.getParameterType());
-        javaMockMethodInfoDTO.setReturnType(javaMethodModel.getReturnType());
-        //设置父类类型
-        javaMockMethodInfoDTO.setParentClassType(superClass.getFullyQualifiedName());
-        javaMockMethodInfoDTOList.add(javaMockMethodInfoDTO);
-    }
 
     /**
      * 方法抛出的异常
