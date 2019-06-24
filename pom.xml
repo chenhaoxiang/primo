@@ -6,47 +6,24 @@
 
     <groupId>com.uifuture.maven.plugins</groupId>
     <artifactId>maven-auto-generate-test-plugin</artifactId>
-    <version>1.0.0</version>
-    <packaging>maven-plugin</packaging>
+    <version>1.0.1</version>
+    <modules>
+        <module>magt-core</module>
+        <module>magt-run</module>
+    </modules>
+    <packaging>pom</packaging>
     <name>maven-auto-generate-test-plugin</name>
     <description>MAGT-plugin,基于Java的自动测试代码生成Maven插件,项目地址:https://github.com/chenhaoxiang/maven-auto-generate-test-plugin</description>
 
 
-    <dependencies>
-        <!--java源码解析-->
-        <dependency>
-            <groupId>com.thoughtworks.qdox</groupId>
-            <artifactId>qdox</artifactId>
-            <version>2.0-M10</version>
-        </dependency>
-
-        <!--代码生成器依赖-->
-        <dependency>
-            <groupId>org.freemarker</groupId>
-            <artifactId>freemarker</artifactId>
-            <version>2.3.28</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.maven</groupId>
-            <artifactId>maven-plugin-api</artifactId>
-            <version>3.6.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.maven.plugin-tools</groupId>
-            <artifactId>maven-plugin-annotations</artifactId>
-            <version>3.6.0</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>1.7.25</version>
-        </dependency>
-
-    </dependencies>
-
+    <properties>
+        <project.verstion>1.0.1</project.verstion>
+        <qdox.verstion>2.0-M10</qdox.verstion>
+        <freemarker.verstion>2.3.28</freemarker.verstion>
+        <maven-plugin-api.verstion>3.6.0</maven-plugin-api.verstion>
+        <maven-plugin-annotations.verstion>3.6.0</maven-plugin-annotations.verstion>
+        <commons-lang3.verstion>3.8.1</commons-lang3.verstion>
+    </properties>
 
     <!-- 在工程的pom.xml文件中，引入Sonatype官方的一个通用配置oss-parent，这样做的好处是很多pom.xml的发布配置不需要自己配置了 -->
     <parent>
