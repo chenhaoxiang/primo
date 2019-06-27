@@ -7,6 +7,7 @@ package com.uifuture.maven.plugins.core.model;
 import lombok.Data;
 
 import java.util.List;
+import java.util.Map;
 import java.util.StringJoiner;
 
 /**
@@ -18,20 +19,26 @@ import java.util.StringJoiner;
 @Data
 public class JavaClassModel {
     /**
-     * 属性变量名称
+     * 该类的的属性变量名称
      */
     private String name;
     /**
      * 类型 - 全限定名
      */
+    private String fullyType;
+    /**
+     * 类型 - 非全限定名
+     */
     private String type;
     /**
      * 父类类型
      */
-    private String parentType;
+    private String parentFullyTypeType;
 
     /**
      * 类中方法
      */
     private List<JavaMethodModel> javaMethodModelList;
+
+
 }

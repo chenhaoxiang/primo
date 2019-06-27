@@ -7,7 +7,7 @@ package com.uifuture.maven.plugins;
 import com.uifuture.maven.plugins.core.common.BaseConstant;
 import com.uifuture.maven.plugins.core.common.ConfigConstant;
 import com.uifuture.maven.plugins.core.dto.JavaClassDTO;
-import com.uifuture.maven.plugins.core.util.JavaProjectBuilderUtil;
+import com.uifuture.maven.plugins.core.build.BuildClass;
 import com.uifuture.maven.plugins.core.util.StringUtil;
 import freemarker.template.Configuration;
 import freemarker.template.TemplateExceptionHandler;
@@ -52,15 +52,15 @@ public class GenJava {
                 return;
             }
 
-            //获取类中方法
-            JavaClassDTO javaClassDTO = JavaProjectBuilderUtil.buildTestMethod(javaName, ConfigConstant.CONFIG_ENTITY.getTestPackageName() + "." + className);
-            if(javaClassDTO==null){
-                return;
-            }
+            JavaClassDTO javaClassDTO = new JavaClassDTO();
             javaClassDTO.setDate(BaseConstant.DATE);
             javaClassDTO.setAuthor(ConfigConstant.CONFIG_ENTITY.getAuthor());
             javaClassDTO.setModelNameUpperCamel(className);
             javaClassDTO.setModelNameLowerCamel(StringUtil.strConvertLowerCamel(className));
+            //获取类中方法
+            if(!BuildClass.build(ConfigConstant.CONFIG_ENTITY.getTestPackageName() + "." + className,javaClassDTO)){
+                return;
+            }
 
             Map<String, Object> data = new HashMap<>();
             data.put("javaClassDTO", javaClassDTO);

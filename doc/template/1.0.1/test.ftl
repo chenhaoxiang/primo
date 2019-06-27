@@ -19,7 +19,7 @@ import static org.mockito.ArgumentMatchers.any;
 * @author ${javaClassDTO.author!''}
 * @date ${javaClassDTO.date!''}
 */
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(PowerMockRunner.class)
 @PowerMockIgnore("javax.management.*")
 public class ${javaClassDTO.modelNameUpperCamel}Test {
 @InjectMocks
@@ -33,30 +33,50 @@ private ${javaClassDTO.modelNameUpperCamel} ${javaClassDTO.modelNameLowerCamel};
 <#--遍历方法-->
 <#list javaClassDTO.javaMethodDTOList as method>
     @Test
-    public void ${method.methodTestName}Test() <#list method.javaExceptionsDTOList as exceptions><#if exceptions_index==0>throws ${exceptions.type}<#else>,${exceptions.type}</#if></#list>{
-    //组装参数
+    public void ${method.methodTestName}() <#list method.javaExceptionsDTOList as exceptions><#if exceptions_index==0>throws ${exceptions.type}<#else>,${exceptions.type}</#if></#list>{
+    //组装测试方法的参数
     <#list method.javaParameterDTOList as parameter>
     <#--判断是否是自定义参数-->
         <#if parameter.customType>
         <#--获取内部参数-->
             ${parameter.type} ${parameter.name} = <#if parameter.value??>${parameter.value}<#else >new ${parameter.type}()</#if>;
-            <#list javaClassDTO.javaParameterDTOMap['${parameter.keyName}'] as cParameter>
+
+            <#list parameter.javaParameterDTOList as cParameter>
             <#--设置内部值-->
                 ${parameter.name}.set${cParameter.upName}(<#if cParameter.value??>${cParameter.value}<#else >new ${cParameter.type}()</#if>);
             </#list>
+
         <#else >
             ${parameter.type} ${parameter.name} = <#if parameter.value??>${parameter.value}<#else >new ${parameter.type}()</#if>;
         </#if>
     </#list>
 
     //mock方法
-    <#list method.javaMockMethodInfoMap?keys as key>
-
-        <#list method.javaMockMethodInfoMap[key] as methodInfo>
-            PowerMockito.when(${methodInfo.className}.${methodInfo.name}(<#if methodInfo.parameterName??><#list methodInfo.parameterName as parameterN><#if parameterN_index==0>any()<#else>,any()</#if></#list></#if>)).thenReturn(null);
+    <#if method.javaMockMethodInfoDTOList??>
+        <#list method.javaMockMethodInfoDTOList as mockMethInfo>
+            <#if mockMethInfo.fieldName==javaClassDTO.modelNameLowerCamel>
+                // mock当前测试类方法
+                ${javaClassDTO.modelNameLowerCamel} = PowerMockito.spy(${javaClassDTO.modelNameLowerCamel});
+            </#if>
+            <#if mockMethInfo.returnType=='void'>
+                //返回void
+                PowerMockito.doNothing().when(${mockMethInfo.fieldName}).${mockMethInfo.name}(
+                <#if mockMethInfo.javaParameterDTOList??>
+                    <#list mockMethInfo.javaParameterDTOList as mockParameter>
+                        <#if mockParameter_index==0>any()<#else>,any()</#if>
+                    </#list>
+                </#if>);
+            <#else >
+                PowerMockito.doReturn(null).when(${mockMethInfo.fieldName}).${mockMethInfo.name}(
+                <#if mockMethInfo.javaParameterDTOList??>
+                    <#list mockMethInfo.javaParameterDTOList as mockParameter>
+                        <#if mockParameter_index==0>any()<#else>,any()</#if>
+                    </#list>
+                </#if>
+                );
+            </#if>
         </#list>
-
-    </#list>
+    </#if>
 
     //调用方法
     ${javaClassDTO.modelNameLowerCamel}.${method.methodName}(<#list method.javaParameterDTOList as parameter><#if parameter_index==0>${parameter.name}<#else>,${parameter.name}</#if></#list>);

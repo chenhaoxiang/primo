@@ -4,6 +4,8 @@
  */
 package com.uifuture.maven.plugins.core.common;
 
+import com.uifuture.maven.plugins.core.util.StringUtil;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -25,10 +27,31 @@ public class InitConstant {
      * 对应类型的默认值
      */
     public static final Map<String, String> VALUE = new HashMap<>();
+
+    /**
+     * 导入的包
+     */
+    public static final Map<String, String> COLLECTION_VALUE_IMPORT = new HashMap<>();
+
     /**
      * 导入包需要排除的包名
      */
     public static final Set<String> EXCLUDE_IMPORT_TYPE = new HashSet<>();
+
+    /**
+     * 通过全限定名获取简称
+     * @param type
+     * @return
+     */
+    public static String getAbbreviation(String type){
+        if(StringUtil.isEmpty(type)){
+            return type;
+        }
+        if(type.contains(".")){
+            type = type.substring(type.lastIndexOf(".")+1);
+        }
+        return MAPPING.getOrDefault(type,type);
+    }
 
     static {
         //初始化类型转换
@@ -37,6 +60,15 @@ public class InitConstant {
         initValue();
         //初始化排除的包
         initExclude();
+        //初始化集合的默认值 
+        initCollectionValue();
+    }
+
+    private static void initCollectionValue() {
+        COLLECTION_VALUE_IMPORT.put("List", "java.util.ArrayList");
+        COLLECTION_VALUE_IMPORT.put("Set", "java.util.HashSet");
+        COLLECTION_VALUE_IMPORT.put("Map", "java.util.HashMap");
+
     }
 
     private static void initExclude() {
@@ -74,6 +106,11 @@ public class InitConstant {
         EXCLUDE_IMPORT_TYPE.add("char");
         EXCLUDE_IMPORT_TYPE.add("byte");
         EXCLUDE_IMPORT_TYPE.add("short");
+
+        EXCLUDE_IMPORT_TYPE.add("T");
+        EXCLUDE_IMPORT_TYPE.add("B");
+        EXCLUDE_IMPORT_TYPE.add("M");
+        EXCLUDE_IMPORT_TYPE.add("F");
     }
 
     private static void initMapping() {
@@ -91,9 +128,6 @@ public class InitConstant {
         MAPPING.put("java.lang.StringBuilder", "StringBuilder");
         MAPPING.put("java.lang.Void", "Void");
 
-        MAPPING.put("java.util.Map", "java.util.HashMap");
-        MAPPING.put("java.util.List", "java.util.ArrayList");
-        MAPPING.put("java.util.set", "java.util.HashSet");
         MAPPING.put("T", "Object");
         MAPPING.put("B", "Object");
         MAPPING.put("M", "Object");
@@ -121,10 +155,12 @@ public class InitConstant {
         VALUE.put("StringBuffer", "new StringBuffer(\"\")");
         VALUE.put("StringBuilder", "new StringBuilder(\"\")");
 
-        VALUE.put("java.util.HashMap", "new java.util.HashMap()");
-        VALUE.put("java.util.ArrayList", "new java.util.ArrayList()");
-        VALUE.put("java.util.HashSet", "new java.util.HashSet()");
-        VALUE.put("java.util.Date", "new java.util.Date()");
+        VALUE.put("T", "new Object()");
+        VALUE.put("B", "new Object()");
+        VALUE.put("M", "new Object()");
+        VALUE.put("F", "new Object()");
+
+        VALUE.put("Object", "new Object()");
     }
 
 }

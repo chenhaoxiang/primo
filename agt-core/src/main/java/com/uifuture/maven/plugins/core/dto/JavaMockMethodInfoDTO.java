@@ -6,6 +6,7 @@ package com.uifuture.maven.plugins.core.dto;
 
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.StringJoiner;
 
@@ -17,15 +18,15 @@ import java.util.StringJoiner;
 @Data
 public class JavaMockMethodInfoDTO {
     /**
-     * 父类类型
+     * 父类类型 - 全限定名
      */
-    private String parentClassType;
+    private String parentClassFullyType;
     /**
-     * 类的名称
+     * 调用该方法的属性变量名称
      */
-    private String className;
+    private String fieldName;
     /**
-     * 类的类型
+     * 类的类型 - 全限定类型
      */
     private String classType;
 
@@ -35,22 +36,16 @@ public class JavaMockMethodInfoDTO {
     private String name;
 
     /**
-     * 参数数量
+     * 方法参数
      */
-    private Integer parameterNum;
+    private List<JavaParameterDTO> javaParameterDTOList = new ArrayList<>();
 
     /**
-     * 方法参数名称
+     * 方法返回参数类型 - 全限定 名称
      */
-    private List<String> parameterName;
-
+    private String returnFullyType;
     /**
-     * 方法参数类型
-     */
-    private List<String> parameterType;
-
-    /**
-     * 方法返回参数类型
+     * 方法返回参数类型 名称
      */
     private String returnType;
 

@@ -31,12 +31,14 @@ public class BaseConstant {
     /**
      * 需要mock的java类，全限定名称
      */
-    public static Set<String> mockJavaSet = new HashSet<>();
+//    public static Set<String> mockJavaSet = new HashSet<>();
 
     /**
-     * 需要mock的类的信息 父类的信息
+     * 类信息
+     * key - 全限定名称
+     * value - 类信息
      */
-    public static Map<String, JavaClassModel> mockParentJavaClassModelMap = new HashMap<>();
+//    public static Map<String, JavaClassModel> mockParentJavaClassModelMap = new HashMap<>();
 
     /**
      * 日期

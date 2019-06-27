@@ -6,6 +6,7 @@ package com.uifuture.maven.plugins.core.dto;
 
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.StringJoiner;
@@ -25,26 +26,28 @@ public class JavaMethodDTO {
      * 测试方法名称
      */
     private String methodTestName;
-
     /**
      * 方法返回类型
      */
-    private String methodReturnType;
+    private String returnType;
+    /**
+     * 方法返回类型 - 全限定 名称
+     */
+    private String returnFullyType;
     /**
      * 方法参数
      */
-    private List<JavaParameterDTO> javaParameterDTOList;
+    private List<JavaParameterDTO> javaParameterDTOList = new ArrayList<>();
 
     /**
      * 方法异常
      */
-    private List<JavaExceptionsDTO> javaExceptionsDTOList;
+    private List<JavaExceptionsDTO> javaExceptionsDTOList = new ArrayList<>();
 
     /**
-     * 被mock的方法信息 - 直接设置为
+     * 需要被mock的方法
      */
-    private Map<String,List<JavaMockMethodInfoDTO>>  javaMockMethodInfoMap;
-
+    private List<JavaMockMethodInfoDTO> javaMockMethodInfoDTOList = new ArrayList<>();
 
 
 }

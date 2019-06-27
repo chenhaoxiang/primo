@@ -33,7 +33,7 @@ public class ${javaClassDTO.modelNameUpperCamel}Test {
 <#--遍历方法-->
 <#list javaClassDTO.javaMethodDTOList as method>
     @Test
-    public void ${method.methodTestName}Test() <#list method.javaExceptionsDTOList as exceptions><#if exceptions_index==0>throws ${exceptions.type}<#else>,${exceptions.type}</#if></#list>{
+    public void ${method.methodTestName}() <#list method.javaExceptionsDTOList as exceptions><#if exceptions_index==0>throws ${exceptions.type}<#else>,${exceptions.type}</#if></#list>{
     //组装参数
     <#list method.javaParameterDTOList as parameter>
     <#--判断是否是自定义参数-->

@@ -6,6 +6,8 @@ package com.uifuture.maven.plugins.core.dto;
 
 import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.StringJoiner;
@@ -41,11 +43,12 @@ public class JavaClassDTO {
     /**
      * 类方法
      */
-    private List<JavaMethodDTO> javaMethodDTOList;
+    private List<JavaMethodDTO> javaMethodDTOList = new ArrayList<>();
+
     /**
-     * 导入的包
+     * 需要导入的包 - 简称相同的类，不会被导入
      */
-    private List<JavaImplementsDTO> javaImplementsDTOList;
+    private List<JavaImplementsDTO> javaImplementsDTOList = new ArrayList<>();
 
     /**
      * 被测试类包名
@@ -55,12 +58,12 @@ public class JavaClassDTO {
     /**
      * 包装类的内部属性 - 包含了父类的属性
      */
-    private Map<String,List<JavaParameterDTO>> javaParameterDTOMap;
+    private Map<String,List<JavaParameterDTO>> javaParameterDTOMap = new HashMap<>();
 
     /**
-     * 需要引入的mcok类 - 普通Mock方法
+     * 需要引入的mcok类
      */
-    private List<JavaMockClassInfoDTO> javaMockClassInfoDTOList;
+    private List<JavaMockClassInfoDTO> javaMockClassInfoDTOList = new ArrayList<>();
 
 
 }
