@@ -1,3 +1,6 @@
+/*
+ * auto-generate-test：https://github.com/chenhaoxiang/auto-generate-test-maven-plugin
+ */
 package ${javaClassDTO.packageName};
 
 import org.junit.Test;
