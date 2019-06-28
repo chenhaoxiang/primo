@@ -9,13 +9,13 @@
     <version>1.1.0</version>
     <modules>
         <module>agt-core</module>
-        <module>maven-agt-plugin</module>
+        <module>agt-maven-plugin</module>
     </modules>
 
-    <name>maven-auto-generate-test-plugin</name>
-    <url>https://github.com/chenhaoxiang/maven-auto-generate-test-plugin</url>
+    <name>auto-generate-test</name>
+    <url>https://github.com/chenhaoxiang/auto-generate-test-maven-plugin</url>
     <description>
-        MAGT-plugin,基于Java的自动测试代码生成Maven插件,项目地址:https://github.com/chenhaoxiang/maven-auto-generate-test-plugin
+        AGT-mp,基于Java的自动测试代码生成Maven插件,项目地址:https://github.com/chenhaoxiang/auto-generate-test-maven-plugin
     </description>
 
     <properties>

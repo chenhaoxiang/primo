@@ -5,7 +5,7 @@
 
 简称：MAGT-plugin    
 
-项目地址： https://github.com/chenhaoxiang/maven-auto-generate-test-plugin  
+项目地址： https://github.com/chenhaoxiang/auto-generate-test-maven-plugin 
 
 
 ## 使用  
@@ -14,7 +14,7 @@
 ```xml
 <plugin> 
   <groupId>com.uifuture.maven.plugins</groupId>
-  <artifactId>maven-auto-generate-test-plugin</artifactId>
+  <artifactId>auto-generate-test-maven-plugin</artifactId>
   <version>1.0.0</version> 
     <configuration>
         <testPackageName>com.jiaxuan.heaven.book.service.impl</testPackageName>
@@ -84,6 +84,12 @@
 6. 优化全限定名称为简称，使用import导入包，名称存在重复的类，使用全限定名称  
 
 分支：version/1.0.0  
+依赖：
+```xml
+<groupId>com.uifuture.maven.plugins</groupId>
+<artifactId>auto-generate-test-maven-plugin</artifactId>
+<version>1.0.0</version> 
+```
 
 ## V1.1.0 - 开发中 
 1. 支持配置选择是否自动mock掉父类的方法 - 默认true  
