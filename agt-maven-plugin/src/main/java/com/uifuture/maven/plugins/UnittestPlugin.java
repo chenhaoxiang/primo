@@ -70,7 +70,7 @@ public class UnittestPlugin extends AbstractPlugin {
 
     public static void main(String[] args) throws IOException {
         JavaProjectBuilder builder = new JavaProjectBuilder();
-        builder.addSource(new File("/Users/chenhx/Desktop/github/maven-auto-generate-test-plugin/agt-core/src/main/java/com/uifuture/maven/plugins/core/model/JavaClassModel.java"));
+        builder.addSource(new File("/Users/chenhx/Desktop/github/auto-generate-test-maven-plugin/agt-core/src/main/java/com/uifuture/maven/plugins/core/model/JavaClassModel.java"));
         JavaClass javaClass1 = builder.getClassByName("JavaClassModel");
         JavaClass javaClass2 = builder.getClassByName("com.uifuture.maven.plugins.core.model.JavaClassModel");
         System.out.println(javaClass1 + "====" + javaClass2);

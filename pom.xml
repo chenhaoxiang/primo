@@ -56,9 +56,9 @@
     </licenses>
     <scm>
         <tag>master</tag>
-        <url>git@github.com:chenhaoxiang/maven-auto-generate-test-plugin.git</url>
-        <connection>scm:git:git@github.com:chenhaoxiang/maven-auto-generate-test-plugin.git</connection>
-        <developerConnection>scm:git:git@github.com:chenhaoxiang/maven-auto-generate-test-plugin.git
+        <url>git@github.com:chenhaoxiang/auto-generate-test-maven-plugin.git</url>
+        <connection>scm:git:git@github.com:chenhaoxiang/auto-generate-test-maven-plugin.git</connection>
+        <developerConnection>scm:git:git@github.com:chenhaoxiang/auto-generate-test-maven-plugin.git
         </developerConnection>
     </scm>
 
