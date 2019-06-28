@@ -33,7 +33,7 @@
 配置好```<configPath></configPath>```填写路径，相对路径为当前运行项目的根路径。(默认下载路径：/src/main/resources/test/template)   
 运行插件的init命令，即可将配置文件下载到对应的路径。  
   
-可设置配置文件的文件名，通过```<configFileName>init.ftl</configFileName>```设置配置文件的文件名称。（默认文件名称为test.ftl）  
+可设置配置文件的文件名，通过```<configFileName>magt.ftl</configFileName>```设置配置文件的文件名称。（默认文件名称为magt.ftl）  
 
 3. 引入mock相关依赖  
 自动测试代码生成插件   
