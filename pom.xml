@@ -9,7 +9,7 @@
     <version>1.1.0</version>
     <modules>
         <module>agt-core</module>
-        <module>agt-run</module>
+        <module>maven-agt-plugin</module>
     </modules>
 
     <name>maven-auto-generate-test-plugin</name>
