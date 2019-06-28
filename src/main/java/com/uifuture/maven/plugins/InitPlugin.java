@@ -24,7 +24,7 @@ public class InitPlugin extends AbstractPlugin {
     /**
      * 配置文件下载地址
      */
-    private static final String CONFIG_URL = "https://raw.githubusercontent.com/chenhaoxiang/maven-auto-generate-test-plugin/master/src/main/resources/test/template/test.ftl";
+    private static final String CONFIG_URL = "https://raw.githubusercontent.com/chenhaoxiang/maven-auto-generate-test-plugin/master/doc/template/magt.ftl";
     /**
      * 需要将配置文件下载下来
      * @throws MojoExecutionException

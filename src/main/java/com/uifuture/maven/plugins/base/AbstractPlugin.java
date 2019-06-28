@@ -42,7 +42,7 @@ public abstract class AbstractPlugin extends AbstractMojo {
     /**
      * 配置文件名称
      */
-    @Parameter(defaultValue = "test.ftl")
+    @Parameter(defaultValue = "magt.ftl")
     protected String configFileName;
 
 }
