@@ -81,6 +81,10 @@ public class InitConstant {
         FULLY_COLLECTION_VALUE_IMPORT.put("java.util.Set", "java.util.HashSet");
         FULLY_COLLECTION_VALUE_IMPORT.put("java.util.Map", "java.util.HashMap");
 
+        //其他抽象类的实现
+        FULLY_COLLECTION_VALUE_IMPORT.put("com.baomidou.mybatisplus.core.conditions.Wrapper", "com.baomidou.mybatisplus.core.conditions.query.QueryWrapper");
+        FULLY_COLLECTION_VALUE_IMPORT.put("com.baomidou.mybatisplus.core.metadata.IPage", "com.baomidou.mybatisplus.extension.plugins.pagination.Page");
+
     }
 
     private static void initExclude() {

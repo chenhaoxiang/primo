@@ -125,6 +125,8 @@
 4. 不支持集合的构造；期望：支持集合的构造  
 5. mock方法返回值不支持自定义，统一是返回null；期望：支持mock返回值的自定义/生成值   
 6. 不支持Spring自定义事务管理器DataSourceTransactionManager的mock；期望：支持自定义事务的mock  
+7. 对于一些没有setter方法的属性，也进行了set值；期望：对于没有setter的属性值，不进行设置  
+  
   
 ### 配置更改点  
 ```<childPackage>```配置属性修改为```<isGetChildPackage>```
