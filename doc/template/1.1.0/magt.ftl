@@ -53,10 +53,15 @@ private ${javaClassDTO.modelNameUpperCamel} ${javaClassDTO.modelNameLowerCamel};
 
     //mock方法
     <#if method.javaMockMethodInfoDTOList??>
+        <#--定义变量-->
+        <#assign mockThis = 0>
         <#list method.javaMockMethodInfoDTOList as mockMethInfo>
             <#if mockMethInfo.fieldName==javaClassDTO.modelNameLowerCamel>
                 // mock当前测试类方法
-                ${javaClassDTO.modelNameLowerCamel} = PowerMockito.spy(${javaClassDTO.modelNameLowerCamel});
+                <#if mockThis==0>
+                    ${javaClassDTO.modelNameLowerCamel} = PowerMockito.spy(${javaClassDTO.modelNameLowerCamel});
+                    <#assign mockThis = 1>
+                </#if>
             </#if>
             <#if mockMethInfo.returnType=='void'>
                 //返回void
