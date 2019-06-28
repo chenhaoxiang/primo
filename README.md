@@ -80,6 +80,36 @@
 - ```<skipPackages>```:~~在方法参数初始化的时候，需要进行赋值为null的类（例如，适合接口或者没有空参构造的类），在该包下的类不会进行赋值。可配置多个，使用英文分号隔开。~~（V1.1.0已删除）       
 - ```<otherProjectName>```:~~适合多项目，配置其他的项目名称，可以使MAGT-plugin解析到该模块下的所有类。一个项目下多个项目模块。项目模块的路径名称。可配置多个，使用英文分号隔开。~~ （V1.1.0已删除）          
 
+### 5. 配置第三方依赖  
+待测试类有依赖第三方Jar包的，需要进行引入插件的依赖，否则agt无法解析到依赖的类信息   
+配置位置如下所示：      
+```xml
+<plugin>
+    <!-- ... -->   
+    <configuration>
+    <!-- ... -->
+    </configuration>
+    <dependencies>
+        <!-- 引入包，框架可以利用反射找到类的所有信息 -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus</artifactId>
+            <version>3.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-generator</artifactId>
+            <version>3.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>4.3.2.RELEASE</version>
+        </dependency>
+        <!-- ... -->
+    </dependencies>
+</plugin>
+```
 
 # 版本功能
 
