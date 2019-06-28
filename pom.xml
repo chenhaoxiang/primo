@@ -15,7 +15,7 @@
     <name>auto-generate-test</name>
     <url>https://github.com/chenhaoxiang/auto-generate-test-maven-plugin</url>
     <description>
-        AGT-mp,基于Java的自动测试代码生成Maven插件,项目地址:https://github.com/chenhaoxiang/auto-generate-test-maven-plugin
+        AGT,基于Java的自动测试代码生成Maven插件,项目地址:https://github.com/chenhaoxiang/auto-generate-test-maven-plugin
     </description>
 
     <properties>
