@@ -6,6 +6,7 @@ package com.uifuture.maven.plugins.core.dto;
 
 import com.uifuture.maven.plugins.core.common.BaseCanUserType;
 import lombok.Data;
+import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.List;
  * @version JavaParameterDTO.java, v 0.1 2019-06-10 16:43 chenhx
  */
 @Data
+@ToString(callSuper = true)
 public class JavaParameterDTO extends BaseCanUserType {
     /**
      * 参数名称
@@ -43,4 +45,5 @@ public class JavaParameterDTO extends BaseCanUserType {
      * 如果默认值为NULL
      */
     private List<JavaParameterDTO> javaParameterDTOList = new ArrayList<>();
+
 }

@@ -4,7 +4,10 @@
  */
 package com.uifuture.maven.plugins.core.common;
 
+import com.uifuture.maven.plugins.core.enums.BaseTypeEnum;
 import com.uifuture.maven.plugins.core.util.StringUtil;
+import com.uifuture.maven.plugins.core.util.UUIDUtil;
+import org.apache.commons.lang3.RandomUtils;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -26,12 +29,17 @@ public class InitConstant {
     /**
      * 对应类型的默认值
      */
-    public static final Map<String, String> VALUE = new HashMap<>();
+    private static final Map<String, String> VALUE = new HashMap<>();
 
     /**
-     * 导入的包
+     * 导入的包 - 集合接口，对应的实现类
      */
     public static final Map<String, String> COLLECTION_VALUE_IMPORT = new HashMap<>();
+
+    /**
+     * 导入的包 - 集合接口，对应的实现类 - 全限定名称对象
+     */
+    public static final Map<String, String> FULLY_COLLECTION_VALUE_IMPORT = new HashMap<>();
 
     /**
      * 导入包需要排除的包名
@@ -68,6 +76,10 @@ public class InitConstant {
         COLLECTION_VALUE_IMPORT.put("List", "java.util.ArrayList");
         COLLECTION_VALUE_IMPORT.put("Set", "java.util.HashSet");
         COLLECTION_VALUE_IMPORT.put("Map", "java.util.HashMap");
+
+        FULLY_COLLECTION_VALUE_IMPORT.put("java.util.List", "java.util.ArrayList");
+        FULLY_COLLECTION_VALUE_IMPORT.put("java.util.Set", "java.util.HashSet");
+        FULLY_COLLECTION_VALUE_IMPORT.put("java.util.Map", "java.util.HashMap");
 
     }
 
@@ -141,7 +153,9 @@ public class InitConstant {
         VALUE.put("Double", "0.0");
         VALUE.put("Float", "0.0f");
         VALUE.put("Boolean", "true");
-        VALUE.put("Class", "null");
+        VALUE.put("Character", "'0'");
+        VALUE.put("Byte", "0");
+        VALUE.put("Short", "0");
 
         VALUE.put("int", "0");
         VALUE.put("long", "0L");
@@ -155,12 +169,82 @@ public class InitConstant {
         VALUE.put("StringBuffer", "new StringBuffer(\"\")");
         VALUE.put("StringBuilder", "new StringBuilder(\"\")");
 
+        VALUE.put("Class", "null");
         VALUE.put("T", "new Object()");
         VALUE.put("B", "new Object()");
         VALUE.put("M", "new Object()");
         VALUE.put("F", "new Object()");
 
         VALUE.put("Object", "new Object()");
+
+//        VALUE.put("List", "new ArrayList<>()");
+//        VALUE.put("Set", "new HashSet<>()");
+//        VALUE.put("Map", "new HashMap<>()");
+    }
+
+    /**
+     * 获取值
+     * @param type
+     * @return
+     */
+    public static String getValue(String type) {
+        if(ConfigConstant.CONFIG_ENTITY.getIsSetBasicTypesRandomValue()) {
+            //设置默认值
+            if(BaseTypeEnum.getByValue(type)!=null){
+                return getRandomValue(type);
+            }
+        }
+        return VALUE.getOrDefault(type, null);
+    }
+
+    private static String getRandomValue(String type) {
+        if(StringUtil.isEmpty(type)){
+            return null;
+        }
+        //获取默认值
+        if(BaseTypeEnum.String_type.getValue().equals(type)){
+            return "\""+UUIDUtil.getID()+"\"";
+        }else if(BaseTypeEnum.Integer_type.getValue().equals(type)
+                || BaseTypeEnum.int_type.getValue().equals(type)
+        ){
+            int rand = RandomUtils.nextInt(0,1000);
+            return ""+rand;
+        }else if(BaseTypeEnum.Double_type.getValue().equals(type)
+                || BaseTypeEnum.double_type.getValue().equals(type)
+        ){
+            double rand = RandomUtils.nextDouble(0.00,10000.00);
+            return ""+rand;
+        }else if(BaseTypeEnum.Float_type.getValue().equals(type)
+                || BaseTypeEnum.float_type.getValue().equals(type)
+        ){
+            float rand = RandomUtils.nextFloat(0.00f,10000.00f);
+            return ""+rand+"f";
+        }else if(BaseTypeEnum.Boolean_type.getValue().equals(type)
+                || BaseTypeEnum.boolean_type.getValue().equals(type)
+        ){
+            boolean rand = RandomUtils.nextBoolean();
+            return ""+rand;
+        }else if(BaseTypeEnum.Long_type.getValue().equals(type)
+                || BaseTypeEnum.long_type.getValue().equals(type)
+        ){
+            long rand = RandomUtils.nextLong(0L,10000L);
+            return ""+rand+"L";
+        }else if(BaseTypeEnum.Character_type.getValue().equals(type)
+                || BaseTypeEnum.char_type.getValue().equals(type)
+        ){
+            return "'"+UUIDUtil.getRandomChar()+"'";
+        }else if(BaseTypeEnum.Byte_type.getValue().equals(type)
+                || BaseTypeEnum.byte_type.getValue().equals(type)
+        ){
+            int rand = RandomUtils.nextInt(0,1);
+            return ""+rand;
+        }else if(BaseTypeEnum.Short_type.getValue().equals(type)
+                || BaseTypeEnum.short_type.getValue().equals(type)
+        ){
+            int rand = RandomUtils.nextInt(0,127);
+            return ""+rand;
+        }
+        return null;
     }
 
 }

@@ -59,15 +59,23 @@ public class BuildClassMethodParamete {
             FullNameHandle.addQualifiedNameToImplementsPackageMap(javaParameterDTO, javaGenInfoModel.getImplementsJavaPackageMap());
 
             //设置默认值
-            javaParameterDTO.setValue(InitConstant.VALUE.getOrDefault(type, null));
+            javaParameterDTO.setValue(InitConstant.getValue(type));
 
             if (javaParameterDTO.getValue() == null) {
                 //自定义类型 暂时处理一层包装类
                 JavaClass javaClass = BaseConstant.javaProjectBuilder.getClassByName(typeToStr);
                 log.info("自定义类型：" + typeToStr + "，cls：" + (javaClass == null ? "null" : javaClass.getFullyQualifiedName()));
 
-                if (javaClass != null && javaClass.getLineNumber() > 0) {
-                    if (javaClass.isInterface()) {
+                if (javaClass != null) {
+
+                    if (InitConstant.FULLY_COLLECTION_VALUE_IMPORT.keySet().contains(typeToStr)) {
+                        //设置为ArrayList
+                        javaParameterDTO.setSubClassFullyType(InitConstant.FULLY_COLLECTION_VALUE_IMPORT.get(typeToStr));
+                        javaParameterDTO.setSubClassType(InitConstant.getAbbreviation(InitConstant.FULLY_COLLECTION_VALUE_IMPORT.get(typeToStr)));
+
+                        javaParameterDTO.setIsInterface(true);
+                        log.info("参数类型为FULLY_COLLECTION_VALUE_IMPORT中类型，javaParameterDTO:"+javaParameterDTO);
+                    }else if (javaClass.isInterface()) {
                         //获取实现类 该类是一个接口,获取实现类,子类-也就是派生类
                         List<JavaClass> javaClassList = javaClass.getDerivedClasses();
                         log.info("javaClassList1:" + javaClassList + ",自定义类型" + typeToStr);
@@ -116,13 +124,14 @@ public class BuildClassMethodParamete {
                     javaParameterDTO.setValue("null");
                 }
 
+                //处理全称限定名称 - 简称
+                FullNameHandle.addQualifiedNameToImplementsPackageMap(javaParameterDTO, javaGenInfoModel.getImplementsJavaPackageMap());
             }
 
+            log.info("生成完参数值的设定:"+javaParameterDTO);
             javaParameterDTOS.add(javaParameterDTO);
         }
 
-        //处理全称限定名称 - 简称
-        FullNameHandle.addQualifiedNameToImplementsPackageMap(javaParameterDTOS, javaGenInfoModel.getImplementsJavaPackageMap());
         javaMethodDTO.setJavaParameterDTOList(javaParameterDTOS);
     }
 
@@ -160,7 +169,7 @@ public class BuildClassMethodParamete {
             javaParameterDTO1.setName(fieldName);
             javaParameterDTO1.setType(fieldType);
             javaParameterDTO1.setFullyType(fullyTypeName);
-            String value = InitConstant.VALUE.getOrDefault(fieldType, null);
+            String value = InitConstant.getValue(fieldType);
             javaParameterDTO1.setValue(value);
             javaParameterDTO1.setUpName(StringUtil.strConvertUpperCamel(fieldName));
 

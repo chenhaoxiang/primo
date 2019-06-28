@@ -42,7 +42,22 @@ private ${javaClassDTO.modelNameUpperCamel} ${javaClassDTO.modelNameLowerCamel};
     <#--判断是否是自定义参数-->
         <#if parameter.customType>
         <#--获取内部参数-->
-            ${parameter.type} ${parameter.name} = <#if parameter.value??>${parameter.value}<#else >new ${parameter.type}()</#if>;
+            <#if parameter.isInterface>
+            <#--参数是接口-->
+                ${parameter.type} ${parameter.name} =
+                <#if parameter.value??>
+                    ${parameter.value}
+                <#else >
+                    <#--判断是否能够使用简称-->
+                    <#if parameter.subClassCanUserType>
+                        new ${parameter.subClassType}()
+                    <#else >
+                        new ${parameter.subClassFullyType}()
+                    </#if>
+                </#if>;
+            <#else >
+                ${parameter.type} ${parameter.name} = <#if parameter.value??>${parameter.value}<#else >new ${parameter.type}()</#if>;
+            </#if>
 
             <#list parameter.javaParameterDTOList as cParameter>
             <#--设置内部值-->
@@ -50,7 +65,25 @@ private ${javaClassDTO.modelNameUpperCamel} ${javaClassDTO.modelNameLowerCamel};
             </#list>
 
         <#else >
-            ${parameter.type} ${parameter.name} = <#if parameter.value??>${parameter.value}<#else >new ${parameter.type}()</#if>;
+
+        <#--获取内部参数-->
+            <#if parameter.isInterface>
+            <#--参数是接口-->
+                ${parameter.type} ${parameter.name} =
+                <#if parameter.value??>
+                    ${parameter.value}
+                <#else >
+                <#--判断是否能够使用简称-->
+                    <#if parameter.subClassCanUserType>
+                        new ${parameter.subClassType}()
+                    <#else >
+                        new ${parameter.subClassFullyType}()
+                    </#if>
+                </#if>;
+            <#else >
+                ${parameter.type} ${parameter.name} = <#if parameter.value??>${parameter.value}<#else >new ${parameter.type}()</#if>;
+            </#if>
+
         </#if>
     </#list>
 

@@ -18,6 +18,7 @@ import org.apache.maven.plugins.annotations.Parameter;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -44,6 +45,18 @@ public class UnittestPlugin extends AbstractPlugin {
      */
     @Parameter(defaultValue = "true")
     private Boolean isGetChildPackage;
+
+    /**
+     * 配置是否mock掉父类以及自身测试类非测试的方法(默认true)
+     */
+    @Parameter(defaultValue = "true")
+    private Boolean isMockThisOtherMethod;
+
+    /**
+     * 配置是否设置基础类型的值随机生成
+     */
+    @Parameter(defaultValue = "false")
+    private Boolean isSetBasicTypesRandomValue;
 
     /**
      * 需要mock掉的包，包下所有类的方法都会被mock
@@ -91,18 +104,36 @@ public class UnittestPlugin extends AbstractPlugin {
         ConfigConstant.CONFIG_ENTITY.setMockPackage(mockPackage);
         ConfigConstant.CONFIG_ENTITY.setSkipPackages(skipPackages);
         ConfigConstant.CONFIG_ENTITY.setOtherProjectName(otherProjectName);
+        ConfigConstant.CONFIG_ENTITY.setIsMockThisOtherMethod(isMockThisOtherMethod);
+        ConfigConstant.CONFIG_ENTITY.setIsSetBasicTypesRandomValue(isSetBasicTypesRandomValue);
 
         getLog().info("开始生成自动化测试代码" +
                 "\n" + ConfigConstant.CONFIG_ENTITY
         );
+
+        if(StringUtil.isEmpty(testPackageName)){
+            getLog().error("testPackageName必须进行配置（需要测试的项目包名）"
+            );
+            return;
+        }
 
         if (StringUtil.isNotEmpty(skipPackages)) {
             //无法进行预加载的类，设置参数值为null，外部包
             Collections.addAll(BaseConstant.skipPackage, skipPackages.split(";"));
         }
 
-        //获取该包下所有的类
-        List<String> javaList = PackageUtil.getClassName(basedir.getPath(), testPackageName, isGetChildPackage);
+        List<String> javaList = new ArrayList<>();
+        //如果配置的是java类，直接使用该类
+        if(testPackageName.endsWith(".java")){
+            testPackageName = testPackageName.substring(0,testPackageName.lastIndexOf(".java"));
+            String classPathName = basedir + "/src/main/java/"+ testPackageName.replace(".", "/")+".java";
+            //重新设置包名
+            ConfigConstant.CONFIG_ENTITY.setTestPackageName(testPackageName.substring(0,testPackageName.lastIndexOf(".")));
+            javaList.add(classPathName);
+        }else {
+            //获取该包下所有的类
+            javaList = PackageUtil.getClassName(basedir.getPath(), testPackageName, isGetChildPackage);
+        }
         getLog().info("获取的所有类名为：" + javaList);
 
         //初始化类源

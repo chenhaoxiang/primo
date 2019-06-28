@@ -9,6 +9,7 @@ import com.thoughtworks.qdox.model.JavaField;
 import com.thoughtworks.qdox.model.JavaMethod;
 import com.thoughtworks.qdox.model.JavaParameter;
 import com.uifuture.maven.plugins.core.common.BaseConstant;
+import com.uifuture.maven.plugins.core.common.ConfigConstant;
 import com.uifuture.maven.plugins.core.common.InitConstant;
 import com.uifuture.maven.plugins.core.dto.JavaMockClassInfoDTO;
 import com.uifuture.maven.plugins.core.dto.JavaMockMethodInfoDTO;
@@ -147,12 +148,26 @@ public class MockClassInfo {
             javaMockClassInfoDTO.setFullyType(fullyQualifiedName);
 
             javaMockClassInfoDTOList.add(javaMockClassInfoDTO);
-
         }
 
         //处理父类的方法，进行mock父类的方法
-        JavaClass superJavaClass = javaClass.getSuperJavaClass();
+        if(ConfigConstant.CONFIG_ENTITY.getIsMockThisOtherMethod()) {
+            mockThisOtherMethod(javaClass, javaGenInfoModel, javaClassModelMap);
+        }
 
+        //属性的相关信息
+        log.info("本类属性相关信息，类：" + javaClass.getName());
+        return javaMockClassInfoDTOList;
+    }
+
+    /**
+     * mock父类的方法，mock父类和当前测试类非本测试方法的方法
+     * @param javaClass
+     * @param javaGenInfoModel
+     * @param javaClassModelMap
+     */
+    private static void mockThisOtherMethod(JavaClass javaClass, JavaGenInfoModel javaGenInfoModel, Map<String, JavaClassModel> javaClassModelMap) {
+        JavaClass superJavaClass = javaClass.getSuperJavaClass();
         JavaClassModel superJavaClassModel = new JavaClassModel();
         superJavaClassModel.setName(javaGenInfoModel.getModelNameLowerCamel());
         superJavaClassModel.setType(InitConstant.getAbbreviation(superJavaClass.getFullyQualifiedName()));
@@ -172,10 +187,6 @@ public class MockClassInfo {
         if (!javaClassModelMap.containsKey(superJavaClassModel.getFullyType())) {
             javaClassModelMap.put(superJavaClassModel.getFullyType(), superJavaClassModel);
         }
-
-        //属性的相关信息
-        log.info("本类属性相关信息，类：" + javaClass.getName());
-        return javaMockClassInfoDTOList;
     }
 
     /**

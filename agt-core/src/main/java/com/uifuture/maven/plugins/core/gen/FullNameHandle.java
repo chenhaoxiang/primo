@@ -45,13 +45,43 @@ public class FullNameHandle {
         String type = baseCanUserType.getType();
         if (implementsJavaPackageMap.containsKey(type)) {
             Set<String> stringList = implementsJavaPackageMap.get(type);
-            if (stringList.size() == 1) {
-                baseCanUserType.setCanUserType(true);
+            if(stringList.size()==1){
+                for (String fType : stringList) {
+                    if(fType.equals(baseCanUserType.getFullyType())){
+                        baseCanUserType.setCanUserType(true);
+                    }
+                }
             }
+            stringList.add(baseCanUserType.getFullyType());
         } else {
             Set<String> stringList = new HashSet<>();
             stringList.add(baseCanUserType.getFullyType());
             implementsJavaPackageMap.put(baseCanUserType.getType(), stringList);
+            baseCanUserType.setCanUserType(true);
+        }
+
+        //接口，处理实现类的全限定名称
+        if(baseCanUserType.getIsInterface()){
+            String subType = baseCanUserType.getSubClassType();
+            if (implementsJavaPackageMap.containsKey(subType)) {
+
+                Set<String> stringList = implementsJavaPackageMap.get(subType);
+                if(stringList.size()==1){
+                    for (String fType : stringList) {
+                        if(fType.equals(baseCanUserType.getSubClassFullyType())){
+                            baseCanUserType.setSubClassCanUserType(true);
+                        }
+                    }
+                }
+                stringList.add(baseCanUserType.getSubClassFullyType());
+
+            } else {
+                Set<String> stringList = new HashSet<>();
+                stringList.add(baseCanUserType.getSubClassFullyType());
+                implementsJavaPackageMap.put(baseCanUserType.getSubClassType(), stringList);
+                baseCanUserType.setSubClassCanUserType(true);
+            }
+
         }
     }
 

@@ -72,4 +72,16 @@ public class ConfigEntity {
      */
     private String configFileName;
 
+
+    /**
+     * 配置是否mock掉父类以及自身测试类非测试的方法
+     */
+    private Boolean isMockThisOtherMethod;
+
+    /**
+     * 配置是否设置基础类型的值随机生成
+     */
+    private Boolean isSetBasicTypesRandomValue;
+
+
 }
