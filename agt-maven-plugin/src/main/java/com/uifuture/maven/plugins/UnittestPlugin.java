@@ -43,7 +43,7 @@ public class UnittestPlugin extends AbstractPlugin {
      * 是否获取子包下的类
      */
     @Parameter(defaultValue = "true")
-    private Boolean childPackage;
+    private Boolean isGetChildPackage;
 
     /**
      * 需要mock掉的包，包下所有类的方法都会被mock
@@ -64,8 +64,10 @@ public class UnittestPlugin extends AbstractPlugin {
 
     /**
      * 其他的项目名称，一个项目下多个项目模块。项目模块的路径
+     * 不需要进行配置，插件进行依赖即可
      */
     @Parameter
+    @Deprecated
     private String otherProjectName;
 
     public static void main(String[] args) throws IOException {
@@ -85,7 +87,7 @@ public class UnittestPlugin extends AbstractPlugin {
         super.execute();
         ConfigConstant.CONFIG_ENTITY.setTestPackageName(testPackageName);
         ConfigConstant.CONFIG_ENTITY.setAuthor(author);
-        ConfigConstant.CONFIG_ENTITY.setChildPackage(childPackage);
+        ConfigConstant.CONFIG_ENTITY.setIsGetChildPackage(isGetChildPackage);
         ConfigConstant.CONFIG_ENTITY.setMockPackage(mockPackage);
         ConfigConstant.CONFIG_ENTITY.setSkipPackages(skipPackages);
         ConfigConstant.CONFIG_ENTITY.setOtherProjectName(otherProjectName);
@@ -100,7 +102,7 @@ public class UnittestPlugin extends AbstractPlugin {
         }
 
         //获取该包下所有的类
-        List<String> javaList = PackageUtil.getClassName(basedir.getPath(), testPackageName, childPackage);
+        List<String> javaList = PackageUtil.getClassName(basedir.getPath(), testPackageName, isGetChildPackage);
         getLog().info("获取的所有类名为：" + javaList);
 
         //初始化类源
@@ -129,15 +131,15 @@ public class UnittestPlugin extends AbstractPlugin {
         getLog().info("加载当前模块的类：" + mainJava);
 
         //加载其他模块的类
-        if (StringUtil.isNotEmpty(otherProjectName)) {
-            for (String name : otherProjectName.split(";")) {
-                String fileName = basedir.getPath().substring(0, basedir.getPath().lastIndexOf("/") + 1) + name + BaseConstant.JAVA_MAIN_SRC;
-                BaseConstant.javaProjectBuilder.addSourceTree(new File(fileName));
-                getLog().info("加载其他模块的类：" + fileName);
-            }
-        }
+//        if (StringUtil.isNotEmpty(otherProjectName)) {
+//            for (String name : otherProjectName.split(";")) {
+//                String fileName = basedir.getPath().substring(0, basedir.getPath().lastIndexOf("/") + 1) + name + BaseConstant.JAVA_MAIN_SRC;
+//                BaseConstant.javaProjectBuilder.addSourceTree(new File(fileName));
+//                getLog().info("加载其他模块的类：" + fileName);
+//            }
+//        }
 
-        //TODO 需要删除 不需要配置需要mock的包
+        //需要删除 不需要配置需要mock的包
 //        if (StringUtil.isNotEmpty(mockPackage)) {
 //            //需要mock的包
 //            String mockJava = basedir + BaseConstant.JAVA_MAIN_SRC + mockPackage.replace(".", "/");
