@@ -20,11 +20,9 @@ import org.apache.maven.plugins.annotations.Mojo;
 @Mojo(name="init")
 public class InitPlugin extends AbstractPlugin {
     /**
-     * TODO 配置文件下载地址
+     * 配置文件下载地址
      */
-//    private static final String CONFIG_URL = "https://raw.githubusercontent.com/chenhaoxiang/maven-auto-generate-test-plugin/master/magt-run/src/main/resources/template/test.ftl";
-
-    private static final String CONFIG_URL = "https://raw.githubusercontent.com/chenhaoxiang/maven-auto-generate-test-plugin/master/src/main/resources/test/template/test.ftl";
+    private static final String CONFIG_URL = "https://raw.githubusercontent.com/chenhaoxiang/maven-auto-generate-test-plugin/master/doc/template/1.1.0/magt.ftl";
     /**
      * 需要将配置文件下载下来
      * @throws MojoExecutionException

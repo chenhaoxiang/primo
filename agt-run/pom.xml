@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>maven-agt-plugin</artifactId>
-    <version>1.0.1</version>
+    <version>1.1.0</version>
 
     <packaging>maven-plugin</packaging>
 
@@ -23,7 +23,7 @@
         <dependency>
             <groupId>com.uifuture.maven.plugins</groupId>
             <artifactId>agt-core</artifactId>
-            <version>1.0.1</version>
+            <version>1.1.0</version>
         </dependency>
 
         <dependency>
