@@ -29,7 +29,7 @@ public class FullNameHandle {
     /**
      * 处理全称限定名称 - 简称
      * 页面进行导入时进行处理
-     * @param baseCanUserTypes
+     * @param baseCanUserTypes 被处理的类集合，设置是否能够使用简称
      * @param implementsJavaPackageMap 需要导入的包  如果有多个，全部使用全限定名，在该map中的，表示没有简称相同的类
      *                                 key - 变量名-简称
      *                                 value - 全限定名称
@@ -40,6 +40,15 @@ public class FullNameHandle {
             addQualifiedNameToImplementsPackageMap(javaParameterDTO,implementsJavaPackageMap);
         }
     }
+
+    /**
+     * 处理全称限定名称 - 简称
+     *
+     * @param baseCanUserType          被处理的类，设置是否能够使用简称
+     * @param implementsJavaPackageMap 需要导入的包  如果有多个，全部使用全限定名，在该map中的，表示没有简称相同的类
+     *                                 key - 变量名-简称
+     *                                 value - 全限定名称
+     */
     public static void addQualifiedNameToImplementsPackageMap(BaseCanUserType baseCanUserType, Map<String, Set<String>> implementsJavaPackageMap) {
         //处理全限定名称
         String type = baseCanUserType.getType();
@@ -92,7 +101,7 @@ public class FullNameHandle {
      *      * 需要导入的包  如果有多个，全部使用全限定名，在该map中的，表示没有简称相同的类
      *      * key - 变量名-简称
      *      * value - 全限定名称
-     * @return
+     * @return 需要导入的包 - 简称相同的类，不会被导入
      */
     public static List<JavaImplementsDTO> handleImplements(Map<String, Set<String>> implementsJavaPackageMap) {
         List<JavaImplementsDTO> javaImplementsDTOList = new ArrayList<>();

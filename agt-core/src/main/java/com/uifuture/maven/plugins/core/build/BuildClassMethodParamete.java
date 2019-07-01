@@ -34,10 +34,9 @@ public class BuildClassMethodParamete {
      * 获取的参数
      * 参数组装-方法参数
      *
-     * @param javaMethod
-     * @param javaGenInfoModel
-     * @param javaMethodDTO
-     * @return
+     * @param javaMethod 类方法信息
+     * @param javaGenInfoModel 存储的类信息
+     * @param javaMethodDTO 模板方法信息
      */
     public static void build(JavaMethod javaMethod, JavaGenInfoModel javaGenInfoModel, JavaMethodDTO javaMethodDTO) {
         List<JavaParameterDTO> javaParameterDTOS = new ArrayList<>();
@@ -139,9 +138,9 @@ public class BuildClassMethodParamete {
     /**
      * 获取属性，设置到对象中去
      *
-     * @param javaParameterDTOList
-     * @param javaClass
-     * @param javaGenInfoModel
+     * @param javaParameterDTOList 模板的属性信息集合
+     * @param javaClass 类信息
+     * @param javaGenInfoModel 存储的类信息
      */
     private static void addParameterToList(List<JavaParameterDTO> javaParameterDTOList, JavaClass javaClass, JavaGenInfoModel javaGenInfoModel) {
         if (javaClass.isInterface()) {
@@ -197,7 +196,7 @@ public class BuildClassMethodParamete {
                             javaParameterDTO1.setCustomType(true);
                             fullyTypeName = javaClass2.getFullyQualifiedName();
                             javaParameterDTO1.setFullyType(fullyTypeName);
-                            if(fullyTypeName.equals("List")){
+                            if ("List".equals(fullyTypeName)) {
                                 log.info("javaParameterDTOList="+javaParameterDTOList+",,,javaParameterDTO1="+javaParameterDTO1);
                             }
                             fieldType = InitConstant.getAbbreviation(fullyTypeName);

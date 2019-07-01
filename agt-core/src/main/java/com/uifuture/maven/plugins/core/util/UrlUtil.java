@@ -25,10 +25,10 @@ public class UrlUtil {
     /**
      * 从网络Url中下载文件
      *
-     * @param urlStr
-     * @param fileName
-     * @param savePath
-     * @throws IOException
+     * @param urlStr 地址
+     * @param fileName 文件名称
+     * @param savePath 保存路径
+     * @throws IOException IO异常
      */
     public static void downLoadFromUrl(String urlStr, String fileName, String savePath) throws IOException {
         URL url = new URL(urlStr);
@@ -46,7 +46,10 @@ public class UrlUtil {
         //文件保存位置
         File saveDir = new File(savePath);
         if (!saveDir.exists()) {
-            saveDir.mkdirs();
+            if (!saveDir.mkdirs()) {
+                log.info(savePath + " 文件路径不存在，AGT进行创建失败，请检查是否有权限");
+                return;
+            }
         }
         File file = new File(saveDir + File.separator + fileName);
         if(file.exists()){
@@ -63,9 +66,9 @@ public class UrlUtil {
     /**
      * 从输入流中获取字节数组
      *
-     * @param inputStream
-     * @return
-     * @throws IOException
+     * @param inputStream 输入流
+     * @return 字节数组
+     * @throws IOException 流处理IO异常
      */
     private static byte[] readInputStream(InputStream inputStream) throws IOException {
         byte[] buffer = new byte[1024];

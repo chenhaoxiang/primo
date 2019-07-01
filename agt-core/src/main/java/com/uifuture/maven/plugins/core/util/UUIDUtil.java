@@ -39,8 +39,10 @@ public class UUIDUtil {
         return HashUtil.convertToHashStr(uuid.getMostSignificantBits(), 5)
                 + HashUtil.convertToHashStr(uuid.getLeastSignificantBits(), 5);
     }
+
     /**
-     * 获取随机字符串
+     * 获取随机字符串(字节)
+     * @return 返回随机字节
      */
     public static String getRandomChar() {
         int rand = RandomUtils.nextInt(0,strDigits.length-1);

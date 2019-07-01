@@ -5,13 +5,10 @@
 package com.uifuture.maven.plugins.core.common;
 
 import com.thoughtworks.qdox.JavaProjectBuilder;
-import com.uifuture.maven.plugins.core.model.JavaClassModel;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -29,20 +26,7 @@ public class BaseConstant {
     public static final String JAVA_TEST_SRC = "/src/test/java/";
 
     /**
-     * 需要mock的java类，全限定名称
-     */
-//    public static Set<String> mockJavaSet = new HashSet<>();
-
-    /**
-     * 类信息
-     * key - 全限定名称
-     * value - 类信息
-     */
-//    public static Map<String, JavaClassModel> mockParentJavaClassModelMap = new HashMap<>();
-
-    /**
      * 日期
-     * @date
      */
     public static final String DATE = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 

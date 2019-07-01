@@ -5,29 +5,17 @@
 package com.uifuture.maven.plugins.core.build;
 
 import com.thoughtworks.qdox.model.JavaClass;
-import com.thoughtworks.qdox.model.JavaField;
 import com.thoughtworks.qdox.model.JavaMethod;
-import com.thoughtworks.qdox.model.JavaParameter;
-import com.uifuture.maven.plugins.core.common.BaseConstant;
 import com.uifuture.maven.plugins.core.common.InitConstant;
 import com.uifuture.maven.plugins.core.dto.JavaExceptionsDTO;
 import com.uifuture.maven.plugins.core.dto.JavaMethodDTO;
-import com.uifuture.maven.plugins.core.dto.JavaMockMethodInfoDTO;
-import com.uifuture.maven.plugins.core.dto.JavaParameterDTO;
-import com.uifuture.maven.plugins.core.gen.FullNameHandle;
-import com.uifuture.maven.plugins.core.model.JavaClassModel;
 import com.uifuture.maven.plugins.core.model.JavaGenInfoModel;
-import com.uifuture.maven.plugins.core.model.JavaMethodModel;
-import com.uifuture.maven.plugins.core.model.JavaParameteModel;
-import com.uifuture.maven.plugins.core.util.StringUtil;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.plugin.logging.SystemStreamLog;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * 构建类中的方法
@@ -39,14 +27,12 @@ public class BuildClassMethod {
     private static Log log = new SystemStreamLog();
 
     /**
-     * 核心方法
-     *
-     * @param javaClass
-     * @param javaParameterDTOMap 包装类的内部属性 - 包含了父类的属性
-     * @param javaGenInfoModel
+     * 构建测试类核心方法
+     * @param javaClass 被测试类的信息
+     * @param javaGenInfoModel 贯穿本次类构造，记录类信息
+     * @return 方法DTO集合
      */
     public static List<JavaMethodDTO> build(JavaClass javaClass,
-                                                        Map<String, List<JavaParameterDTO>> javaParameterDTOMap,
                                                         JavaGenInfoModel javaGenInfoModel) {
         List<JavaMethodDTO> javaMethodDTOList = new ArrayList<>();
 
@@ -61,7 +47,7 @@ public class BuildClassMethod {
             //获取方法名称
             String methodName = javaMethod.getName();
             javaMethodDTO.setMethodName(methodName);
-//          //处理重名方法
+            //处理重名方法
             methodDdealingWithRenaming(methodMap, methodName, javaMethodDTO);
 
             //获取方法返回类型
@@ -98,9 +84,9 @@ public class BuildClassMethod {
     /**
      * 处理重名方法
      *
-     * @param methodMap
-     * @param methodName
-     * @param javaMethodDTO
+     * @param methodMap 测试方法名称出现的次数，如果有多个重名方法，方法后面接上数字
+     * @param methodName  方法名称
+     * @param javaMethodDTO 方法展示信息
      */
     private static void methodDdealingWithRenaming(Map<String, Integer> methodMap, String methodName, JavaMethodDTO javaMethodDTO) {
         javaMethodDTO.setMethodTestName(methodName + "Test");
@@ -115,10 +101,10 @@ public class BuildClassMethod {
 
 
     /**
-     * 排除方法
+     * 排除静态方法和私有方法
      *
-     * @param javaMethod
-     * @return
+     * @param javaMethod 类方法信息
+     * @return true-进行排除，false-不是静态方法和私有方法
      */
     private static boolean excludeMethod(JavaMethod javaMethod) {
         //是否是静态方法

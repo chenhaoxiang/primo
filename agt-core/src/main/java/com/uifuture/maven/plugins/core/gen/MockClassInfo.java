@@ -39,8 +39,9 @@ public class MockClassInfo {
      * 获取mock的信息，
      * 遍历类中属性，以及属性名称，设置到需要mock的类的信息
      *
-     * @param javaClass
-     * @param javaGenInfoModel
+     * @param javaClass 测试类信息
+     * @param javaGenInfoModel 类信息存储
+     * @return 模板中类信息
      */
     public static List<JavaMockClassInfoDTO> getMockClass(JavaClass javaClass, JavaGenInfoModel javaGenInfoModel) {
         //需要mock的类
@@ -119,15 +120,7 @@ public class MockClassInfo {
                 if (javaClassList != null) {
                     for (JavaClass aClass : javaClassList) {
                         superClass = aClass;
-                        //TODO 第三方包，可以通过插件导入包解决解析源码问题
-//                        try {
-//                        引入包之后，便可以解析到第三方包
-//                            Class aClass1 = Class.forName(superClass.getFullyQualifiedName());
-//                            log.info("反射获取的方法数：" + aClass1.getMethods().length);
-//                         } catch (ClassNotFoundException e) {
-//                            e.printStackTrace();
-//                        }
-                        log.info("获取的父类接口的源码行数：" + superClass.getLineNumber());
+                        // 第三方包，可以通过插件导入包解决解析源码问题
                         log.info("获取的父类接口：" + superClass.getSource());
                         handleSuperClass(javaGenInfoModel, javaField, javaMockClassInfoDTO, superClass,javaClassModel);
                     }
@@ -162,9 +155,9 @@ public class MockClassInfo {
 
     /**
      * mock父类的方法，mock父类和当前测试类非本测试方法的方法
-     * @param javaClass
-     * @param javaGenInfoModel
-     * @param javaClassModelMap
+     * @param javaClass 测试类信息
+     * @param javaGenInfoModel 存储类的信息
+     * @param javaClassModelMap 类信息存储，key - 类的全限定名称，value - 类信息
      */
     private static void mockThisOtherMethod(JavaClass javaClass, JavaGenInfoModel javaGenInfoModel, Map<String, JavaClassModel> javaClassModelMap) {
         JavaClass superJavaClass = javaClass.getSuperJavaClass();
@@ -191,11 +184,11 @@ public class MockClassInfo {
 
     /**
      * 存储父类的信息
-     *  @param javaGenInfoModel
-     * @param javaField
-     * @param javaMockClassInfoDTO
-     * @param superClass
-     * @param javaClassModel
+     *  @param javaGenInfoModel 存储的类信息
+     * @param javaField 类属性信息
+     * @param javaMockClassInfoDTO 模板中的类信息
+     * @param superClass 父类
+     * @param javaClassModel 类信息
      */
     private static void handleSuperClass(JavaGenInfoModel javaGenInfoModel, JavaField javaField, JavaMockClassInfoDTO javaMockClassInfoDTO, JavaClass superClass, JavaClassModel javaClassModel) {
         //父类的方法
@@ -230,9 +223,9 @@ public class MockClassInfo {
     /**
      * 设置mock方法的信息
      *
-     * @param javaField
-     * @param javaMethod
-     * @param superClass
+     * @param javaField 类属性
+     * @param javaMethod 方法
+     * @param superClass 父类
      */
     private static JavaMockMethodInfoDTO setMockMethodInfo(JavaField javaField, JavaMethod javaMethod, JavaClass superClass) {
 
@@ -269,11 +262,11 @@ public class MockClassInfo {
 
     /**
      * 获取方法的信息，参数，方法返回值，参数类型
-     * @param javaMethod
+     * @param javaMethod 方法
      * @param fieldName 调用该方法的变量名
      * @param classType 该方法的类的类型
-     * @param superClass
-     * @return
+     * @param superClass 父类
+     * @return 方法信息
      */
     private static JavaMethodModel getJavaMethodModel(JavaMethod javaMethod, String fieldName,String classType, JavaClass superClass) {
         JavaMethodModel javaMethodModel = new JavaMethodModel();
@@ -311,7 +304,7 @@ public class MockClassInfo {
         String rType = InitConstant.getAbbreviation(rTypeStr);
         javaMethodModel.setReturnType(rType);
 
-        if (superClass != null && superClass.getLineNumber() > 0) {
+        if (superClass != null) {
             //设置父类类型
             javaMethodModel.setParentClassFullyType(superClass.getFullyQualifiedName());
         }

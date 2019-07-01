@@ -7,7 +7,6 @@ package com.uifuture.maven.plugins.core.model;
 import lombok.Data;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -23,7 +22,7 @@ public class JavaGenInfoModel {
      */
     private String modelNameLowerCamel;
     /**
-     * 类信息
+     * 类信息存储
      * key - 类的全限定名称
      * value - 类信息
      */

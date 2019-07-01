@@ -7,10 +7,7 @@ package com.uifuture.maven.plugins.core.dto;
 import lombok.Data;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.StringJoiner;
 
 /**
  * 类DTO
@@ -54,11 +51,6 @@ public class JavaClassDTO {
      * 被测试类包名
      */
     private String packageName;
-
-    /**
-     * 包装类的内部属性 - 包含了父类的属性
-     */
-    private Map<String,List<JavaParameterDTO>> javaParameterDTOMap = new HashMap<>();
 
     /**
      * 需要引入的mcok类

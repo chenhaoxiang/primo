@@ -4,28 +4,25 @@
  */
 package com.uifuture.maven.plugins.core.build;
 
-import com.uifuture.maven.plugins.core.common.ConfigConstant;
-import com.uifuture.maven.plugins.core.gen.FullNameHandle;
-
 import com.thoughtworks.qdox.model.JavaClass;
 import com.thoughtworks.qdox.model.JavaPackage;
 import com.thoughtworks.qdox.model.JavaType;
 import com.uifuture.maven.plugins.core.common.BaseConstant;
+import com.uifuture.maven.plugins.core.common.ConfigConstant;
 import com.uifuture.maven.plugins.core.dto.JavaClassDTO;
 import com.uifuture.maven.plugins.core.dto.JavaImplementsDTO;
 import com.uifuture.maven.plugins.core.dto.JavaMethodDTO;
 import com.uifuture.maven.plugins.core.dto.JavaMockClassInfoDTO;
 import com.uifuture.maven.plugins.core.dto.JavaParameterDTO;
+import com.uifuture.maven.plugins.core.gen.FullNameHandle;
 import com.uifuture.maven.plugins.core.gen.MockClassInfo;
 import com.uifuture.maven.plugins.core.model.JavaGenInfoModel;
-import com.uifuture.maven.plugins.core.util.StringUtil;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.plugin.logging.SystemStreamLog;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -52,10 +49,11 @@ public class BuildClass {
     }
 
     /**
-     * 生成测试方法
-     *
+     * 生成测试类
      * @param javaName     java类的全限定名称
-     * @param javaClassDTO
+     * @param javaClassDTO 模板类信息
+     * @return true-生成成功，false-生成失败
+     * @throws IOException IO异常
      */
     public static Boolean build(String javaName, JavaClassDTO javaClassDTO) throws IOException {
         //获取Java类
@@ -93,11 +91,7 @@ public class BuildClass {
         //需要引入的mcok类
         javaClassDTO.setJavaMockClassInfoDTOList(javaMockClassInfoDTOList);
 
-
-        //包装类的内部属性 - 包含了父类的属性
-        Map<String, List<JavaParameterDTO>> javaParameterDTOMap = new HashMap<>();
-
-        List<JavaMethodDTO> javaMethodDTOList = BuildClassMethod.build(javaClass, javaParameterDTOMap, javaGenInfoModel);
+        List<JavaMethodDTO> javaMethodDTOList = BuildClassMethod.build(javaClass, javaGenInfoModel);
         javaClassDTO.setJavaMethodDTOList(javaMethodDTOList);
 
 
@@ -125,7 +119,6 @@ public class BuildClass {
             }
         }
 
-        javaClassDTO.setJavaParameterDTOMap(javaParameterDTOMap);
         //设置包名
         JavaPackage pkg = javaClass.getPackage();
         javaClassDTO.setPackageName(pkg.getName());

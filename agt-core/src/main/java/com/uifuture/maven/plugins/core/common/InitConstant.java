@@ -48,8 +48,8 @@ public class InitConstant {
 
     /**
      * 通过全限定名获取简称
-     * @param type
-     * @return
+     * @param type 全限定名称
+     * @return 简称
      */
     public static String getAbbreviation(String type){
         if(StringUtil.isEmpty(type)){
@@ -181,15 +181,12 @@ public class InitConstant {
 
         VALUE.put("Object", "new Object()");
 
-//        VALUE.put("List", "new ArrayList<>()");
-//        VALUE.put("Set", "new HashSet<>()");
-//        VALUE.put("Map", "new HashMap<>()");
     }
 
     /**
-     * 获取值
-     * @param type
-     * @return
+     * 获取默认的值
+     * @param type 简称
+     * @return 默认值，没有找到返回null
      */
     public static String getValue(String type) {
         if(ConfigConstant.CONFIG_ENTITY.getIsSetBasicTypesRandomValue()) {
@@ -201,6 +198,12 @@ public class InitConstant {
         return VALUE.getOrDefault(type, null);
     }
 
+    /**
+     * 返回随机值
+     *
+     * @param type 简称
+     * @return 随机值
+     */
     private static String getRandomValue(String type) {
         if(StringUtil.isEmpty(type)){
             return null;

@@ -7,12 +7,10 @@ package com.uifuture.maven.plugins.core.model;
 import lombok.Data;
 
 import java.util.List;
-import java.util.Map;
-import java.util.StringJoiner;
 
 /**
  *
- * 类中方法
+ * 类信息
  * @author chenhx
  * @version JavaClassModel.java, v 0.1 2019-06-11 11:38 chenhx
  */

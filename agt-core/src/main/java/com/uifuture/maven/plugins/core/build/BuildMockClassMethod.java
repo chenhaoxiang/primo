@@ -31,10 +31,10 @@ public class BuildMockClassMethod {
 
     private static Log log = new SystemStreamLog();
     /**
-     *
-     * @param javaGenInfoModel
-     * @param javaMethod
-     * @param javaMethodDTO
+     * 构建mock的类方法信息
+     * @param javaGenInfoModel 存储的类信息
+     * @param javaMethod 方法信息
+     * @param javaMethodDTO 模板的方法信息
      */
     public static void buildMock(JavaGenInfoModel javaGenInfoModel, JavaMethod javaMethod, JavaMethodDTO javaMethodDTO) {
         //Mock方法模拟
@@ -65,11 +65,11 @@ public class BuildMockClassMethod {
     /**
      * 保存方法中对应使用的mock方法的一些信息
      *
-     * @param javaGenInfoModel
-     * @param javaMockMethodInfoDTOList
-     * @param methodCode
-     * @param name
-     * @param m
+     * @param javaGenInfoModel 存储的类信息
+     * @param javaMockMethodInfoDTOList Mock方法集合
+     * @param methodCode 方法的源码
+     * @param name 属性变量名称 + "." + 方法名称
+     * @param m 正则匹配
      */
     private static void saveMockMethodInfoDTO(JavaGenInfoModel javaGenInfoModel,
                                               List<JavaMockMethodInfoDTO> javaMockMethodInfoDTOList,
@@ -185,13 +185,13 @@ public class BuildMockClassMethod {
     /**
      * 通过父类进行获取方法的属性
      *
-     * @param javaGenInfoModel
-     * @param name
-     * @param nameS
-     * @param javaMethodModel
-     * @return
+     * @param javaGenInfoModel 存储的类信息
+     * @param name 属性变量名称 + "." + 方法名称
+     * @param methodName 方法名称
+     * @param javaMethodModel 方法信息
+     * @return 方法信息
      */
-    private static JavaMethodModel getJavaMethodModelByParent(JavaGenInfoModel javaGenInfoModel, String name, String nameS, JavaMethodModel javaMethodModel) {
+    private static JavaMethodModel getJavaMethodModelByParent(JavaGenInfoModel javaGenInfoModel, String name, String methodName, JavaMethodModel javaMethodModel) {
         //通过父类再进行获取
         JavaClass javaClass = BaseConstant.javaProjectBuilder.getClassByName(name);
         if (javaClass == null) {
@@ -214,11 +214,11 @@ public class BuildMockClassMethod {
         }
         for (JavaMethodModel methodModel : javaClassModel1.getJavaMethodModelList()) {
             //获取到对应的方法
-            if (methodModel.getName().equals(nameS)) {
+            if (methodModel.getName().equals(methodName)) {
                 return javaMethodModel;
             }
         }
-        log.warn("在类中没有找到该方法，方法名：" + nameS + "，类名："
+        log.warn("在类中没有找到该方法，方法名：" + methodName + "，类名："
                 + name + "，javaGenInfoModel=" + javaGenInfoModel);
 
         return null;

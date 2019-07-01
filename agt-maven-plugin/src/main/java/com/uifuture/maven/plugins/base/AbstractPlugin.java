@@ -25,7 +25,7 @@ public abstract class AbstractPlugin extends AbstractMojo {
     protected String target;
 
     /**
-     * 运行项目的跟路径
+     * 运行项目的根路径
      */
     @Parameter(defaultValue = "${project.basedir}")
     protected File basedir;

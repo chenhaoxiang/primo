@@ -24,6 +24,7 @@ public class PackageUtil {
 
     /**
      * 获取某包下所有类
+     * @param basedir 运行项目的根路径
      * @param packageName 包名
      * @param childPackage 是否遍历子包
      * @return 类的完整名称
@@ -47,6 +48,7 @@ public class PackageUtil {
         File[] childFiles = file.listFiles();
         if(childFiles==null){
             log.error("文件下的类为空");
+            return myClassName;
         }
         for (File childFile : childFiles) {
             if (childFile.isDirectory()) {
