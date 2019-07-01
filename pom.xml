@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.uifuture.maven.plugins</groupId>
-    <artifactId>agt-parent</artifactId>
+    <artifactId>auto-generate-test-maven-plugin</artifactId>
     <version>1.1.0</version>
     <modules>
         <module>agt-core</module>
