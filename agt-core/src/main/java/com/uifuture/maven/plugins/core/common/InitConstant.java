@@ -47,6 +47,11 @@ public class InitConstant {
     public static final Set<String> EXCLUDE_IMPORT_TYPE = new HashSet<>();
 
     /**
+     * 在源码类上有该注解，能够自动在class文件中生成set方法的注解全限定名称,类级别注解
+     */
+    public static final Set<String> CLASS_ANNOTATION_AUTO_SET = new HashSet<>();
+
+    /**
      * 通过全限定名获取简称
      * @param type 全限定名称
      * @return 简称
@@ -70,6 +75,16 @@ public class InitConstant {
         initExclude();
         //初始化集合的默认值 
         initCollectionValue();
+        //初始化生成set的注解 
+        initAnnotationSet();
+    }
+
+    /**
+     * 初始化生成set的注解
+     */
+    private static void initAnnotationSet() {
+        CLASS_ANNOTATION_AUTO_SET.add("lombok.Data");
+        CLASS_ANNOTATION_AUTO_SET.add("lombok.Setter");
     }
 
     private static void initCollectionValue() {

@@ -4,6 +4,7 @@
  */
 package com.uifuture.maven.plugins.core.build;
 
+import com.thoughtworks.qdox.model.JavaAnnotation;
 import com.thoughtworks.qdox.model.JavaClass;
 import com.thoughtworks.qdox.model.JavaField;
 import com.thoughtworks.qdox.model.JavaMethod;
@@ -19,7 +20,9 @@ import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.plugin.logging.SystemStreamLog;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 构建方法的参数
@@ -83,7 +86,7 @@ public class BuildClassMethodParamete {
                             JavaClass javaClass1 = javaClassList.get(0);
                             javaParameterDTO.setCustomType(true);
                             List<JavaParameterDTO> javaParameterDTOList = new ArrayList<>();
-                            //获取属性
+                            //获取属性 - javaParameterDTOList需要排除没有set方法的属性值
                             addParameterToList(javaParameterDTOList, javaClass1, javaGenInfoModel);
                             //设置属性的内部实现
                             javaParameterDTO.setJavaParameterDTOList(javaParameterDTOList);
@@ -146,6 +149,27 @@ public class BuildClassMethodParamete {
         if (javaClass.isInterface()) {
             return;
         }
+        //获取方法名称 - set方法名称
+        Set<String> methodSet = new HashSet<>();
+        List<JavaMethod> javaMethodList = javaClass.getMethods();
+        for (JavaMethod javaMethod : javaMethodList) {
+            methodSet.add(javaMethod.getName());
+        }
+
+        //处理源码上含有生成set方法的注解，但是源码中没有set方法处理
+        boolean hasAnnotationSet = false;
+        //注解 - lombok.Data;lombok.Setter;，均会在class生成set方法
+        List<JavaAnnotation> annotationList = javaClass.getAnnotations();
+        for (JavaAnnotation javaAnnotation : annotationList) {
+            JavaClass anClass = javaAnnotation.getType();
+            String anClassName = anClass.getFullyQualifiedName();
+            if (InitConstant.CLASS_ANNOTATION_AUTO_SET.contains(anClassName)) {
+                //表明有set注解
+                hasAnnotationSet = true;
+            }
+        }
+        //TODO 属性上的setter注解并没有进行处理
+
         List<JavaField> javaFields = javaClass.getFields();
         if (javaFields.isEmpty()) {
             log.warn("获取的类下的属性为空，可能是由于不在同一个项目，类：" + javaClass);
@@ -210,7 +234,16 @@ public class BuildClassMethodParamete {
                 }
             }
 
-            javaParameterDTOList.add(javaParameterDTO1);
+            //判断类是否含有set的注解，注解能够在class生成set方法的
+            if (hasAnnotationSet) {
+                javaParameterDTOList.add(javaParameterDTO1);
+            } else {
+                //判断是否有该属性的set方法
+                if (methodSet.contains("set" + javaParameterDTO1.getUpName())) {
+                    javaParameterDTOList.add(javaParameterDTO1);
+                }
+            }
+
         }
     }
 
