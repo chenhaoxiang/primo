@@ -11,6 +11,8 @@
 ## 使用  
 
 ### 1. 首先依赖插件：
+
+#### 版本1.0.0：（注意1.0.0以后的artifactId已经更换）
 ```xml
 <plugin> 
   <groupId>com.uifuture.maven.plugins</groupId>
@@ -20,8 +22,27 @@
         <testPackageName>com.jiaxuan.heaven.book.service.impl</testPackageName> 
     </configuration>
 </plugin>
-```  
-**1.0.0版本已上传至中央仓库.**    
+```   
+(建议使用最新版本)：目前最新版本1.0.0   
+#### 版本1.0.0+：
+```xml
+<plugin>
+    <groupId>com.uifuture.maven.plugins</groupId>
+    <artifactId>agt-maven-plugin</artifactId>
+    <version>1.1.0</version>
+    <configuration>
+        <testPackageName>com.jiaxuan.heaven.book.service.impl</testPackageName>
+    </configuration>
+    <dependencies>
+        <!--引入包，框架可以利用反射找到类--> 
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>4.3.2.RELEASE</version>
+        </dependency> 
+    </dependencies>
+</plugin>
+``` 
 
 ### 2. 下载配置文件  
 运行：插件的agt:init命令    
@@ -34,7 +55,7 @@
 
 ### 3. 引入mock相关依赖  
 自动测试代码生成插件   
-项目需要依赖Jar包：
+项目需要依赖Jar包： 
 ```xml
 
 <dependency>
@@ -129,10 +150,9 @@
 <version>1.0.0</version> 
 ```
 
-## V1.1.0 - 开发中 
+## V1.1.0  
 1. 支持配置选择是否自动mock掉父类&自身非测试的方法 - 默认true  
-2. 支持配置静态方法mock，默认不支持，需要配置   
-3. 支持配置实体基础类型随机设置/使用默认值空值  
+2. 支持配置实体基础类型随机设置/使用默认值空值   
     a. 随机 String长度:10位数字与字母，使用JDK UUID进行生成，确保唯一  
     b. 随机 int:[0,1000]   
     c. 随机 byte:[0,1]  
@@ -141,12 +161,11 @@
     f. 随机 float:[0.00f,10000.00f]   
     g. 随机 long:[0L,100000L]   
     g. 随机 char:数字/字母      
-4. ~~每个测试类使用统一的before注解进行mock方法~~(考虑到后面每个分支的mock，如果同意进行mock的话，会导致分支无法全面覆盖)   
-5. 测试类中的私有方法进行mock，私有方法专门开方法进行生成mock测试，默认不支持，需要配置      
-6. mock注解的类，使用了全限定名称，优化为简称，类进行导入，重复类简称，第一个类使用简称，后面的类使用全限定名称   
-7. 不再支持配置其他包下的类进行mock，非测试类的所有方法均进行mock，测试类的私有方法也进行mock  
-8. 已生成测试类，不再进行覆盖生成   
-9. 支持第三方包类的加载和构造    
+3. ~~每个测试类使用统一的before注解进行mock方法~~(考虑到后面每个分支的mock，如果同意进行mock的话，会导致分支无法全面覆盖)   
+4. mock注解的类，使用了全限定名称，优化为简称，类进行导入，重复类简称，第一个类使用简称，后面的类使用全限定名称   
+5. 不再支持配置其他包下的类进行mock，非测试类的所有方法均进行mock，测试类的私有方法也进行mock  
+6. 已生成测试类，不再进行覆盖生成   
+7. 支持第三方包类的加载和构造    
 
 ### 待支持功能   
 1. 同一个测试方法中存在Mock方法名称重复（参数个数不同）无法进行区分，仅仅对于第一个方法进行mock，且会存在重复mock代码生成；期望：支持同名方法的mock  
@@ -157,9 +176,17 @@
 6. 不支持Spring自定义事务管理器DataSourceTransactionManager的mock；期望：支持自定义事务的mock  
 7. 对于一些没有setter方法的属性，也进行了set值；期望：对于没有setter的属性值，不进行设置  
   
-  
+8. 支持配置静态方法mock，默认不支持，需要配置   
+9. 测试类中的私有方法进行mock，私有方法专门开方法进行生成mock测试，默认不支持，需要配置      
+
 ### 配置更改点  
 ```<childPackage>```配置属性修改为```<isGetChildPackage>```
+
+## V1.1.1 - 开发中
+1. 对于一些没有setter方法的属性，也进行了set值；期望：对于没有setter的属性值，不进行设置     
+2. 支持配置静态方法mock，默认不支持，需要配置     
+3. 测试类中的私有方法进行mock，私有方法专门开方法进行生成mock测试，默认不支持，需要配置        
+
 
 ## V1.1.2 - 开发中
 1. 支持if-else生成多个mock分支方法  

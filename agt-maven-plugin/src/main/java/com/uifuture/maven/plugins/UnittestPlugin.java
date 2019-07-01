@@ -53,14 +53,14 @@ public class UnittestPlugin extends AbstractPlugin {
     private Boolean isMockThisOtherMethod;
 
     /**
-     * 配置是否设置基础类型的值随机生成
+     * 配置是否设置基础类型的值随机生成(默认false)
      */
     @Parameter(defaultValue = "false")
     private Boolean isSetBasicTypesRandomValue;
 
     /**
      * 需要mock掉的包，包下所有类的方法都会被mock
-     * v1.0.2 不再支持进行配置进行mock的包
+     * v1.1.2 将不再支持进行配置进行mock的包
      */
     @Parameter
     @Deprecated()
