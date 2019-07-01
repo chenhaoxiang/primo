@@ -4,6 +4,7 @@
  */
 package com.uifuture.maven.plugins.core.util;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.RandomUtils;
 
 import java.util.UUID;
@@ -29,6 +30,7 @@ public class UUIDUtil {
             "p", "q", "r", "s", "t",
             "u", "v", "w", "x", "y", "z"};
 
+    private static String str = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
     /**
      * 生成10位UUID
      * @return 生成10位UUID
@@ -48,6 +50,16 @@ public class UUIDUtil {
         int rand = RandomUtils.nextInt(0,strDigits.length-1);
         // 改变uuid的生成规则
         return strDigits[rand];
+    }
+
+    /**
+     * 获取随机字符串
+     *
+     * @param count 字符串长度
+     * @return count长度的随机字符串
+     */
+    public static String getRandomString(int count) {
+        return RandomStringUtils.random(count, str);
     }
 
 }

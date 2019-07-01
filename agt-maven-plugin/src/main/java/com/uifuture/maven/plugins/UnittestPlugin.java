@@ -83,6 +83,31 @@ public class UnittestPlugin extends AbstractPlugin {
     @Deprecated
     private String otherProjectName;
 
+    /**
+     * 配置字符串随机值的位数（例如："10"，表示10位随机字母/数字字符）
+     * V1.1.1+
+     */
+    @Parameter(defaultValue = "10")
+    private String setStringRandomRange;
+    /**
+     * 配置int/Integer类型随机值的范围（例如："0,1000"，表示[0,1000)范围的int数值，配置固定的值可配置为"0",则int值固定为0）
+     * V1.1.1+
+     */
+    @Parameter(defaultValue = "0,1000")
+    private String setIntRandomRange;
+    /**
+     * 配置long/Long类型随机值的范围(配置规则与setIntRandomRange类似)
+     * V1.1.1+
+     */
+    @Parameter(defaultValue = "0,10000")
+    private String setLongRandomRange;
+    /**
+     * 配置boolean/Boolean类型随机值的范围（例如：配置为"true"/"false"表示为固定的值，其他任意值表示true和false随机）
+     * V1.1.1+
+     */
+    @Parameter(defaultValue = "true,false")
+    private String setBooleanRandomRange;
+
     public static void main(String[] args) throws IOException {
         JavaProjectBuilder builder = new JavaProjectBuilder();
         builder.addSource(new File("/Users/chenhx/Desktop/github/auto-generate-test-maven-plugin/agt-core/src/main/java/com/uifuture/maven/plugins/core/model/JavaClassModel.java"));
@@ -106,6 +131,10 @@ public class UnittestPlugin extends AbstractPlugin {
         ConfigConstant.CONFIG_ENTITY.setOtherProjectName(otherProjectName);
         ConfigConstant.CONFIG_ENTITY.setIsMockThisOtherMethod(isMockThisOtherMethod);
         ConfigConstant.CONFIG_ENTITY.setIsSetBasicTypesRandomValue(isSetBasicTypesRandomValue);
+        ConfigConstant.CONFIG_ENTITY.setSetStringRandomRange(setStringRandomRange);
+        ConfigConstant.CONFIG_ENTITY.setSetBooleanRandomRange(setBooleanRandomRange);
+        ConfigConstant.CONFIG_ENTITY.setSetIntRandomRange(setIntRandomRange);
+        ConfigConstant.CONFIG_ENTITY.setSetLongRandomRange(setLongRandomRange);
 
         getLog().info("开始生成自动化测试代码" +
                 "\n" + ConfigConstant.CONFIG_ENTITY

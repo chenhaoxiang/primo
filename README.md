@@ -24,7 +24,8 @@
 </plugin>
 ```   
 (建议使用最新版本)：目前最新版本1.0.0   
-#### 版本1.0.0+：
+#### 版本1.0.0+： 
+（后续版本如无说明，groupId与artifactId不会再进行更换）  
 ```xml
 <plugin>
     <groupId>com.uifuture.maven.plugins</groupId>
@@ -61,9 +62,9 @@
 <dependency>
     <groupId>org.powermock</groupId>
     <artifactId>powermock-module-junit4</artifactId>
-    <version>1.7.4</version>
-    <scope>test</scope>
-</dependency>
+    <version>1.7.4</version> 
+    <scope>test</scope> 
+</dependency> 
 <dependency>
     <groupId>org.powermock</groupId>
     <artifactId>powermock-api-mockito2</artifactId>
@@ -74,8 +75,7 @@
     <groupId>org.mockito</groupId>
     <artifactId>mockito-core</artifactId>
     <version>2.8.47</version>
-    <scope>test</scope>
-    
+    <scope>test</scope> 
 </dependency>
 
 ``` 
@@ -93,7 +93,12 @@
 - ```<configFileName>```:下载下来的配置文件的名称   
 - ```<isGetChildPackage>```:配置testPackageName的包是否递归获取子包下的类(默认true)    
 - ```<isMockThisOtherMethod>```:配置是否mock掉父类以及自身测试类非测试的方法(默认true)    
-- ```<isSetBasicTypesRandomValue>```:配置是否设置基础类型的值随机生成(默认false)    
+- ```<isSetBasicTypesRandomValue>```:配置是否设置基础类型的值随机生成(默认false)
+    
+- ```<setStringRandomRange>```:配置字符串随机值的位数（例如："10"，表示10位随机字母/数字字符）    
+- ```<setIntRandomRange>```:配置int/Integer类型随机值的范围（例如："0,1000"，表示[0,1000)范围的int数值，配置固定的值可配置为"0",则int值固定为0 ）    
+- ```<setLongRandomRange>```:配置long/Long类型随机值的范围(配置规则与setIntRandomRange类似)   
+- ```<setBooleanRandomRange>```:配置boolean/Boolean类型随机值的范围（例如：配置为"true"/"false"表示为固定的值，其他任意值表示true和false随机）   
 
 #### 已删除配置 
 - ```<childPackage>```:已更名为 ```<isGetChildPackage>```   
@@ -135,6 +140,7 @@
 # 版本功能
 
 ## V1.0.0    
+### 本次新增/优化功能  
 1. 支持包下所有类中公共非静态方法生成测试方法   
 2. 支持配置mock的包，将mock掉包下类的所有方法  
 3. 支持基础类型和包装类型自动赋值  
@@ -151,15 +157,17 @@
 ```
 
 ## V1.1.0  
+
+### 本次新增/优化功能  
 1. 支持配置选择是否自动mock掉父类&自身非测试的方法 - 默认true  
 2. 支持配置实体基础类型随机设置/使用默认值空值   
     a. 随机 String长度:10位数字与字母，使用JDK UUID进行生成，确保唯一  
-    b. 随机 int:[0,1000]   
-    c. 随机 byte:[0,1]  
-    d. 随机 short:[0,127]   
-    e. 随机 double:[0.00,10000.00]   
-    f. 随机 float:[0.00f,10000.00f]   
-    g. 随机 long:[0L,100000L]   
+    b. 随机 int:[0,1000)  
+    c. 随机 byte:[0,1)  
+    d. 随机 short:[0,127)   
+    e. 随机 double:[0.00,10000.00)   
+    f. 随机 float:[0.00f,10000.00f)   
+    g. 随机 long:[0L,100000L)   
     g. 随机 char:数字/字母      
 3. ~~每个测试类使用统一的before注解进行mock方法~~(考虑到后面每个分支的mock，如果同意进行mock的话，会导致分支无法全面覆盖)   
 4. mock注解的类，使用了全限定名称，优化为简称，类进行导入，重复类简称，第一个类使用简称，后面的类使用全限定名称   
@@ -174,22 +182,25 @@
 4. 不支持集合的构造；期望：支持集合的构造  
 5. mock方法返回值不支持自定义，统一是返回null；期望：支持mock返回值的自定义/生成值   
 6. 不支持Spring自定义事务管理器DataSourceTransactionManager的mock；期望：支持自定义事务的mock  
-7. 对于一些没有setter方法的属性，也进行了set值；期望：对于没有setter的属性值，不进行设置  
+7. 对于一些没有setter方法的属性，也进行了set值；期望：对于没有setter的属性值，不进行设置(V1.1.1+)   
   
-8. 支持配置静态方法mock，默认不支持，需要配置   
-9. 测试类中的私有方法进行mock，私有方法专门开方法进行生成mock测试，默认不支持，需要配置      
+8. 支持配置静态方法mock，默认不支持，需要配置(V1.1.1+)   
+9. 测试类中的私有方法进行mock，私有方法专门开方法进行生成mock测试，默认不支持，需要配置(V1.1.1+)      
 
 ### 配置更改点  
 ```<childPackage>```配置属性修改为```<isGetChildPackage>```  
 
 ## V1.1.1 - 开发中
-1. 对于一些没有setter方法的属性，也进行了set值；期望：对于没有setter的属性值，不进行设置     
-2. 支持配置静态方法mock，默认不支持，需要配置     
+
+### 本次新增/优化功能   
+1. v1.1.0版本中对于一些没有setter方法的属性，也进行了set值；期望：对于没有setter的属性值，不进行设置  
+2. 支持字符串、int、long、布尔类型随机值的范围设置   
+
 3. 测试类中的私有方法进行mock，私有方法专门开方法进行生成mock测试，默认不支持，需要配置      
-4. 支持随机值的范围设置   
+5. 支持配置生成父类属性的set方法进行设置值，默认true，生成的set方法包含父类的属性      
 
 
-## V1.1.2 - 开发中
+## 其他功能排期  
 1. 支持if-else生成多个mock分支方法  
 2. 支持新增方法对应新增测试方法  
 3. 支持重载方法的mock    
@@ -198,6 +209,7 @@
 6. 支持mock方法进行配置/生成值，而非返回null      
 7. 支持断言配置   
 8. 测试类新增方法支持追加生成mock测试方法  
+9. 支持配置静态方法mock，需要进行配置静态类的全限定名称     
 
 ### 注意 
 配置mock静态方法：
@@ -265,6 +277,6 @@ service层的实现类不推荐使用泛型基类service父类进行调用泛型
 
 ![单元覆盖数据](https://raw.githubusercontent.com/chenhaoxiang/auto-generate-test-maven-plugin/master/doc/images/20190620151630.jpg)   
 
-目前1.0.0版本不支持分支的覆盖，导致覆盖率不高，将在1.1.2版本推出分支的多方法mock。大大提高分支覆盖率。      
+目前1.0.0版本不支持分支的覆盖，导致覆盖率不高，将在1.2.0版本后推出分支的多方法mock。大大提高分支覆盖率。      
 
 # 贡献人员 

@@ -8,6 +8,8 @@ import com.uifuture.maven.plugins.core.enums.BaseTypeEnum;
 import com.uifuture.maven.plugins.core.util.StringUtil;
 import com.uifuture.maven.plugins.core.util.UUIDUtil;
 import org.apache.commons.lang3.RandomUtils;
+import org.apache.maven.plugin.logging.Log;
+import org.apache.maven.plugin.logging.SystemStreamLog;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -20,6 +22,8 @@ import java.util.Set;
  * @version InitConstant.java, v 0.1 2019-06-12 11:19 chenhx
  */
 public class InitConstant {
+
+    private static Log log = new SystemStreamLog();
 
     /**
      * 对应类型转换
@@ -225,11 +229,39 @@ public class InitConstant {
         }
         //获取默认值
         if(BaseTypeEnum.String_type.getValue().equals(type)){
-            return "\""+UUIDUtil.getID()+"\"";
+            String strValue = ConfigConstant.CONFIG_ENTITY.getSetStringRandomRange();
+            int len = 10;
+            try {
+                len = Integer.valueOf(strValue);
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+            return "\"" + UUIDUtil.getRandomString(len) + "\"";
         }else if(BaseTypeEnum.Integer_type.getValue().equals(type)
                 || BaseTypeEnum.int_type.getValue().equals(type)
         ){
-            int rand = RandomUtils.nextInt(0,1000);
+            int a = 0;
+            int b = 1000;
+            String intValue = ConfigConstant.CONFIG_ENTITY.getSetIntRandomRange();
+            try {
+                if (intValue.contains(",")) {
+                    //范围
+                    String[] intValues = intValue.split(",");
+                    if (intValues.length == 2) {
+                        a = Integer.valueOf(intValue.split(",")[0].trim());
+                        b = Integer.valueOf(intValue.split(",")[1].trim());
+                    } else {
+                        log.error("setIntRandomRange配置错误，请输入正确的范围。当前配置值：" + intValue);
+                    }
+                } else {
+                    //                固定值
+                    a = Integer.valueOf(intValue.trim());
+                    b = Integer.valueOf(intValue.trim());
+                }
+            } catch (NumberFormatException e) {
+                log.error("setIntRandomRange配置错误，请输入正确的范围。当前配置值：" + intValue, e);
+            }
+            int rand = RandomUtils.nextInt(a, b);
             return ""+rand;
         }else if(BaseTypeEnum.Double_type.getValue().equals(type)
                 || BaseTypeEnum.double_type.getValue().equals(type)
@@ -245,11 +277,38 @@ public class InitConstant {
                 || BaseTypeEnum.boolean_type.getValue().equals(type)
         ){
             boolean rand = RandomUtils.nextBoolean();
+            String booValue = ConfigConstant.CONFIG_ENTITY.getSetBooleanRandomRange();
+            if ("true".equals(booValue.trim())) {
+                rand = true;
+            } else if ("false".equals(booValue.trim())) {
+                rand = false;
+            }
             return ""+rand;
         }else if(BaseTypeEnum.Long_type.getValue().equals(type)
                 || BaseTypeEnum.long_type.getValue().equals(type)
         ){
-            long rand = RandomUtils.nextLong(0L,10000L);
+            long a = 0L;
+            long b = 10000L;
+            String longValue = ConfigConstant.CONFIG_ENTITY.getSetLongRandomRange();
+            try {
+                if (longValue.contains(",")) {
+                    //范围
+                    String[] intValues = longValue.split(",");
+                    if (intValues.length == 2) {
+                        a = Long.valueOf(longValue.split(",")[0].trim());
+                        b = Long.valueOf(longValue.split(",")[1].trim());
+                    } else {
+                        log.error("setLongRandomRange配置错误，请输入正确的范围。当前配置值：" + longValue);
+                    }
+                } else {
+                    //                固定值
+                    a = Integer.valueOf(longValue.trim());
+                    b = Integer.valueOf(longValue.trim());
+                }
+            } catch (NumberFormatException e) {
+                log.error("setLongRandomRange配置错误，请输入正确的范围。当前配置值：" + longValue, e);
+            }
+            long rand = RandomUtils.nextLong(a, b);
             return ""+rand+"L";
         }else if(BaseTypeEnum.Character_type.getValue().equals(type)
                 || BaseTypeEnum.char_type.getValue().equals(type)
