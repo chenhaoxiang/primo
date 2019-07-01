@@ -112,9 +112,8 @@ public class BuildClassMethod {
         if (mStatic) {
             return true;
         }
-        //是否公共方法
-        boolean mPublic = javaMethod.isPublic();
-        return !mPublic;
+        boolean isPublic = javaMethod.isPublic();
+        return !isPublic;
     }
 
 

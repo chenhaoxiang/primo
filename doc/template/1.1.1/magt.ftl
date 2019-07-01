@@ -18,13 +18,13 @@ import org.mockito.junit.MockitoJUnitRunner;
 import static org.mockito.ArgumentMatchers.any;
 
 /**
-* ${javaClassDTO.modelNameUpperCamel}Test
+* ${javaClassDTO.modelNameUpperCamelTestClass}
 * @author ${javaClassDTO.author!''}
 * @date ${javaClassDTO.date!''}
 */
 @RunWith(PowerMockRunner.class)
 @PowerMockIgnore("javax.management.*")
-public class ${javaClassDTO.modelNameUpperCamel}Test {
+public class ${javaClassDTO.modelNameUpperCamelTestClass} {
 @InjectMocks
 private ${javaClassDTO.modelNameUpperCamel} ${javaClassDTO.modelNameLowerCamel};
 <#--遍历mock的类-->

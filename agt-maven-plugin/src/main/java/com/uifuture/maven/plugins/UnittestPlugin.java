@@ -189,6 +189,10 @@ public class UnittestPlugin extends AbstractPlugin {
         String mainJava = basedir.getPath() + BaseConstant.JAVA_MAIN_SRC;
         BaseConstant.javaProjectBuilder.addSourceTree(new File(mainJava));
         getLog().info("加载当前模块的类：" + mainJava);
+        //读取包下所有的测试的java类文件
+        String testJava = basedir.getPath() + BaseConstant.JAVA_TEST_SRC;
+        BaseConstant.javaProjectBuilder.addSourceTree(new File(testJava));
+        getLog().info("加载当前模块的测试类：" + testJava);
 
         //加载其他模块的类
 //        if (StringUtil.isNotEmpty(otherProjectName)) {

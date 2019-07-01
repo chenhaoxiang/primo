@@ -8,8 +8,6 @@ import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.StringJoiner;
 
 /**
  * 方法
@@ -18,6 +16,10 @@ import java.util.StringJoiner;
  */
 @Data
 public class JavaMethodDTO {
+    /**
+     * 是否是私有方法
+     */
+    private Boolean isPrivate;
     /**
      * 方法名称
      */

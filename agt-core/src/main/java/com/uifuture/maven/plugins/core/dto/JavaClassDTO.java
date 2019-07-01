@@ -28,6 +28,16 @@ public class JavaClassDTO {
     private String modelNameLowerCamel;
 
     /**
+     * 测试类名
+     */
+    private String modelNameUpperCamelTestClass;
+
+    /**
+     * 测试类名 - 首字母小写
+     */
+    private String modelNameLowerCamelTestClass;
+
+    /**
      * 当前日期
      */
     private String date;
