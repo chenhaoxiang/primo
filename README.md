@@ -92,7 +92,7 @@
 - ```<author>```:作者名称    
 - ```<configFileName>```:下载下来的配置文件的名称   
 - ```<isGetChildPackage>```:配置testPackageName的包是否递归获取子包下的类(默认true)    
-- ```<isMockThisOtherMethod>```:配置是否mock掉父类以及自身测试类非测试的方法(默认true)    
+- ```<isMockThisOtherMethod>```:配置是否mock掉父类以及自身测试类非测试的方法(默认true),父类/本类方法调用需要使用this进行调用，目前版本无法支持mock        
 - ```<isSetBasicTypesRandomValue>```:配置是否设置基础类型的值随机生成(默认false)
     
 - ```<setStringRandomRange>```:配置字符串随机值的位数（例如："10"，表示10位随机字母/数字字符）    

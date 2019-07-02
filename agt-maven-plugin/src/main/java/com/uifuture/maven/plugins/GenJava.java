@@ -13,13 +13,19 @@ import com.uifuture.maven.plugins.core.dto.JavaClassDTO;
 import com.uifuture.maven.plugins.core.util.StringUtil;
 import com.uifuture.maven.plugins.core.util.UUIDUtil;
 import freemarker.template.Configuration;
+import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.plugin.logging.SystemStreamLog;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -82,7 +88,7 @@ public class GenJava {
             javaClassDTO.setModelNameUpperCamel(className);
             javaClassDTO.setModelNameLowerCamel(StringUtil.strConvertLowerCamel(className));
             javaClassDTO.setModelNameUpperCamelTestClass(className + "Test");
-            javaClassDTO.setModelNameLowerCamel(StringUtil.strConvertLowerCamel(className + "Test"));
+            javaClassDTO.setModelNameLowerCamelTestClass(StringUtil.strConvertLowerCamel(className + "Test"));
             //获取类中方法
             if(!BuildClass.build(ConfigConstant.CONFIG_ENTITY.getTestPackageName() + "." + className,javaClassDTO)){
                 return;
@@ -95,40 +101,11 @@ public class GenJava {
                 cfg.getTemplate(ConfigConstant.CONFIG_ENTITY.getConfigFileName()).process(data, new FileWriter(file));
                 log.info(file + "生成成功");
             } else {
-                //测试类已经存在了
-                String randId = UUIDUtil.getID();
-                testJavaName = ConfigConstant.CONFIG_ENTITY.getBasedir() + BaseConstant.JAVA_TEST_SRC + ConfigConstant.CONFIG_ENTITY.getTestPackageName().replace(".", "/") + "/" + className + randId + "Test.java";
-
-                javaClassDTO.setModelNameUpperCamelTestClass(className + randId + "Test");
-                javaClassDTO.setModelNameLowerCamel(StringUtil.strConvertLowerCamel(className + randId + "Test"));
-
-                File newFile = new File(testJavaName);
-                if (!newFile.getParentFile().exists() && !newFile.getParentFile().mkdirs()) {
-                    log.error(newFile.getParentFile() + "生成失败，请检查是否有权限");
+                File newFile = fileIsExists(className, cfg, testMethodNameSet, file, javaClassDTO, data);
+                if (newFile == null) {
+                    log.error("追加方法失败");
                     return;
                 }
-                cfg.getTemplate(ConfigConstant.CONFIG_ENTITY.getConfigFileName()).process(data, new FileWriter(newFile));
-                //读取类的方法
-                String newClassName = ConfigConstant.CONFIG_ENTITY.getTestPackageName() + "." + className + randId + "Test";
-                log.info("获取临时生成的类名:" + newClassName);
-                //读取包下所有的测试的java类文件
-                BaseConstant.javaProjectBuilder.addSourceTree(newFile);
-
-                JavaClass testJavaClass = BaseConstant.javaProjectBuilder.getClassByName(newClassName);
-                List<JavaMethod> javaMethodList = testJavaClass.getMethods();
-                log.info("获取的方法名称:" + javaMethodList);
-                for (JavaMethod javaMethod : javaMethodList) {
-                    if (!testMethodNameSet.contains(javaMethod.getName())) {
-                        //新增的方法
-                        String code = javaMethod.getSourceCode();
-                        log.info("获取追加的方法源码为:" + code);
-                        //追加方法
-                    }
-                    log.info("获取临时测试类的方法名称:" + javaMethod.getName());
-                }
-                //删除文件
-                newFile.delete();
-
                 log.info(newFile + "追加方法成功");
             }
         } catch (Exception e) {
@@ -137,6 +114,100 @@ public class GenJava {
 
     }
 
+    /**
+     * 文件存在时，进行追加生成的方法
+     *
+     * @param className         类名
+     * @param configuration     Template模板生成文件
+     * @param testMethodNameSet 已有测试方法的名称
+     * @param file              原有已生成的文件
+     * @param javaClassDTO      生成的临时文件信息
+     * @param data              模板的数据
+     * @return 临时生成的文件
+     * @throws TemplateException 模板异常
+     * @throws IOException       流异常
+     */
+    private static File fileIsExists(String className, Configuration configuration, Set<String> testMethodNameSet, File file, JavaClassDTO javaClassDTO, Map<String, Object> data) throws TemplateException, IOException {
+        String testJavaName;//测试类已经存在了
+        String randId = UUIDUtil.getID();
+        testJavaName = ConfigConstant.CONFIG_ENTITY.getBasedir() + BaseConstant.JAVA_TEST_SRC + ConfigConstant.CONFIG_ENTITY.getTestPackageName().replace(".", "/") + "/" + className + randId + "Test.java";
+
+        javaClassDTO.setModelNameUpperCamelTestClass(className + randId + "Test");
+        javaClassDTO.setModelNameLowerCamelTestClass(StringUtil.strConvertLowerCamel(className + randId + "Test"));
+
+        File newFile = new File(testJavaName);
+        if (!newFile.getParentFile().exists() && !newFile.getParentFile().mkdirs()) {
+            log.error(newFile.getParentFile() + "生成失败，请检查是否有权限");
+            return null;
+        }
+        configuration.getTemplate(ConfigConstant.CONFIG_ENTITY.getConfigFileName()).process(data, new FileWriter(newFile));
+        //读取类的方法
+        String newClassName = ConfigConstant.CONFIG_ENTITY.getTestPackageName() + "." + className + randId + "Test";
+        log.info("获取临时生成的类名:" + newClassName);
+        //读取包下所有的测试的java类文件
+        BaseConstant.javaProjectBuilder.addSourceTree(newFile);
+
+        JavaClass testJavaClass = BaseConstant.javaProjectBuilder.getClassByName(newClassName);
+        List<JavaMethod> javaMethodList = testJavaClass.getMethods();
+        log.info("获取的方法名称:" + javaMethodList);
+        for (JavaMethod javaMethod : javaMethodList) {
+            if (!testMethodNameSet.contains(javaMethod.getName())) {
+                //新增的方法 - 测试方法的源码
+                String code = javaMethod.getSourceCode();
+                log.info("获取追加的方法源码为:" + code);
+                //原来的文件进行追加方法
+                String methodStr = "\n    @Test\n" +
+                        "    public void " + javaMethod.getName() + "(){\n" +
+                        code + "\n" +
+                        "    }\n}";
+                //文件追加
+                FileReader fileReader = new FileReader(file);
+                BufferedReader br = new BufferedReader(fileReader);
+                String lineContent = null;
+                List<String> oldFileStr = new ArrayList<>();
+                while ((lineContent = br.readLine()) != null) {
+                    oldFileStr.add(lineContent);
+                }
+                br.close();
+                fileReader.close();
+                //文件覆盖
+                for (int i = oldFileStr.size() - 1; i >= 0; i--) {
+                    String line = oldFileStr.get(i).trim();
+                    if (StringUtil.isEmpty(line)) {
+                        continue;
+                    }
+                    if ("}".equals(line)) {
+                        //删除该行
+                        oldFileStr.remove(i);
+                        break;
+                    }
+                    if (line.endsWith("}")) {
+                        //删除该行最后一个}字符
+                        oldFileStr.set(i, oldFileStr.get(i).substring(0, oldFileStr.get(i).lastIndexOf("}")));
+                        break;
+                    }
+                }
+
+                StringBuilder fileStr = new StringBuilder();
+                //覆盖保存文件
+                for (String line : oldFileStr) {
+                    fileStr.append(line).append("\n");
+                }
+                fileStr.append(methodStr);
+                //写入文件
+                PrintStream ps = new PrintStream(new FileOutputStream(file));
+                // 往文件里写入字符串
+                ps.println(fileStr);
+                ps.close();
+            }
+            log.info("获取临时测试类的方法名称:" + javaMethod.getName());
+        }
+        //删除文件
+        if (!newFile.delete()) {
+            log.error("删除临时文件失败，请检查是否有权限。文件:" + newFile);
+        }
+        return newFile;
+    }
 
 
     private static Configuration getConfiguration() throws IOException {
