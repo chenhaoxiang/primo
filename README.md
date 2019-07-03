@@ -1,10 +1,9 @@
 # auto-generate-test-maven-plugin 
 
 ## 介绍  
-你还在为写大量mock测试而烦恼吗，你还在苦苦的构建包装类的值吗？这里有一款简单mock测试代码自动生成的Maven插件，解决开发人员单元覆盖率低，浪费测试时间的问题，全面优化开发人员的测试效率和测试时间。 
+你还在为写大量单元测试而烦恼吗，你还在苦苦的构建包装类的值吗？这里有一款mock单元测试代码自动生成的Maven插件，解决开发人员消耗大量时间在单元测试的问题，全面优化开发人员的测试效率和测试时间。   
 
 简称：AGT     
-
 项目地址： https://github.com/chenhaoxiang/auto-generate-test-maven-plugin 
 
 
@@ -23,9 +22,25 @@
     </configuration>
 </plugin>
 ```   
+
 (建议使用最新版本)：目前最新版本1.1.0     
 #### 版本1.0.0+： 
 （后续版本如无说明，groupId与artifactId不会再进行更换）  
+
+最简单配置：
+```xml
+
+<plugin>
+    <groupId>com.uifuture.maven.plugins</groupId>
+    <artifactId>agt-maven-plugin</artifactId>
+    <version>*.*.*</version>
+    <configuration>
+        <testPackageName>待测试类的包名</testPackageName>
+    </configuration>
+</plugin>
+```
+
+示例： 
 ```xml
 <plugin>
     <groupId>com.uifuture.maven.plugins</groupId>
@@ -35,7 +50,7 @@
         <testPackageName>com.jiaxuan.heaven.book.service.impl</testPackageName>
     </configuration>
     <dependencies>
-        <!--引入包，框架可以利用反射找到类--> 
+        <!-- 引入包，框架可以利用反射找到类，其他项目中的依赖请按照需要进行引入，本配置仅为示例 --> 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId>
@@ -85,7 +100,7 @@
 运行插件的test命令即可在对应的test路径下生成测试用例。   
 
 #### 必填  
-- ```<testPackageName>```:必填）配置需要生成单元测试用例的包名，不要填写接口所在包名，需要实现类所在包名,会遍历包下以及子包下所有类和类的方法      
+- ```<testPackageName>```:必填）配置需要生成单元测试用例的包名，不要填写接口所在包名，需要实现类所在包名,会遍历包下以及子包下所有类和类的方法（v1.1.2支持配置多个包名，英文分号隔开不同的包名）      
 
 #### 选填 
 - ```<configPath>```:下载配置文件的路径  
@@ -187,7 +202,12 @@
 4. 测试类新增方法支持追加生成mock测试方法  
  
 # V1.1.2  - 开发中  
+1. 支持在不同包下的测试类同时进行生成  
+2. 初始化下载配置文件不再需要，直接运行生成，自动检测是否下载，未下载先进行下载配置文件再生成  
+3. 
 
+### 配置更改点  
+```<testPackageName>``` 支持配置多个包，多个包使用英文分号";"隔开  
 
 
 ## 其他功能排期  
@@ -275,5 +295,7 @@ service层的实现类不推荐使用泛型基类service父类进行调用泛型
 ![单元覆盖数据](https://raw.githubusercontent.com/chenhaoxiang/auto-generate-test-maven-plugin/master/doc/images/20190620151630.jpg)   
 
 目前1.0.0版本不支持分支的覆盖，导致覆盖率不高，将在1.2.0版本后推出分支的多方法mock。大大提高分支覆盖率。      
+
+有任何问题/建议欢迎提<a href="https://github.com/chenhaoxiang/auto-generate-test-maven-plugin/issues">Issues</a>
 
 # 贡献人员 

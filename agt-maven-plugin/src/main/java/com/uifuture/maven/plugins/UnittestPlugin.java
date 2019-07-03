@@ -20,7 +20,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 构建自动化测试
@@ -151,33 +153,54 @@ public class UnittestPlugin extends AbstractPlugin {
             Collections.addAll(BaseConstant.skipPackage, skipPackages.split(";"));
         }
 
-        List<String> javaList = new ArrayList<>();
+        Map<String, List<String>> javaListMap = new HashMap<>();
         //如果配置的是java类，直接使用该类
         if(testPackageName.endsWith(".java")){
+            List<String> javaList = new ArrayList<>();
             testPackageName = testPackageName.substring(0,testPackageName.lastIndexOf(".java"));
             String classPathName = basedir + "/src/main/java/"+ testPackageName.replace(".", "/")+".java";
             //重新设置包名
             ConfigConstant.CONFIG_ENTITY.setTestPackageName(testPackageName.substring(0,testPackageName.lastIndexOf(".")));
             javaList.add(classPathName);
-        }else {
-            //获取该包下所有的类
-            javaList = PackageUtil.getClassName(basedir.getPath(), testPackageName, isGetChildPackage);
-        }
-        getLog().info("获取的所有类名为：" + javaList);
+            javaListMap.put(testPackageName, javaList);
+        } else {
+            //遍历包名，多个包的情况
+            if (testPackageName.contains(";")) {
+                String[] packageNames = testPackageName.split(";");
+                for (String packageName : packageNames) {
+                    if (StringUtil.isEmpty(packageName)) {
+                        continue;
+                    }
+                    //获取该包下所有的类
+                    List<String> javaList = PackageUtil.getClassName(basedir.getPath(), packageName, isGetChildPackage);
+                    javaListMap.put(packageName, javaList);
+                }
 
+            } else {
+                //获取该包下所有的类
+                List<String> javaList = PackageUtil.getClassName(basedir.getPath(), testPackageName, isGetChildPackage);
+                javaListMap.put(testPackageName, javaList);
+            }
+
+        }
         //初始化类源
         initJavaProjectBuilder();
 
-        //class文件绝对路径
-        for (String javaName : javaList) {
-            getLog().info("当前文件路径：" + javaName);
-            if (javaName.endsWith("$1")) {
-                //跳过
-                getLog().info("跳过:" + javaName);
-                continue;
+        //遍历javaListMap  
+        for (String packageName : javaListMap.keySet()) {
+            List<String> javaList = javaListMap.get(packageName);
+            getLog().info("包名为：" + packageName + "，获取的所有类名为：" + javaList);
+            //class文件绝对路径
+            for (String javaName : javaList) {
+                getLog().info("当前文件路径：" + javaName);
+                if (javaName.endsWith("$1")) {
+                    //跳过
+                    getLog().info("跳过:" + javaName);
+                    continue;
+                }
+                //文件路径
+                GenJava.genTest(javaName);
             }
-            //文件路径
-            GenJava.genTest(javaName);
         }
     }
 

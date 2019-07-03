@@ -12,9 +12,6 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.Mojo;
 
-import java.io.File;
-import java.io.IOException;
-
 /**
  * 初始化配置文件
  * @author chenhx
@@ -25,7 +22,7 @@ public class InitPlugin extends AbstractPlugin {
     /**
      * 配置文件下载地址
      */
-    private static final String CONFIG_URL = "https://raw.githubusercontent.com/chenhaoxiang/auto-generate-test-maven-plugin/master/doc/template/1.1.0/magt.ftl";
+    private static final String CONFIG_URL = "https://raw.githubusercontent.com/chenhaoxiang/auto-generate-test-maven-plugin/master/doc/template/1.1.2/magt.ftl";
     /**
      * 需要将配置文件下载下来
      * @throws MojoExecutionException
