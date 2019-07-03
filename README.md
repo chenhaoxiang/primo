@@ -35,7 +35,7 @@
     <artifactId>agt-maven-plugin</artifactId>
     <version>*.*.*</version>
     <configuration>
-        <testPackageName>待测试类的包名</testPackageName>
+        <testPackageName>待测试类的包名（可配置多个，英文分号进行隔开）</testPackageName>
     </configuration>
 </plugin>
 ```
@@ -202,7 +202,7 @@
 4. 测试类新增方法支持追加生成mock测试方法  
  
 # V1.1.3  - 开发中  
-1. 支持在不同包下的测试类同时进行生成  
+1. 支持在不同包下的测试类同时进行生成   
 2. 初始化下载配置文件不再需要，直接运行生成，自动检测是否下载，未下载先进行下载配置文件再生成  
 3. 
 

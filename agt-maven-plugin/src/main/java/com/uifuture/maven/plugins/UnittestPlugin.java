@@ -159,10 +159,8 @@ public class UnittestPlugin extends AbstractPlugin {
             List<String> javaList = new ArrayList<>();
             testPackageName = testPackageName.substring(0,testPackageName.lastIndexOf(".java"));
             String classPathName = basedir + "/src/main/java/"+ testPackageName.replace(".", "/")+".java";
-            //重新设置包名
-            ConfigConstant.CONFIG_ENTITY.setTestPackageName(testPackageName.substring(0,testPackageName.lastIndexOf(".")));
             javaList.add(classPathName);
-            javaListMap.put(testPackageName, javaList);
+            javaListMap.put(testPackageName.substring(0, testPackageName.lastIndexOf(".")), javaList);
         } else {
             //遍历包名，多个包的情况
             if (testPackageName.contains(";")) {
@@ -188,6 +186,8 @@ public class UnittestPlugin extends AbstractPlugin {
 
         //遍历javaListMap  
         for (String packageName : javaListMap.keySet()) {
+            //设置测试包名
+            ConfigConstant.CONFIG_ENTITY.setTestPackageName(packageName);
             List<String> javaList = javaListMap.get(packageName);
             getLog().info("包名为：" + packageName + "，获取的所有类名为：" + javaList);
             //class文件绝对路径
