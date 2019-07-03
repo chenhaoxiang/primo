@@ -138,6 +138,8 @@ public class UnittestPlugin extends AbstractPlugin {
         ConfigConstant.CONFIG_ENTITY.setSetIntRandomRange(setIntRandomRange);
         ConfigConstant.CONFIG_ENTITY.setSetLongRandomRange(setLongRandomRange);
 
+        InitPlugin.downFile();
+
         getLog().info("开始生成自动化测试代码" +
                 "\n" + ConfigConstant.CONFIG_ENTITY
         );

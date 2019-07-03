@@ -123,7 +123,7 @@ public class BuildClass {
         JavaPackage pkg = javaClass.getPackage();
         javaClassDTO.setPackageName(pkg.getName());
 
-        log.info("构建的类信息：" + javaClassDTO);
+        log.debug("构建的类信息：" + javaClassDTO);
         return true;
     }
 

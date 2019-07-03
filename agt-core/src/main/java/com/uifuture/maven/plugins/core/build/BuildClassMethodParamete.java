@@ -76,11 +76,11 @@ public class BuildClassMethodParamete {
                         javaParameterDTO.setSubClassType(InitConstant.getAbbreviation(InitConstant.FULLY_COLLECTION_VALUE_IMPORT.get(typeToStr)));
 
                         javaParameterDTO.setIsInterface(true);
-                        log.info("参数类型为FULLY_COLLECTION_VALUE_IMPORT中类型，javaParameterDTO:"+javaParameterDTO);
+                        log.debug("参数类型为FULLY_COLLECTION_VALUE_IMPORT中类型，javaParameterDTO:" + javaParameterDTO);
                     }else if (javaClass.isInterface()) {
                         //获取实现类 该类是一个接口,获取实现类,子类-也就是派生类
                         List<JavaClass> javaClassList = javaClass.getDerivedClasses();
-                        log.info("javaClassList1:" + javaClassList + ",自定义类型" + typeToStr);
+                        log.debug("javaClassList1:" + javaClassList + ",自定义类型" + typeToStr);
                         if (!javaClassList.isEmpty()) {
                             //取第一个
                             JavaClass javaClass1 = javaClassList.get(0);
@@ -98,7 +98,7 @@ public class BuildClassMethodParamete {
                     } else if (javaClass.isEnum()) {
                         //枚举取值
                         List<JavaField> javaFieldList = javaClass.getFields();
-                        log.info("获取的枚举值：" + javaFieldList + "，javaClass=" + javaClass);
+                        log.debug("获取的枚举值：" + javaFieldList + "，javaClass=" + javaClass);
                         if (!javaFieldList.isEmpty()) {
                             JavaField javaField = javaFieldList.get(0);
                             javaParameterDTO.setValue(javaField.getType().getFullyQualifiedName() + "." + javaField.getName());
@@ -117,7 +117,7 @@ public class BuildClassMethodParamete {
                         if (!InitConstant.MAPPING.containsKey(superJavaClass.getFullyQualifiedName())) {
                             addParameterToList(javaParameterDTOList, superJavaClass, javaGenInfoModel);
                         }
-                        log.info("superJavaClass:" + superJavaClass.getFullyQualifiedName() + ",自定义类型" + typeToStr + "，自定义类型中的类型：" + javaParameterDTOList);
+                        log.debug("superJavaClass:" + superJavaClass.getFullyQualifiedName() + ",自定义类型" + typeToStr + "，自定义类型中的类型：" + javaParameterDTOList);
                         javaParameterDTO.setJavaParameterDTOList(javaParameterDTOList);
                     }
 
@@ -130,7 +130,7 @@ public class BuildClassMethodParamete {
                 FullNameHandle.addQualifiedNameToImplementsPackageMap(javaParameterDTO, javaGenInfoModel.getImplementsJavaPackageMap());
             }
 
-            log.info("生成完参数值的设定:"+javaParameterDTO);
+            log.debug("生成完参数值的设定:" + javaParameterDTO);
             javaParameterDTOS.add(javaParameterDTO);
         }
 

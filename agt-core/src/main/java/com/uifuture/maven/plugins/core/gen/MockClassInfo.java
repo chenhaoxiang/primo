@@ -95,7 +95,7 @@ public class MockClassInfo {
             JavaClass superClass = javaField.getType().getSuperJavaClass();
             //获取该类中的方法
             JavaClass fieldClass = BaseConstant.javaProjectBuilder.getClassByName(fullyQualifiedName);
-            log.info("获取该类的源码长度为:" + fieldClass.getLineNumber());
+            log.debug("获取该类的源码为:" + fieldClass.getSource());
 
             List<JavaMethod> fieldMethodList = fieldClass.getMethods();
 

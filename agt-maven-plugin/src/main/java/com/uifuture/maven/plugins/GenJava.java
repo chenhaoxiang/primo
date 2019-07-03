@@ -94,7 +94,7 @@ public class GenJava {
                 return;
             }
 
-            Map<String, Object> data = new HashMap<>();
+            Map<String, Object> data = new HashMap<>(2);
             data.put("javaClassDTO", javaClassDTO);
             //获取mock的类
             if (!fileIsExists) {
@@ -106,7 +106,7 @@ public class GenJava {
                     log.error("追加方法失败");
                     return;
                 }
-                log.info(newFile + "追加方法成功");
+                log.info(file + ", 追加方法成功，生成的临时文件:" + newFile);
             }
         } catch (Exception e) {
             log.error("生成失败，出现异常", e);
@@ -154,7 +154,7 @@ public class GenJava {
             if (!testMethodNameSet.contains(javaMethod.getName())) {
                 //新增的方法 - 测试方法的源码
                 String code = javaMethod.getSourceCode();
-                log.info("获取追加的方法源码为:" + code);
+                log.debug("获取追加的方法源码为:" + code);
                 //原来的文件进行追加方法
                 String methodStr = "\n    @Test\n" +
                         "    public void " + javaMethod.getName() + "(){\n" +

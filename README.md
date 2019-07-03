@@ -61,7 +61,12 @@
 ``` 
 
 ### 2. 下载配置文件  
-运行：插件的agt:init命令    
+在引入插件的项目模块下运行maven插件的agt:init命令    
+```
+mvn agt:init
+```   
+（v1.1.3+起不再需要先运行agt:init命令，直接运行agt:test即可下载模板文件&生成测试类） 
+agt:init仅仅作为单独下载模板的命令，agt:test包含了agt:init的所有功能  
 
 相关配置：
 ```<configPath></configPath>```填写路径，相对路径为当前运行项目的根路径。(默认下载路径：/src/main/resources/test/template)   
@@ -71,9 +76,8 @@
 
 ### 3. 引入mock相关依赖  
 自动测试代码生成插件   
-项目需要依赖Jar包： 
+插件生成的mock测试类方法依赖powermock&mockito，建议引入如下依赖（不依赖对于agt插件的运行没有影响）   
 ```xml
-
 <dependency>
     <groupId>org.powermock</groupId>
     <artifactId>powermock-module-junit4</artifactId>
@@ -96,8 +100,10 @@
 ``` 
 
 ### 4. configuration中相关配置属性  
-  
-运行插件的test命令即可在对应的test路径下生成测试用例。   
+在引入插件的项目名模块下，运行插件的agt:test命令即可在对应的test路径下生成测试用例。
+```
+mvn agt:test
+```   
 
 #### 必填  
 - ```<testPackageName>```:必填）配置需要生成单元测试用例的包名，不要填写接口所在包名，需要实现类所在包名,会遍历包下以及子包下所有类和类的方法（v1.1.2支持配置多个包名，英文分号隔开不同的包名）      
