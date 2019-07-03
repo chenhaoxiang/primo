@@ -85,17 +85,17 @@ public class ConfigEntity {
 
     /**
      * 配置字符串随机值的位数（例如："10"，表示10位随机字母/数字字符）
-     * V1.1.1+
+     * V1.1.2+
      */
     private String setStringRandomRange;
     /**
      * 配置int/Integer类型随机值的范围（例如："0,1000"，表示[0,1000]范围的int数值，配置固定的值可配置为"0",则int值固定为0）
-     * V1.1.1+
+     * V1.1.2+
      */
     private String setIntRandomRange;
     /**
      * 配置long/Long类型随机值的范围(配置规则与setIntRandomRange类似)
-     * V1.1.1+
+     * V1.1.2+
      */
     private String setLongRandomRange;
     /**
