@@ -8,7 +8,6 @@ import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringJoiner;
 
 /**
  * 需要mock的方法的信息
@@ -41,7 +40,7 @@ public class JavaMockMethodInfoDTO {
     private List<JavaParameterDTO> javaParameterDTOList = new ArrayList<>();
 
     /**
-     * 方法返回参数类型 - 全限定 名称
+     * 方法返回参数类型 - 全限定名称
      */
     private String returnFullyType;
     /**

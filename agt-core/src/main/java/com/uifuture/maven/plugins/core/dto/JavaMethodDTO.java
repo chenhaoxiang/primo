@@ -21,7 +21,7 @@ public class JavaMethodDTO {
      */
     private Boolean isPrivate;
     /**
-     * 方法名称
+     * 被测试的方法名称
      */
     private String methodName;
     /**
@@ -29,11 +29,11 @@ public class JavaMethodDTO {
      */
     private String methodTestName;
     /**
-     * 方法返回类型
+     * 被测试的方法返回类型
      */
     private String returnType;
     /**
-     * 方法返回类型 - 全限定 名称
+     * 被测试的方法返回类型 - 全限定 名称
      */
     private String returnFullyType;
     /**
