@@ -336,5 +336,10 @@ service层的实现类不推荐使用泛型基类service父类进行调用泛型
 
 有任何问题/建议欢迎提<a href="https://github.com/chenhaoxiang/auto-generate-test-maven-plugin/issues">Issues</a>
 
+ 
+## 说明     
 
-# 贡献人员 
+20190703拉了个团队小伙伴一块开发，项目从1.1.3版本开始，进入团队内部开发阶段。感谢您的使用。后期更新，本项目会进行同步更新/提醒。  
+
+建议您可以先star本项目  
+
