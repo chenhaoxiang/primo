@@ -5,6 +5,11 @@
 
 经过本人的亲自使用，外加我在团队的内部"推（qing）广（qiu）"使用，从统计来看，可以减少使用mock测试的小伙伴，至少30-50%的时间。没减少你的测试时间，请拿刀背砍我。      
 
+注意，本插件目前无法完成所有的mock测试，让你不用修改一行代码，暂时需要在agt生成mock测试代码的基础上再进行一点修改，例如分支覆盖，断言使用。
+
+本插件的目标是：实现让开发人员不再写一行mock测试代码，agt帮你全部实现    
+愿景是：减少开发人员的测试负担，专注业务开发与迭代  
+
 简称：AGT     
 项目地址： https://github.com/chenhaoxiang/auto-generate-test-maven-plugin 
 
@@ -330,5 +335,6 @@ service层的实现类不推荐使用泛型基类service父类进行调用泛型
 目前1.0.0版本不支持分支的覆盖，导致覆盖率不高，将在1.2.0版本后推出分支的多方法mock。大大提高分支覆盖率。      
 
 有任何问题/建议欢迎提<a href="https://github.com/chenhaoxiang/auto-generate-test-maven-plugin/issues">Issues</a>
+
 
 # 贡献人员 
