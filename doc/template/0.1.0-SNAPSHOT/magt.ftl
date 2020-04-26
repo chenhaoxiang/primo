@@ -44,17 +44,8 @@ private ${javaClassDTO.modelNameUpperCamel} ${javaClassDTO.modelNameLowerCamel};
         <#--获取内部参数-->
             <#if parameter.isInterface>
             <#--参数是接口-->
-                ${parameter.type} ${parameter.name} =
-                <#if parameter.value??>
-                    ${parameter.value}
-                <#else >
-                <#--判断是否能够使用简称-->
-                    <#if parameter.subClassCanUserType>
-                        new ${parameter.subClassType}()
-                    <#else >
-                        new ${parameter.subClassFullyType}()
-                    </#if>
-                </#if>;
+                ${parameter.type} ${parameter.name} =<#if parameter.value??>${parameter.value}
+            <#else ><#--判断是否能够使用简称--><#if parameter.subClassCanUserType>new ${parameter.subClassType}();<#else >new ${parameter.subClassFullyType}();</#if></#if>
             <#else >
                 ${parameter.type} ${parameter.name} = <#if parameter.value??>${parameter.value}<#else >new ${parameter.type}()</#if>;
             </#if>
@@ -69,17 +60,7 @@ private ${javaClassDTO.modelNameUpperCamel} ${javaClassDTO.modelNameLowerCamel};
         <#--获取内部参数-->
             <#if parameter.isInterface>
             <#--参数是接口-->
-                ${parameter.type} ${parameter.name} =
-                <#if parameter.value??>
-                    ${parameter.value}
-                <#else >
-                <#--判断是否能够使用简称-->
-                    <#if parameter.subClassCanUserType>
-                        new ${parameter.subClassType}()
-                    <#else >
-                        new ${parameter.subClassFullyType}()
-                    </#if>
-                </#if>;
+                ${parameter.type} ${parameter.name} =<#if parameter.value??>${parameter.value}<#else ><#--判断是否能够使用简称--><#if parameter.subClassCanUserType>new ${parameter.subClassType}();<#else >new ${parameter.subClassFullyType}();</#if></#if>
             <#else >
                 ${parameter.type} ${parameter.name} = <#if parameter.value??>${parameter.value}<#else >new ${parameter.type}()</#if>;
             </#if>
@@ -100,21 +81,23 @@ private ${javaClassDTO.modelNameUpperCamel} ${javaClassDTO.modelNameLowerCamel};
                 </#if>
             </#if>
             <#if mockMethInfo.returnType=='void'>
-                //返回void
-                PowerMockito.doNothing().when(${mockMethInfo.fieldName}).${mockMethInfo.name}(
-                <#if mockMethInfo.javaParameterDTOList??>
-                    <#list mockMethInfo.javaParameterDTOList as mockParameter>
-                        <#if mockParameter_index==0>any()<#else>,any()</#if>
-                    </#list>
-                </#if>);
-            <#else >
-                PowerMockito.doReturn(null).when(${mockMethInfo.fieldName}).${mockMethInfo.name}(
-                <#if mockMethInfo.javaParameterDTOList??>
-                    <#list mockMethInfo.javaParameterDTOList as mockParameter>
-                        <#if mockParameter_index==0>any()<#else>,any()</#if>
-                    </#list>
+                <#if mockMethInfo.isHaveMoreMethod>
+                    //返回void
+                    //PowerMockito.doNothing().when(${mockMethInfo.fieldName}).${mockMethInfo.name}(<#if mockMethInfo.javaParameterDTOList??><#list mockMethInfo.javaParameterDTOList as mockParameter><#if mockParameter_index==0>any()<#else>,any()</#if></#list></#if>);
+                <#else >
+                    //返回void
+                    PowerMockito.doNothing().when(${mockMethInfo.fieldName}).${mockMethInfo.name}(<#if mockMethInfo.javaParameterDTOList??><#list mockMethInfo.javaParameterDTOList as mockParameter><#if mockParameter_index==0>any()<#else>,any()</#if></#list></#if>);
                 </#if>
-                );
+            <#else >
+
+                <#if mockMethInfo.isHaveMoreMethod>
+                    //TODO 待优化，需要判断是否是有多个方法，方法名一样，参数数量一致
+                    //PowerMockito.doReturn(null).when(${mockMethInfo.fieldName}).${mockMethInfo.name}(<#if mockMethInfo.javaParameterDTOList??><#list mockMethInfo.javaParameterDTOList as mockParameter><#if mockParameter_index==0>any()<#else>,any()</#if></#list></#if>);
+                <#else >
+                    //TODO 待优化，需要判断是否是有多个方法，方法名一样，参数数量一致
+                    PowerMockito.doReturn(null).when(${mockMethInfo.fieldName}).${mockMethInfo.name}(<#if mockMethInfo.javaParameterDTOList??><#list mockMethInfo.javaParameterDTOList as mockParameter><#if mockParameter_index==0>any()<#else>,any()</#if></#list></#if>);
+                </#if>
+
             </#if>
         </#list>
     </#if>
