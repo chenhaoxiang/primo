@@ -1,5 +1,5 @@
 /*
-* auto-generate-test：https://github.com/chenhaoxiang/auto-generate-test-maven-plugin
+* megatron-agt
 */
 package ${javaClassDTO.packageName};
 
@@ -36,7 +36,7 @@ private ${javaClassDTO.modelNameUpperCamel} ${javaClassDTO.modelNameLowerCamel};
 <#--遍历方法-->
 <#list javaClassDTO.javaMethodDTOList as method>
     @Test
-    public void ${method.methodTestName}() <#list method.javaExceptionsDTOList as exceptions><#if exceptions_index==0>throws ${exceptions.type}<#else>,${exceptions.type}</#if></#list>{
+    public void ${method.methodTestName}() <#list method.javaMethodExceptionsDTOList as exceptions><#if exceptions_index==0>throws ${exceptions.type}<#else>,${exceptions.type}</#if></#list>{
     //组装测试方法的参数
     <#list method.javaParameterDTOList as parameter>
     <#--判断是否是自定义参数-->
