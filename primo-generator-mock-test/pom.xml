@@ -15,7 +15,7 @@
         <module>primo-generator-mock-test-maven-plugin</module>
         <module>primo-generator-mock-test-jar</module>
         <module>primo-generator-mock-test-jacoco</module>
-        <module>primo-generator-mock-test-demo</module>
+<!--        <module>primo-generator-mock-test-demo</module>-->
     </modules>
 
     <description>自动生成mock测试代码插件,通过Maven插件配置，一键生成配置包/类的单元测试代码，极大减少开发写单元测试代码的时间，提高单元测试覆盖率</description>
