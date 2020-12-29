@@ -1,5 +1,8 @@
 # primo-generator  
 
+项目地址： 
+[https://github.com/chenhaoxiang/primo](https://github.com/chenhaoxiang/primo)  
+
 ## primo-generator-mybatis-plus-maven-plugin
 自动生成代码插件,通过Maven插件配置，一键生成单表的所有CRUD操作，加速你的业务开发
 

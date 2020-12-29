@@ -1,5 +1,8 @@
 # primo-generator-mock-test
  
+项目地址： 
+[https://github.com/chenhaoxiang/primo](https://github.com/chenhaoxiang/primo)   
+
 ## 介绍  
 你还在为写大量单元测试而烦恼吗，你还在苦苦的构建包装类的值吗？这里有一款mock单元测试代码自动生成的Maven插件，解决开发人员消耗大量时间在单元测试的问题，全面优化开发人员的测试效率和测试时间。   
  
