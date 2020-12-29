@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="wiki.primo.generator.primogeneratormocktestdemo.mapper.TableShardingMapper">
+	<!--开启二级缓存-->
+	<cache/>
+
+	<resultMap id="BaseResultMap" type="wiki.primo.generator.primogeneratormocktestdemo.entity.TableSharding">
+		<id column="id" property="id" />
+		<result column="name" property="name" />
+		<result column="age" property="age" />
+		<result column="create_time" property="createTime" />
+		<result column="token" property="token" />
+	</resultMap>
+
+    <!-- 通用查询结果列-->
+    <sql id="Base_Column_List">
+        `id`, `name`, `age`, `create_time` AS `createTime`, `token`
+    </sql>
+</mapper>

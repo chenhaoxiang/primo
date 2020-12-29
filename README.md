@@ -8,7 +8,7 @@
 - 
 
 ### 详情描述
-[https://github.com/chenhaoxiang/primo/tree/master/primo-agt-maven-plugin](https://github.com/chenhaoxiang/primo/tree/master/primo-agt-maven-plugin)
+[https://github.com/chenhaoxiang/primo/tree/master/primo-generator-mock-test](https://github.com/chenhaoxiang/primo/tree/master/primo-generator-mock-test)
 
 
 ## primo-generator-mybatis-plus 
