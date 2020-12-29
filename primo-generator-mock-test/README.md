@@ -5,12 +5,13 @@
 
 ## 介绍  
 你还在为写大量单元测试而烦恼吗，你还在苦苦的构建包装类的值吗？这里有一款mock单元测试代码自动生成的Maven插件，解决开发人员消耗大量时间在单元测试的问题，全面优化开发人员的测试效率和测试时间。   
- 
+
 注意，本插件目前无法完成所有的mock测试，让你不用修改一行代码，暂时需要在primo-generator-mock-test生成mock测试代码的基础上再进行一点修改，例如分支覆盖，断言使用。
 
 本插件的目标是：实现让开发人员不再写一行mock测试代码，primo-generator-mock-test帮你全部实现    
 愿景是：减少开发人员的测试负担，专注业务开发与迭代  
 
+经过本人的亲自使用，外加我在团队的内部"推（qiang）广（tui）"使用，从统计来看，可以减少使用mock测试的小伙伴，至少30-50%的时间。  
 （此项目目前在我公司几个团队使用，节省了团队成员非常多的单元测试时间，在此分享出来）  
 
 ## 使用  
@@ -271,3 +272,13 @@ service层的实现类不推荐使用泛型基类service父类进行调用泛型
 按照我以前的经验，如果全部由自己写，一切顺利的情况下，199个方法的mock测试，至少要多出几倍的时间。  
 （此测试项目为使用mybatis-plus的项目，service层的实现类非常多的方法直接使用了父类方法，导致mock很麻烦，耽搁了一些时间，其他项目相对而言会节省更多时间）      
 
+
+## 测试类：  
+![测试类](https://raw.githubusercontent.com/chenhaoxiang/primo/master/primo-generator-mock-test/doc/images/20190619221913.jpg)
+## 测试方法：
+![测试方法](https://raw.githubusercontent.com/chenhaoxiang/primo/master/primo-generator-mock-test/doc/images/20190619223834.jpg)   
+## 单元覆盖数据：  
+![总覆盖率](https://raw.githubusercontent.com/chenhaoxiang/primo/master/primo-generator-mock-test/doc/images/20190620151913.jpg)   
+--- 
+
+![单元覆盖数据](https://raw.githubusercontent.com/chenhaoxiang/primo/master/primo-generator-mock-test/doc/images/20190620151630.jpg)   
