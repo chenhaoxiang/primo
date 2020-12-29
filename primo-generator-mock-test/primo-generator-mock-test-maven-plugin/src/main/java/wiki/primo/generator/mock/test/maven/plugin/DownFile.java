@@ -23,10 +23,7 @@ import java.io.InputStream;
  * @version InitPlugin.java, v 0.1 2019-06-10 14:16 chenhx
  */
 public class DownFile {
-    /**
-     * 配置文件下载地址
-     */
-    private static final String CONFIG_URL = "https://github.com/chenhaoxiang/primo/raw/master/doc/template/1.0.0-SNAPSHOT/primo-generator-mock-test.ftl";
+
     private static Log log = new SystemStreamLog();
 
     private static String tmpFtlFileName = "primo-generator-mock-test-" + UUIDUtils.getID() + ".ftl";

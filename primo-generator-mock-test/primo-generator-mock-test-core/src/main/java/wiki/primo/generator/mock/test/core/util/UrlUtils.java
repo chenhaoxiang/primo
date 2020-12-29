@@ -36,7 +36,7 @@ public class UrlUtils {
         File saveDir = new File(savePath);
         if (!saveDir.exists()) {
             if (!saveDir.mkdirs()) {
-                log.info(savePath + " 文件路径不存在，AGT进行创建失败，请检查是否有权限");
+                log.info(savePath + " 文件路径不存在，进行创建失败，请检查是否有权限");
                 return;
             }
         }
