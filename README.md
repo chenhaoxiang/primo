@@ -42,5 +42,8 @@
 - [Spring](https://github.com/spring-projects)
 - ...
 
+# 问题
+使用中有任何使用问题，欢迎提[issues](https://github.com/chenhaoxiang/primo/issues)
+
 # 贡献
 目前只有我一人，欢迎更多的朋友加入进来一起完善与开发  
