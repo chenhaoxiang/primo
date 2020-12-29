@@ -1,9 +1,5 @@
-# Megatron 
+# primo-generator-mock-test
  
-![家选团队](https://git.souche-inc.com/gourd/megatron/raw/master/megatron-agt/doc/images/jiaxuan.png)
-
-项目地址：https://git.souche-inc.com/danube/danube-megatron/tree/master/megatron-agt
-
 ## 介绍  
 你还在为写大量单元测试而烦恼吗，你还在苦苦的构建包装类的值吗？这里有一款mock单元测试代码自动生成的Maven插件，解决开发人员消耗大量时间在单元测试的问题，全面优化开发人员的测试效率和测试时间。   
  
@@ -12,11 +8,7 @@
 本插件的目标是：实现让开发人员不再写一行mock测试代码，agt帮你全部实现    
 愿景是：减少开发人员的测试负担，专注业务开发与迭代  
 
-### 本项目原理分享
-地址： https://souche.yuque.com/docs/share/efe728be-4cf1-46a5-b615-9ecc91c8f3d5?#
-  
-### 使用分享  
-地址：https://souche.yuque.com/docs/share/ff5f1df2-bf18-423f-a25c-744e8e67d7ab?#
+（此项目目前在我公司几个团队使用，节省了非常多团队成员单元测试时间，在此分享出来）  
 
 ## 使用  
 
@@ -24,26 +16,14 @@
 
 #### 最新版本 
 
-```xml
-<plugin> 
-  <groupId>com.souche.danube</groupId>
-  <artifactId>megatron-maven-plugin</artifactId>
-  <version>0.2.0-SNAPSHOT</version> 
-    <configuration>
-        <testPackageName>com.jiaxuan.heaven.book.service.impl</testPackageName> 
-    </configuration>
-</plugin>
-```   
-
-建议使用最新版本：0.2.0-SNAPSHOT
-（后续版本如无说明，groupId与artifactId不会再进行更换）  
+最新版本：1.0.0-SNAPSHOT
 
 最简单配置：
 ```xml
 
 <plugin>
-    <groupId>com.souche.danube</groupId>
-    <artifactId>megatron-maven-plugin</artifactId>
+    <groupId>wiki.primo.generator</groupId>
+    <artifactId>primo-generator-mock-test-maven-plugin</artifactId>
     <version>（版本号）</version>
     <configuration>
         <testPackageName>（待测试类的包名，0.1.0-SNAPSHOT+支持配置多个，英文分号进行隔开）</testPackageName>
@@ -54,36 +34,36 @@
 
 示例： 
 ```xml
-<plugin>
-    <groupId>com.souche.danube</groupId>
-    <artifactId>megatron-maven-plugin</artifactId>
-    <version>0.1.0-SNAPSHOT</version>
-    <configuration>
-        <testPackageName>com.jiaxuan.heaven.book.service.impl</testPackageName>
-    </configuration>
+<plugin> 
+    <groupId>wiki.primo.generator</groupId>
+    <artifactId>primo-generator-mock-test-maven-plugin</artifactId>
+    <version>1.0.0-SNAPSHOT</version> 
+        <configuration>
+            <testPackageName>wiki.primo.generator.primogeneratormocktestdemo.service.impl</testPackageName> 
+        </configuration>
 </plugin>
 ``` 
 
 ### 2. 生成测试代码 
-在引入插件的项目模块下运行maven插件的 megatron:test 命令    
+在引入插件的项目模块下运行maven插件的 primo-generator-mock-test:test 命令    
 ```
-mvn megatron:test
+mvn primo-generator-mock-test:test
 ```   
 
-直接运行megatron:test即可下载模板文件&生成测试类  
+直接运行mvn primo-generator-mock-test:test即可下载模板文件&生成测试类  
 
 相关配置：
 ```<configPath></configPath>```填写路径，相对路径为当前运行项目的根路径。(默认下载路径：/src/main/resources/test/template)   
-第一次运行运行插件的megatron:test命令，即可将配置文件下载到对应的路径。  
+第一次运行运行插件的primo-generator-mock-test:test命令，即可将配置文件下载到对应的路径。  
   
 可设置配置文件的文件名，通过```<configFileName>primo-generator-mock-test.ftl</configFileName>```设置配置文件的文件名称。（默认文件名称为primo-generator-mock-test.ftl）  
 
 ### 3. 引入mock相关依赖  
 自动测试代码生成插件   
-插件生成的mock测试类方法依赖powermock&mockito，建议引入如下依赖（不依赖对于agt插件的运行没有影响）   
+插件生成的mock测试类方法依赖powermock&mockito，建议直接引入如下依赖（不依赖对于插件的运行没有影响）   
 ```xml
 <dependency>
-    <groupId>com.souche.danube</groupId>
+    <groupId>wiki.primo.generator</groupId>
     <artifactId>primo-generator-mock-test-jar</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <scope>test</scope>
@@ -96,7 +76,7 @@ mvn megatron:test
 
 #### 必填  
 - ```<testPackageName>```:必填）配置需要生成单元测试用例的包名，不要填写接口所在包名，需要实现类所在包名,会遍历包下以及子包下所有类和类的方法（支持配置多个包名，英文分号隔开不同的包名）。
-可以配置单个类。例如：com.souche.danube.metadata.service.impl.ActionFieldGroupServiceImpl.java 
+可以配置单个类。例如：wiki.primo.generator.primogeneratormocktestdemo.service.impl.UserServiceImpl.java 
 注意，配置单个类一定要以.java结尾。  
 
 不支持的类：  
@@ -107,7 +87,9 @@ mvn megatron:test
 
 #### 选填 
 
-##### 0.2.0-SNAPSHOT
+注意：在1.0.0-SNAPSHOT版本之前的jar包未上传至中央仓库  
+
+##### 1.0.0-SNAPSHOT
 - ```<jsonConfigPath>```: json配置文件路径,defaultValue = "/src/main/resources/test/template/"  
 - ```<jsonConfigFileName>```: json配置文件名称,defaultValue = "primo-generator-mock-test.json"  
 - ```<isDownloadTemplateFile>```:  是否将Template配置文件下载到本地，默认true 
@@ -167,7 +149,7 @@ mvn megatron:test
 
 ## 0.1.1-SNAPSHOT
 - testPackageName配置多个包，支持分号间换行，空格 
-- testPackageName可以配置单个实现类。例如：<testPackageName>com.souche.danube.metadata.service.impl.ActionFieldGroupServiceImpl.java </testPackageName> 注意，配置单个类一定要以.java结尾。
+- testPackageName可以配置单个实现类。例如：<testPackageName>wiki.primo.generator.primogeneratormocktestdemo.service.impl.UserServiceImpl.java </testPackageName> 注意，配置单个类一定要以.java结尾。
 - 外部依赖只需要引入primo-generator-mock-test-jar即可。  
 
 ## 0.1.0-SNAPSHOT
