@@ -41,3 +41,6 @@
 - [mybatis-plus](http://git.oschina.net/baomidou/mybatis-plus) 
 - [Spring](https://github.com/spring-projects)
 - ...
+
+# 贡献
+目前只有我一人，欢迎更多的朋友加入进来一起完善与开发  
