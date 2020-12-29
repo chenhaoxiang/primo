@@ -43,7 +43,10 @@
 - ...
 
 # 问题
-使用中有任何使用问题，欢迎提[issues](https://github.com/chenhaoxiang/primo/issues)
+使用中有任何使用问题，欢迎提[issues](https://github.com/chenhaoxiang/primo/issues)  
+
+也可以加我微信，拉你进群，务必备注：primo   
+![微信号：luck20190512](https://raw.githubusercontent.com/chenhaoxiang/github-images/master/2020/12/29/t6gGAZ.jpg)  
 
 # 贡献
 目前只有我一人，欢迎更多的朋友加入进来一起完善与开发  
