@@ -46,7 +46,7 @@ public abstract class AbstractPlugin extends AbstractMojo {
     /**
      * 配置文件名称
      */
-    @Parameter(defaultValue = "magt.ftl")
+    @Parameter(defaultValue = "primo-generator-mock-test.ftl")
     protected String configFileName;
 
     /**
@@ -58,7 +58,7 @@ public abstract class AbstractPlugin extends AbstractMojo {
     /**
      * json配置文件名称
      */
-    @Parameter(defaultValue = "magt.json")
+    @Parameter(defaultValue = "primo-generator-mock-test.json")
     protected String jsonConfigFileName;
 
     /**

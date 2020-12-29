@@ -76,7 +76,7 @@ mvn megatron:test
 ```<configPath></configPath>```填写路径，相对路径为当前运行项目的根路径。(默认下载路径：/src/main/resources/test/template)   
 第一次运行运行插件的megatron:test命令，即可将配置文件下载到对应的路径。  
   
-可设置配置文件的文件名，通过```<configFileName>magt.ftl</configFileName>```设置配置文件的文件名称。（默认文件名称为magt.ftl）  
+可设置配置文件的文件名，通过```<configFileName>primo-generator-mock-test.ftl</configFileName>```设置配置文件的文件名称。（默认文件名称为primo-generator-mock-test.ftl）  
 
 ### 3. 引入mock相关依赖  
 自动测试代码生成插件   
@@ -109,7 +109,7 @@ mvn megatron:test
 
 ##### 0.2.0-SNAPSHOT
 - ```<jsonConfigPath>```: json配置文件路径,defaultValue = "/src/main/resources/test/template/"  
-- ```<jsonConfigFileName>```: json配置文件名称,defaultValue = "magt.json"  
+- ```<jsonConfigFileName>```: json配置文件名称,defaultValue = "primo-generator-mock-test.json"  
 - ```<isDownloadTemplateFile>```:  是否将Template配置文件下载到本地，默认true 
 - ```<isDownloadJsonFile>```:  是否将json配置文件下载到本地，默认true  
 
@@ -281,7 +281,7 @@ service层的实现类不推荐使用泛型基类service父类进行调用泛型
    
 
 # 使用体验  
-199个测试方法，一共覆盖309个被测试方法，使用magt生成后，仅仅只使用了3个多小时进行mock优化（仅仅优化了运行报错的方法，没有进行完善分支测试）。     
+199个测试方法，一共覆盖309个被测试方法，使用primo-generator-mock-test生成后，仅仅只使用了3个多小时进行mock优化（仅仅优化了运行报错的方法，没有进行完善分支测试）。     
 
 按照我以前的经验，如果全部由自己写，一切顺利的情况下，199个方法的mock测试，至少要多出几倍的时间。  
 （此测试项目为使用mybatis-plus的项目，service层的实现类非常多的方法直接使用了父类方法，导致mock很麻烦，耽搁了一些时间，其他项目相对而言会节省更多时间）      

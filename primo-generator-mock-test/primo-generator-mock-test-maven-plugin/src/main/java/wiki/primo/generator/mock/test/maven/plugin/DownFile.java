@@ -26,10 +26,10 @@ public class DownFile {
     /**
      * 配置文件下载地址
      */
-    private static final String CONFIG_URL = "https://github.com/chenhaoxiang/auto-generate-test-maven-plugin/raw/master/doc/template/0.1.0-SNAPSHOT/magt.ftl";
+    private static final String CONFIG_URL = "https://github.com/chenhaoxiang/primo/raw/master/doc/template/1.0.0-SNAPSHOT/primo-generator-mock-test.ftl";
     private static Log log = new SystemStreamLog();
 
-    private static String tmpFtlFileName = "magt_" + UUIDUtils.getID() + ".ftl";
+    private static String tmpFtlFileName = "primo-generator-mock-test-" + UUIDUtils.getID() + ".ftl";
     /**
      * 下载模板文件
      */
@@ -43,7 +43,7 @@ public class DownFile {
         String configPath = CommonConstant.CONFIG_ENTITY.getConfigPath();
         String path = CommonConstant.CONFIG_ENTITY.getBasedir().getPath() + configPath;
         try {
-            FileUtils.downLoadFile(CommonConstant.CONFIG_ENTITY.getConfigFileName(), path, "magt.ftl");
+            FileUtils.downLoadFile(CommonConstant.CONFIG_ENTITY.getConfigFileName(), path, "primo-generator-mock-test.ftl");
         } catch (Exception e) {
             log.error("下载配置文件出现异常", e);
         }
@@ -72,17 +72,17 @@ public class DownFile {
             String jsonStr = "";
             if (!CommonConstant.CONFIG_ENTITY.getIsDownloadJsonFile()) {
                 //创建目录
-                ClassPathResource classPathResource = new ClassPathResource("magt.json");
+                ClassPathResource classPathResource = new ClassPathResource("primo-generator-mock-test.json");
                 //得到输入流
                 InputStream inputStream = classPathResource.getInputStream();
                 jsonStr = FileUtils.readInputStreamToString(inputStream);
             }else {
                 String configPath = CommonConstant.CONFIG_ENTITY.getJsonConfigPath();
                 String path = CommonConstant.CONFIG_ENTITY.getBasedir().getPath() + configPath;
-                FileUtils.downLoadFile(CommonConstant.CONFIG_ENTITY.getJsonConfigFileName(), path, "magt.json");
+                FileUtils.downLoadFile(CommonConstant.CONFIG_ENTITY.getJsonConfigFileName(), path, "primo-generator-mock-test.json");
 
                 //下载说明
-//                FileUtils.downLoadFile("magt-description.md", path, "magt-description.md");
+//                FileUtils.downLoadFile("primo-generator-mock-test-description.md", path, "primo-generator-mock-test-description.md");
 
                 //读取json配置到实体中
                 jsonStr = FileUtils.readFileToString(path + File.separator + CommonConstant.CONFIG_ENTITY.getJsonConfigFileName());
