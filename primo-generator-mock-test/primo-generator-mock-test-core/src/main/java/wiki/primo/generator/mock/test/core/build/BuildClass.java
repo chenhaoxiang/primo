@@ -17,7 +17,7 @@ public interface BuildClass {
 
     /**
      * 构建整个类
-     *
+     * @param javaClass java类数据
      * @return 返回模板需要的信息 javaClassDTO
      */
     JavaClassDTO build(JavaClass javaClass);

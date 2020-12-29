@@ -9,9 +9,9 @@ import lombok.Data;
 import java.util.List;
 
 /**
+ * 读取json配置类的值
  * @author chenhx
  * @version 1.0.0
- * @deprecated  读取json配置类的值
  */
 @Data
 public class JsonConfig {

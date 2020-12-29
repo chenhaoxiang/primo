@@ -8,11 +8,9 @@ import wiki.primo.generator.mock.test.data.enums.JsonConfigListScopeEnum;
 import lombok.Data;
 
 /**
+ * 配置
  * @author chenhx
- * @version 0.0.1
- * @className JsonConfigList.java
- * @date 2020-05-08 15:48
- * @description 配置
+ * @version 0.0.1 2020-05-08 15:48
  */
 @Data
 public class JsonConfigList {

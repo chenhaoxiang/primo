@@ -19,11 +19,10 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
 /**
+ * 文件工具类
  * @author chenhx
  * @version 0.0.1
- * @className FileUtils.java
- * @date 2020-05-08 16:21
- * @description 文件工具类
+ * @since  2020-05-08 16:21
  */
 public class FileUtils {
 
@@ -34,6 +33,7 @@ public class FileUtils {
      *
      * @param fileName 文件名称
      * @param savePath 保存路径
+     * @param jarFileName jar包文件名
      * @throws IOException IO异常
      */
     public static void downLoadFile(String fileName, String savePath,String jarFileName) throws IOException {
@@ -87,6 +87,7 @@ public class FileUtils {
     /**
      * 将文本文件中的内容读入到字符串
      * @param filePath 文件路径
+     * @return 文件内容-字符串，utf-8编码
      * @throws IOException 异常
      */
     public static String readFileToString(String filePath) throws IOException {

@@ -38,7 +38,7 @@ public class BuildClassImpl {
 
     /**
      * 生成测试类
-     *
+     * @param javaClassInfo java类信息
      * @return true-生成成功，false-生成失败
      * @throws IOException IO异常
      */
