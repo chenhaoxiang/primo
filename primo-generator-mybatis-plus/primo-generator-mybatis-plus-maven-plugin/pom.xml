@@ -9,7 +9,7 @@
     <modelVersion>4.0.0</modelVersion>
     <packaging>maven-plugin</packaging>
 
-    <description>自动生成代码插件,通过Maven插件配置，一键生成单表的所有CRUD操作</description>
+    <description>自动生成增删改查代码插件,通过Maven插件配置，一键生成单表的所有CRUD操作</description>
 
     <dependencies>
         <dependency>

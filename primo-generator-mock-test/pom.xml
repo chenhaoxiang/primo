@@ -18,6 +18,8 @@
         <module>primo-generator-mock-test-demo</module>
     </modules>
 
+    <description>自动生成mock测试代码插件,通过Maven插件配置，一键生成配置包/类的单元测试代码，极大减少开发写单元测试代码的时间，提高单元测试覆盖率</description>
+
     <properties>
         <qdox.version>2.0-M10</qdox.version>
         <freemarker.version>2.3.28</freemarker.version>
