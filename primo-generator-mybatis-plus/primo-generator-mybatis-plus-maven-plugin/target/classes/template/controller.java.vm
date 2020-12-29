@@ -1,0 +1,118 @@
+package ${package.Controller};
+
+import ${package.Service}.${table.serviceName};
+import ${package.Entity}.${entity};
+import ${package.ResultModel}.ResultModel;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import ${package.QueryBo}.${table.queryName};
+
+/**
+ * <p>
+ * ${table.comment}  前端控制器
+ * </p>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+@Controller
+@RequestMapping("#if(${package.ModuleName})/${package.ModuleName}#end/${table.entityName.toLowerCase()}")
+public class ${table.controllerName} {
+
+    @Autowired
+    private ${table.serviceName} ${table.strConvertLowerCamel(${table.serviceName})};
+
+    /**
+     * 添加对象
+     *
+     * @param ${table.strConvertLowerCamel(${entity})} 对象
+     * @return ResultModel统一响应结果
+     */
+    @PostMapping("save")
+    @ResponseBody
+    public ResultModel<Object> save(${entity} ${table.strConvertLowerCamel(${entity})}) {
+        if(${table.strConvertLowerCamel(${entity})}==null){
+            return ResultModel.parameterError();
+        }
+        ${table.strConvertLowerCamel(${table.serviceName})}.save(${table.strConvertLowerCamel(${entity})});
+        return ResultModel.success();
+    }
+
+    /**
+     * 根据ID进行删除
+     *
+     * @param id 主键
+     * @return ResultModel统一响应结果
+     */
+    @GetMapping("removeById")
+    @ResponseBody
+    public ResultModel<Object> delete(@RequestParam Integer id) {
+        if(id==null || id<0){
+            return ResultModel.parameterError();
+        }
+        boolean success = ${table.strConvertLowerCamel(${table.serviceName})}.removeById(id);
+        if(success) {
+            return ResultModel.success();
+        }else {
+            return ResultModel.fail();
+        }
+    }
+
+    /**
+     * 根据ID进行修改对象
+     *
+     * @param ${table.strConvertLowerCamel(${entity})} 对象中必须有ID主键
+     * @return ResultModel统一响应结果
+     */
+    @PostMapping("update")
+    @ResponseBody
+    public ResultModel<Object> update(${entity} ${table.strConvertLowerCamel(${entity})}) {
+        if(${table.strConvertLowerCamel(${entity})}==null || ${table.strConvertLowerCamel(${entity})}.getId()==null){
+            return ResultModel.parameterError();
+        }
+        boolean success = ${table.strConvertLowerCamel(${table.serviceName})}.updateById(${table.strConvertLowerCamel(${entity})});
+        if(success) {
+            return ResultModel.success();
+        }else {
+            return ResultModel.fail();
+        }
+    }
+
+    /**
+     * 查询详情
+     *
+     * @param id 主键
+     * @return ResultModel统一响应结果
+     */
+    @GetMapping("getById")
+    @ResponseBody
+    public ResultModel<${entity}> getById(@RequestParam Integer id) {
+        if(id==null || id<0){
+            return ResultModel.parameterError();
+        }
+        ${entity} ${table.strConvertLowerCamel(${entity})} = ${table.strConvertLowerCamel(${table.serviceName})}.getById(id);
+        return ResultModel.success(${table.strConvertLowerCamel(${entity})});
+    }
+
+    /**
+     * 分页查询
+     *
+     * @return ResultModel统一响应结果
+     */
+    @PostMapping("page")
+    @ResponseBody
+    public ResultModel<IPage<${entity}>> page(${table.queryName} queryBo,int pageNo,int pageSize) {
+        if(queryBo==null){
+            return ResultModel.parameterError();
+        }
+        IPage<${entity}> templateIPage = ${table.strConvertLowerCamel(${table.serviceName})}.page(queryBo,pageNo,pageSize);
+        return ResultModel.success(templateIPage);
+    }
+
+}

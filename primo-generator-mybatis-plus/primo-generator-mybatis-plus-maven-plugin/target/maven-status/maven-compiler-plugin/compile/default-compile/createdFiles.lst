@@ -1,0 +1,17 @@
+wiki/primo/generator/mybatis/plus/AbstractGenerateMojo.class
+wiki/primo/generator/mybatis/plus/config/constant/ConstVal.class
+wiki/primo/generator/mybatis/plus/GenerateMojo.class
+wiki/primo/generator/mybatis/plus/config/rules/QuerySQL.class
+wiki/primo/generator/mybatis/plus/config/constant/ConfigConstant.class
+wiki/primo/generator/mybatis/plus/config/rules/NamingStrategy.class
+wiki/primo/generator/mybatis/plus/config/DataSourceConfig.class
+wiki/primo/generator/mybatis/plus/util/PackageUtils.class
+wiki/primo/generator/mybatis/plus/config/po/TableField.class
+wiki/primo/generator/mybatis/plus/config/ExtConfig.class
+wiki/primo/generator/mybatis/plus/config/TemplateConfig.class
+wiki/primo/generator/mybatis/plus/config/StrategyConfig.class
+wiki/primo/generator/mybatis/plus/config/po/TableInfo.class
+wiki/primo/generator/mybatis/plus/config/rules/IdStrategy.class
+wiki/primo/generator/mybatis/plus/config/PackageConfig.class
+wiki/primo/generator/mybatis/plus/config/builder/ConfigBuilder.class
+wiki/primo/generator/mybatis/plus/config/rules/DbType.class
