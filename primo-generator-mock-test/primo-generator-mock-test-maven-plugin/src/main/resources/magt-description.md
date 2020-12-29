@@ -1,0 +1,20 @@
+
+下面为json配置中属性的描述：  
+
+```json
+{
+"isOpen": "是否开启json配置-默认false",
+"list":
+  [
+    {
+      "scope":"作用域：全局（global）、包（package）、类（class）、方法（method） - 默认全局",
+      "scopeValue": "作用域的值，global则无需配置该值，package则为包名，class则为类名，method则为方法名", 
+      "fullyType": "类型的全限定名称",
+      "value":{
+        "若type=base，则该值固定为value":"值",
+        "若type=custom，自定义类型，value下的key为fastjson序列化的属性名称":"值"
+      }
+    }
+  ]
+}
+```
