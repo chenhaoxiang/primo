@@ -1,5 +1,5 @@
 /*
- * souche.com
+ * wiki.primo
  * Copyright (C) 2013-2020 All Rights Reserved.
  */
 package wiki.primo.generator.mock.test.data.config.json;
@@ -10,10 +10,8 @@ import java.util.List;
 
 /**
  * @author chenhx
- * @version 0.0.1
- * @className JsonConfig.java
- * @date 2020-05-08 15:47
- * @description 读取json配置类的值
+ * @version 1.0.0
+ * @deprecated  读取json配置类的值
  */
 @Data
 public class JsonConfig {

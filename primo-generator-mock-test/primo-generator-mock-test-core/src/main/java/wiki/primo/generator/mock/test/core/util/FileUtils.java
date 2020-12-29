@@ -1,5 +1,5 @@
 /*
- * souche.com
+ * wiki.primo
  * Copyright (C) 2013-2020 All Rights Reserved.
  */
 package wiki.primo.generator.mock.test.core.util;
