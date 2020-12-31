@@ -93,7 +93,7 @@
             <plugin>
                 <groupId>wiki.primo.generator</groupId>
                 <artifactId>primo-generator-mock-test-maven-plugin</artifactId>
-                <version>1.0.0</version>
+                <version>1.0.1</version>
                 <configuration>
                     <testPackageName>wiki.primo.generator.primogeneratormocktestdemo.service.impl</testPackageName>
                 </configuration>
