@@ -20,7 +20,7 @@
 
 #### 最新版本 
 
-最新版本：1.0.0-SNAPSHOT
+最新版本：1.0.0
 
 最简单配置：
 ```xml
@@ -41,7 +41,7 @@
 <plugin> 
     <groupId>wiki.primo.generator</groupId>
     <artifactId>primo-generator-mock-test-maven-plugin</artifactId>
-    <version>1.0.0-SNAPSHOT</version> 
+    <version>1.0.0</version> 
         <configuration>
             <testPackageName>wiki.primo.generator.primogeneratormocktestdemo.service.impl</testPackageName> 
         </configuration>
@@ -69,7 +69,7 @@ mvn primo-generator-mock-test:test
 <dependency>
     <groupId>wiki.primo.generator</groupId>
     <artifactId>primo-generator-mock-test-jar</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <scope>test</scope>
 </dependency>
 
@@ -91,9 +91,11 @@ mvn primo-generator-mock-test:test
 
 #### 选填 
 
-注意：在1.0.0-SNAPSHOT版本之前的jar包未上传至中央仓库  
+注意：在1.0.0版本之前的jar包未上传至中央仓库  
 
-##### 1.0.0-SNAPSHOT
+（SNAPSHOT的版本无法直接从maven中央仓库拉取，需要手动去[https://oss.sonatype.org/#welcome](https://oss.sonatype.org/#welcome)搜索下载jar包）  
+
+##### 1.0.0
 - ```<jsonConfigPath>```: json配置文件路径,defaultValue = "/src/main/resources/test/template/"  
 - ```<jsonConfigFileName>```: json配置文件名称,defaultValue = "primo-generator-mock-test.json"  
 - ```<isDownloadTemplateFile>```:  是否将Template配置文件下载到本地，默认true 

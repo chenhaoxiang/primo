@@ -61,7 +61,7 @@
         <dependency>
             <groupId>wiki.primo.generator</groupId>
             <artifactId>primo-generator-mock-test-jar</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>1.0.0</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -93,7 +93,7 @@
             <plugin>
                 <groupId>wiki.primo.generator</groupId>
                 <artifactId>primo-generator-mock-test-maven-plugin</artifactId>
-                <version>1.0.0-SNAPSHOT</version>
+                <version>1.0.0</version>
                 <configuration>
                     <testPackageName>wiki.primo.generator.primogeneratormocktestdemo.service.impl</testPackageName>
                 </configuration>
@@ -102,7 +102,7 @@
             <plugin>
                 <groupId>wiki.primo.generator</groupId>
                 <artifactId>primo-generator-mybatis-plus-maven-plugin</artifactId>
-                <version>1.0.0-SNAPSHOT</version>
+                <version>1.0.0</version>
                 <configuration>
                     <!-- 输出目录(默认java.io.tmpdir) ,项目路径下-->
                     <outputDir>src/main/java/</outputDir>

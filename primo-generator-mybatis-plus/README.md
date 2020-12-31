@@ -28,7 +28,7 @@
 <plugin>
     <groupId>wiki.primo.generator</groupId>
     <artifactId>primo-generator-mybatis-plus-maven-plugin</artifactId>
-    <version>1.0.0-SNAPSHOT</version> 
+    <version>1.0.0</version> 
     <configuration>
         <!-- 输出目录(默认java.io.tmpdir) ,项目路径下-->
         <outputDir>src/main/java/</outputDir>
@@ -211,9 +211,9 @@ mvn -DskipTests=true wiki.primo.generator:primo-generator-mybatis-plus-maven-plu
 若生成后，有报错，请查看必备的配置，看看依赖和mapper扫描是否添加。  
 
 # 版本更新说明 
-请使用最新版本,从1.0.0-SNAPSHOT开始上传到中央仓库
+请使用最新版本,从1.0.0开始上传到中央仓库
 
-## 1.0.0-SNAPSHOT
+## 1.0.0
 - 删除query.open开关的配置，强制开启条件分页查询以及相关类生成
 - 将一些配置的数据进行通用的一个抽取，方便后期进行扩展类
 - druid管理HTML页面上的“Reset All”功能开启 
