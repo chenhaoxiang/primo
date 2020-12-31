@@ -12,6 +12,7 @@
     <modules>
         <module>primo-generator-mybatis-plus</module>
         <module>primo-generator-mock-test</module>
+        <module>primo-dubbo-swagger</module>
     </modules>
 
     <description>primo</description>

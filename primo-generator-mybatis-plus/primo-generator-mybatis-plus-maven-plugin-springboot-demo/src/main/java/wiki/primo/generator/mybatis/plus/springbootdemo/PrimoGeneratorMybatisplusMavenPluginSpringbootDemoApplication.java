@@ -7,10 +7,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 //第二步：扫描mapper
 @MapperScan("wiki.primo.generator.mybatis.plus.springbootdemo.mapper")
-public class MegatronGeneratorMybatisplusMavenPluginSpringbootDemoApplication {
+public class PrimoGeneratorMybatisplusMavenPluginSpringbootDemoApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(MegatronGeneratorMybatisplusMavenPluginSpringbootDemoApplication.class, args);
+        SpringApplication.run(PrimoGeneratorMybatisplusMavenPluginSpringbootDemoApplication.class, args);
     }
 
 }
