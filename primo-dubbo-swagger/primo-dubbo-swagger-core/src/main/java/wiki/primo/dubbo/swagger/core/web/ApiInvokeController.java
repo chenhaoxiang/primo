@@ -83,8 +83,8 @@ public class ApiInvokeController {
 
         if (apiMethod == null) {
             //未标注 ApiMethod注解
-            log.error("[megatron-swagger]实现类:{},方法:{}，未标注ApiMethod注解", classSimpleName, methodName);
-            throw new SwaggerMoreException("[megatron-swagger]实现类:" + classSimpleName + ",方法:" + methodName + "，未标注ApiMethod注解 ");
+            log.error("[primo-dubbo-swagger]实现类:{},方法:{}，未标注ApiMethod注解", classSimpleName, methodName);
+            throw new SwaggerMoreException("[primo-dubbo-swagger]实现类:" + classSimpleName + ",方法:" + methodName + "，未标注ApiMethod注解 ");
         }
 
         List<String> names = new ArrayList<>();
@@ -154,7 +154,7 @@ public class ApiInvokeController {
      * @return
      */
     private Method getMethod(String methodName, Class<?> clazz) {
-        log.info("[megatron-swagger]获取的方法名为:{}", methodName);
+        log.info("[primo-dubbo-swagger]获取的方法名为:{}", methodName);
         List<Method> methodList = new ArrayList<>();
         if (methodName.contains("_(")) {
             String[] methodStr = methodName.split("_");
@@ -209,7 +209,7 @@ public class ApiInvokeController {
                 return methodList.get(0);
             }
         }
-        log.error("[megatron-swagger]在实现类:{},中找不到调用的方法:{}", clazz.getName(), methodName);
+        log.error("[primo-dubbo-swagger]在实现类:{},中找不到调用的方法:{}", clazz.getName(), methodName);
         throw new SwaggerMoreException("找不到方法: " + methodName);
     }
 

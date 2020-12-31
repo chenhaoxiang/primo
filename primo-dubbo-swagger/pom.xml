@@ -9,7 +9,7 @@
         <module>primo-dubbo-swagger-core</module>
         <module>primo-dubbo-swagger-api</module>
         <module>primo-dubbo-swagger-javadoc</module>
-<!--        <module>primo-dubbo-swagger-test</module>-->
+        <module>primo-dubbo-swagger-demo</module>
     </modules>
     <modelVersion>4.0.0</modelVersion>
 

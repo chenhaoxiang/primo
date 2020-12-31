@@ -24,9 +24,9 @@ public class SwaggerStart {
         public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
             Boolean enable = false;
             try {
-                enable = PropertiesConfig.getValue(MegatronSwaggerConfig.MEGATRON_SWAGGER_ENABLE, Boolean.class);
+                enable = PropertiesConfig.getValue(PrimoDubboSwaggerConfig.PRIMO_DUBBO_SWAGGER_ENABLE, Boolean.class);
             } catch (Exception e) {
-                logger.error("您可能未进行配置megatron.swagger.enable的值,如果您不需要开启megatron-swagger，可以进行忽略，但是建议将该值设置为false，避免报错", e);
+                logger.error("您可能未进行配置primo.dubbo.swagger.enable的值,如果您不需要开启primo-dubbo-swagger，可以进行忽略，但是建议将该值设置为false，避免报错", e);
             }
             return enable;
         }

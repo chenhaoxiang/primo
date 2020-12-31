@@ -1,11 +1,9 @@
-# Megatron 
+# primo-dubbo-swagger 
  
-![家选团队](https://git.souche-inc.com/gourd/megatron/raw/master/megatron-agt/doc/images/jiaxuan.png)
- 
+项目地址：
 
-项目地址：https://git.souche-inc.com/danube/danube-megatron/tree/master/megatron-swagger
 
-# megatron-swagger
+# primo-dubbo-swagger 
 
 ## 说明  
 每次项目启动时生成http接口请求项目dubbo接口  
@@ -32,8 +30,8 @@
 
 
 ### 0.0.6-SNAPSHOT
-1. 新增wiki.primo.dubbo.megatron.swagger.api.ApiParam注解。注解中增加enumClass属性，在方法参数中用来标志枚举值,方便生成文档自动带上枚举说明 
-2. 新增wiki.primo.dubbo.megatron.swagger.api.ApiModelProperty注解
+1. 新增wiki.primo.dubbo.swagger.api.ApiParam注解。注解中增加enumClass属性，在方法参数中用来标志枚举值,方便生成文档自动带上枚举说明 
+2. 新增wiki.primo.dubbo.swagger.api.ApiModelProperty注解
    注解中增加enumClass属性，在类参数中用来标志枚举值,方便生成文档Model自动带上枚举说明，注意，需要配合enumAttributeName属性进行配置。  
    如果配置了enumClass，务必配置enumAttributeName  
   该值对应着allowableValues的值，也就是要填写的枚举的名称  
@@ -53,7 +51,7 @@
 
 
 ### 0.0.5-SNAPSHOT
-1. wiki.primo.dubbo.megatron.swagger.api.ApiMethod注解增加version属性，表明方法在某个版本有改动  
+1. wiki.primo.dubbo.swagger.api.ApiMethod注解增加version属性，表明方法在某个版本有改动  
 2. fix：模型数据实体出现异常情况
 
 ## 使用  
@@ -62,7 +60,7 @@
 <!--dubbo文档依赖-->
 <dependency>
     <groupId>wiki.primo.dubbo</groupId>
-    <artifactId>megatron-swagger-api</artifactId>
+    <artifactId>primo-dubbo-swagger-api</artifactId>
     <version>版本号</version> 
 </dependency>
 ```
@@ -70,7 +68,7 @@
 ```xml
 <dependency>
     <groupId>wiki.primo.dubbo</groupId>
-    <artifactId>megatron-swagger-core</artifactId>
+    <artifactId>primo-dubbo-swagger-core</artifactId>
     <version>版本号</version>
 </dependency>
 ```
@@ -85,9 +83,9 @@ public class SwaggerConfig {
 ```
 项目的server层增加配置：
 ```properties
-megatron.swagger.enable=true
+primo.dubbo.swagger.enable=true
 ```
-megatron.swagger.enable的值为布尔类型，表示是否开启dubbo的swagger页面与文档   
+primo.dubbo.swagger.enable的值为布尔类型，表示是否开启dubbo的swagger页面与文档   
 
 在项目API中，使用wiki.primo.dubbo.swagger.api.ApiMethod注解，对于方法进行标注  
 
@@ -100,7 +98,7 @@ swagger-ui.html为固定路径，暂不支持自定义
 注意：地址不能带项目名称  
 
 ## 演示使用的项目 
-megatron-swagger-test  
+primo-dubbo-swagger-test  
 
 ## 访问演示图   
 dubbo的API类：  

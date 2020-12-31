@@ -76,7 +76,7 @@ mvn primo-generator-mock-test:test
 ``` 
 
 ### 4. configuration中相关配置属性  
-在引入插件的项目名模块下，运行插件的megatron:test命令即可在对应的test路径下生成测试用例。
+在引入插件的项目名模块下，运行插件的primo-generator-mock-test:test命令即可在对应的test路径下生成测试用例。
 
 #### 必填  
 - ```<testPackageName>```:必填）配置需要生成单元测试用例的包名，不要填写接口所在包名，需要实现类所在包名,会遍历包下以及子包下所有类和类的方法（支持配置多个包名，英文分号隔开不同的包名）。

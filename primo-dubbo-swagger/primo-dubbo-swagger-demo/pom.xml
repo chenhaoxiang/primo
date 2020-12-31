@@ -6,8 +6,8 @@
     <packaging>pom</packaging>
     <version>0.0.4-SNAPSHOT</version>
     <modules>
-        <module>primo-dubbo-swagger-test-api</module>
-        <module>primo-dubbo-swagger-test-server</module>
+        <module>primo-dubbo-swagger-demo-api</module>
+        <module>primo-dubbo-swagger-demo-server</module>
     </modules>
     <modelVersion>4.0.0</modelVersion>
 
