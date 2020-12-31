@@ -46,7 +46,7 @@ import static wiki.primo.dubbo.swagger.core.util.TypeUtils.isComplexObjectType;
 import static wiki.primo.dubbo.swagger.core.util.TypeUtils.isContainerType;
 
 /**
- * ApiSwaggerController
+ * ApiInvokeController
  *
  * @author chenhx
  * @date 2019-07-14  23:02
@@ -71,7 +71,7 @@ public class ApiInvokeController {
 
         Object actualTarget = AopUtils.isAopProxy(target) ? AopProxyUtils.getSingletonTarget(target) : target;
         String invokeId = UUID.randomUUID().toString();
-        log.info("[swagger-more] 调用({}): ip: {}, invoke -> {}.{}", invokeId, WebUtils.getRemoteAddr(request), actualTarget.getClass(), methodName);
+        log.info("[primo-dubbo-swagger] 调用({}): ip: {}, invoke -> {}.{}", invokeId, WebUtils.getRemoteAddr(request), actualTarget.getClass(), methodName);
 
         //方法名称
         Method method = getMethod(methodName, actualTarget.getClass());
@@ -119,7 +119,7 @@ public class ApiInvokeController {
                         : TypeUtils.cast(arg, parameterMap.get(name).getParameterizedType(), ParserConfig.getGlobalInstance()));
             });
         }
-        log.info("[swagger-more] 调用({}): 入参: {}", invokeId, JSONObject.toJSONString(params));
+        log.info("[primo-dubbo-swagger] 调用({}): 入参: {}", invokeId, JSONObject.toJSONString(params));
         Object result = method.invoke(target, params.toArray());
 
         ReturnModel<Object> returnModel = new ReturnModel<>();

@@ -45,12 +45,12 @@ import static java.util.Objects.nonNull;
 import static java.util.stream.Collectors.joining;
 
 /**
- * SwaggerMoreDoclet
+ * DubboSwaggerDoclet
  *
  * @author chenhx
  * @date 2019-08-28 10:31
  */
-public class SwaggerMoreDoclet {
+public class DubboSwaggerDoclet {
     public static final String OPTION_CLASS_DIR = "-classDir";
     private static String classDir;
 
@@ -75,8 +75,8 @@ public class SwaggerMoreDoclet {
 
     public static void main(String[] args) {
         // 调试入口
-        String[] docArgs = new String[]{"-doclet", SwaggerMoreDoclet.class.getName(), System.getProperty("user.dir") + "/swagger-more-annotations/src/main/java/" + "/com/souche/swagger/more/demoApi/RoleService.java",
-                "-classDir", System.getProperty("user.dir") + "/swagger-more-annotations/target/classes"};
+        String[] docArgs = new String[]{"-doclet", DubboSwaggerDoclet.class.getName(), System.getProperty("user.dir") + "/primo-dubbo-swagger-annotations/src/main/java/" + "/com/souche/swagger/more/demoApi/RoleService.java",
+                "-classDir", System.getProperty("user.dir") + "/primo-dubbo-swagger-annotations/target/classes"};
         com.sun.tools.javadoc.Main.execute(docArgs);
     }
 
@@ -184,7 +184,7 @@ public class SwaggerMoreDoclet {
                         }
                     }
                     if (names.size() != apiMethod.params().length) {
-                        throw new SwaggerMoreException("[SwaggerMoreDoclet->addApiMethodAndMethodDesc]Method " + method.getDeclaringClass().getName() + "." + method.getName() + "，The number of parameters does not match the number of parameters in the comment，names=" + JSON.toJSONString(names) + ", names.size()=" + names.size() + ", apiMethod.params().length=" + apiMethod.params().length);
+                        throw new SwaggerMoreException("[DubboSwaggerDoclet->addApiMethodAndMethodDesc]Method " + method.getDeclaringClass().getName() + "." + method.getName() + "，The number of parameters does not match the number of parameters in the comment，names=" + JSON.toJSONString(names) + ", names.size()=" + names.size() + ", apiMethod.params().length=" + apiMethod.params().length);
                     }
 
                     ApiParam[] params = apiMethod.params();
