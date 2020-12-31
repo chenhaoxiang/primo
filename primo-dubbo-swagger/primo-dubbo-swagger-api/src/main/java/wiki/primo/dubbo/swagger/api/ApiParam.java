@@ -23,7 +23,7 @@ public @interface ApiParam {
     /**
      * 如果是枚举，这里使用枚举的class
      *
-     * @return
+     * @return class类
      */
     Class enumClass() default Object.class;
 

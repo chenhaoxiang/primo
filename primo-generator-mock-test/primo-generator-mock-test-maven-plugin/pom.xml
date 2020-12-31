@@ -5,22 +5,18 @@
     <parent>
         <groupId>wiki.primo.generator</groupId>
         <artifactId>primo-generator-mock-test</artifactId>
-        <version>1.0.0</version>
+        <version>1.0.1</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>primo-generator-mock-test-maven-plugin</artifactId>
     <packaging>maven-plugin</packaging>
 
-    <properties>
-        <primo-generator-mock-test-core.version>1.0.0</primo-generator-mock-test-core.version>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>wiki.primo.generator</groupId>
             <artifactId>primo-generator-mock-test-core</artifactId>
-            <version>${primo-generator-mock-test-core.version}</version>
+            <version>1.0.1</version>
         </dependency>
 
         <dependency>
