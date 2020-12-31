@@ -20,7 +20,7 @@
 
 #### 最新版本 
 
-最新版本：1.0.0
+最新版本：1.0.1
 
 最简单配置：
 ```xml
@@ -41,7 +41,7 @@
 <plugin> 
     <groupId>wiki.primo.generator</groupId>
     <artifactId>primo-generator-mock-test-maven-plugin</artifactId>
-    <version>1.0.0</version> 
+    <version>最新版本号</version> 
         <configuration>
             <testPackageName>wiki.primo.generator.primogeneratormocktestdemo.service.impl</testPackageName> 
         </configuration>
@@ -94,6 +94,9 @@ mvn primo-generator-mock-test:test
 注意：在1.0.0版本之前的jar包未上传至中央仓库  
 
 （SNAPSHOT的版本无法直接从maven中央仓库拉取，需要手动去[https://oss.sonatype.org/#welcome](https://oss.sonatype.org/#welcome)搜索下载jar包）  
+
+##### 1.0.1
+- 逻辑啥都没改，就升级了个版本，1.0.0的包上传有点小问题
 
 ##### 1.0.0
 - ```<jsonConfigPath>```: json配置文件路径,defaultValue = "/src/main/resources/test/template/"  
