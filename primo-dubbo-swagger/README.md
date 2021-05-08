@@ -38,13 +38,13 @@
   例如，枚举中有name和value属性。需要传的值是value属性。  
   则该值为"value"字符串   
    枚举类：  
-![swagger](https://git.souche-inc.com/danube/danube-megatron/raw/master/megatron-swagger/doc/images/20191113154419.jpg) 
+![08160937_LahFbL](http://blogimg.chenhaoxiang.cn/uPic/202105/08160937_LahFbL.jpg)  
 
    代码中的配置：  
-![swagger](https://git.souche-inc.com/danube/danube-megatron/raw/master/megatron-swagger/doc/images/20191113154403.jpg)  
+![08161001_HIr7AN](http://blogimg.chenhaoxiang.cn/uPic/202105/08161001_HIr7AN.jpg)  
 
    页面实际效果：  
-   ![swagger](https://git.souche-inc.com/danube/danube-megatron/raw/master/megatron-swagger/doc/images/20191113154330.png)  
+![08161011_NYUFjD](http://blogimg.chenhaoxiang.cn/uPic/202105/08161011_NYUFjD.jpg)  
 
 
 
@@ -102,15 +102,15 @@ primo-dubbo-swagger-test
 
 ## 访问演示图   
 dubbo的API类：  
-![swagger](https://git.souche-inc.com/danube/danube-megatron/raw/master/megatron-swagger/doc/images/20190819165533.jpg)
+![08160842_HaUgO2](http://blogimg.chenhaoxiang.cn/uPic/202105/08160842_HaUgO2.jpg)  
 
 类的方法：  
-![swagger](https://git.souche-inc.com/danube/danube-megatron/raw/master/megatron-swagger/doc/images/20190819165602.jpg)
+![08160858_AKuPIl](http://blogimg.chenhaoxiang.cn/uPic/202105/08160858_AKuPIl.jpg)  
 
 方法参数：  
-![swagger](https://git.souche-inc.com/danube/danube-megatron/raw/master/megatron-swagger/doc/images/20190819165645.jpg)
+![08160907_3ujfGp](http://blogimg.chenhaoxiang.cn/uPic/202105/08160907_3ujfGp.jpg)  
 
 请求按钮与返回值：  
-![swagger](https://git.souche-inc.com/danube/danube-megatron/raw/master/megatron-swagger/doc/images/20190819165700.jpg)
+![08160918_r5dOLW](http://blogimg.chenhaoxiang.cn/uPic/202105/08160918_r5dOLW.jpg)  
 
 
