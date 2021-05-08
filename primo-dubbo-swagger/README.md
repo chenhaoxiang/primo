@@ -98,7 +98,7 @@ swagger-ui.html为固定路径，暂不支持自定义
 注意：地址不能带项目名称  
 
 ## 演示使用的项目 
-primo-dubbo-swagger-test  
+primo-dubbo-swagger-demo  
 
 ## 访问演示图   
 dubbo的API类：  
