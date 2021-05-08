@@ -1,5 +1,5 @@
 /*
- * souche.com
+ * primo.wiki
  * Copyright (C) 2013-2019 All Rights Reserved.
  */
 package wiki.primo.dubbo.swagger.test.server.primodubboswaggertestserver.dto;

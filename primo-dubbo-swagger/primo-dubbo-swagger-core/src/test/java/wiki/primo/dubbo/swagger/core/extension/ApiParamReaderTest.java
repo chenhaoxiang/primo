@@ -8,7 +8,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /*
- * souche.com
+ * primo.wiki
  * Copyright (C) 2013-2019 All Rights Reserved.
  */
 public class ApiParamReaderTest extends TestCase {

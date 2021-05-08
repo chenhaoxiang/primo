@@ -1,11 +1,10 @@
 /*
- * souche.com
+ * primo.wiki
  * Copyright (C) 2013-2019 All Rights Reserved.
  */
 package wiki.primo.dubbo.swagger.test.api.resp;
 
 import java.io.Serializable;
-import java.util.StringJoiner;
 
 /**
  * @author chenhx

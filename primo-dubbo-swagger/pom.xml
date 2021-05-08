@@ -24,36 +24,6 @@
         <fastJson.version>1.2.60</fastJson.version>
         <project.encoding>utf-8</project.encoding>
     </properties>
-    <distributionManagement>
-        <repository>
-            <id>nexus-releases</id>
-            <name>Local Nexus Repository</name>
-            <url>https://repo.souche-inc.com/repository/releases/</url>
-        </repository>
-        <snapshotRepository>
-            <id>nexus-snapshots</id>
-            <name>Local Nexus Repository</name>
-            <url>https://repo.souche-inc.com/repository/snapshots/</url>
-        </snapshotRepository>
-    </distributionManagement>
-    <pluginRepositories>
-        <pluginRepository>
-            <id>souche</id>
-            <name>artifactory</name>
-            <url>https://repo.souche-inc.com/repository/public/</url>
-        </pluginRepository>
-    </pluginRepositories>
-    <repositories>
-        <repository>
-            <id>souche</id>
-            <name>artifactory</name>
-            <url>https://repo.souche-inc.com/repository/public/</url>
-            <snapshots>
-                <updatePolicy>interval:2</updatePolicy>
-            </snapshots>
-        </repository>
-    </repositories>
-
 
     <build>
         <plugins>
