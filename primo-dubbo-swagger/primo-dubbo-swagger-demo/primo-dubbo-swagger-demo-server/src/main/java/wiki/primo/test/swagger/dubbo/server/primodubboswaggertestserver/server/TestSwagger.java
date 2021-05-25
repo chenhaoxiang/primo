@@ -2,11 +2,11 @@
  * primo.wiki
  * Copyright (C) 2013-2019 All Rights Reserved.
  */
-package wiki.primo.dubbo.swagger.test.server.primodubboswaggertestserver.server;
+package wiki.primo.test.swagger.dubbo.server.primodubboswaggertestserver.server;
 
 
-import wiki.primo.dubbo.swagger.test.server.primodubboswaggertestserver.dto.TestReqDTO;
-import wiki.primo.dubbo.swagger.test.server.primodubboswaggertestserver.dto.TestRespDTO;
+import wiki.primo.test.swagger.dubbo.server.primodubboswaggertestserver.dto.TestReqDTO;
+import wiki.primo.test.swagger.dubbo.server.primodubboswaggertestserver.dto.TestRespDTO;
 
 /**
  * @author chenhx

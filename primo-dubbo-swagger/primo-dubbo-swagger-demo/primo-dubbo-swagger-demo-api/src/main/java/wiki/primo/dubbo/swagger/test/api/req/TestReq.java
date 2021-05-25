@@ -4,6 +4,8 @@
  */
 package wiki.primo.dubbo.swagger.test.api.req;
 
+import wiki.primo.dubbo.swagger.api.ApiModelProperty;
+
 import java.io.Serializable;
 import java.util.StringJoiner;
 
@@ -13,8 +15,10 @@ import java.util.StringJoiner;
  */
 public class TestReq implements Serializable {
     private static final long serialVersionUID = -677694316752347202L;
+    @ApiModelProperty(value = "姓名")
     private String name;
 
+    @ApiModelProperty(value = "年龄")
     private Integer age;
 
     /**

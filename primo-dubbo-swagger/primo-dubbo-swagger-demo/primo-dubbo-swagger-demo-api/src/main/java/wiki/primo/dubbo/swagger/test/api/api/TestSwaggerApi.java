@@ -5,6 +5,8 @@
 package wiki.primo.dubbo.swagger.test.api.api;
 
 
+import wiki.primo.dubbo.swagger.api.ApiMethod;
+import wiki.primo.dubbo.swagger.api.ApiParam;
 import wiki.primo.dubbo.swagger.test.api.req.TestReq;
 import wiki.primo.dubbo.swagger.test.api.resp.TestResp;
 
@@ -19,5 +21,8 @@ public interface TestSwaggerApi {
      * @param testReq
      * @return
      */
+    @ApiMethod(value = "测试类", notes = "", params = {
+            @ApiParam(name = "testReq", value = "测试参数")
+    })
     TestResp test(TestReq testReq);
 }

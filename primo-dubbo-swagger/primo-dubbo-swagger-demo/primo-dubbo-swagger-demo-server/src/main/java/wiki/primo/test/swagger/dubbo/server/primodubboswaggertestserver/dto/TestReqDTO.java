@@ -2,7 +2,7 @@
  * primo.wiki
  * Copyright (C) 2013-2019 All Rights Reserved.
  */
-package wiki.primo.dubbo.swagger.test.server.primodubboswaggertestserver.dto;
+package wiki.primo.test.swagger.dubbo.server.primodubboswaggertestserver.dto;
 
 import java.util.StringJoiner;
 

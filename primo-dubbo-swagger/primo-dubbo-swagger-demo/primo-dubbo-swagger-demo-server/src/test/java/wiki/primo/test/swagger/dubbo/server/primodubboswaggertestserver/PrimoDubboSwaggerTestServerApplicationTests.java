@@ -1,4 +1,4 @@
-package wiki.primo.dubbo.swagger.test.server.primodubboswaggertestserver;
+package wiki.primo.test.swagger.dubbo.server.primodubboswaggertestserver;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
