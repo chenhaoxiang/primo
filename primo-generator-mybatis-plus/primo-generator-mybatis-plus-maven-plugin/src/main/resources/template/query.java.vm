@@ -10,8 +10,8 @@ import java.util.List;
 
 ##BigDecimal导入
 #foreach($field in ${table.fields})
-	#if(${field.propertyType}equals()'BigDecimal')
-import com.baomidou.mybatisplus.annotation.TableName;
+	#if(${field.propertyType.equals('BigDecimal')})
+	import java.math.BigDecimal;
 		#break
 	#end
 #end
