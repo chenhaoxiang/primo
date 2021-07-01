@@ -15,6 +15,12 @@ import java.io.Serializable;
 #if(${table.hasDate})
 import java.util.Date;
 #end
+#foreach($field in ${table.fields})
+	#if(${field.propertyType}equals()'BigDecimal')
+import java.math.BigDecimal;
+	#break
+	#end
+#end
 
 /**
  * <p>

@@ -5,6 +5,17 @@ import ${package.Entity}.${entity};
 #if(${table.hasDate})
 import java.util.Date;
 #end
+##添加了List功能
+import java.util.List;
+
+##BigDecimal导入
+#foreach($field in ${table.fields})
+	#if(${field.propertyType}equals()'BigDecimal')
+import com.baomidou.mybatisplus.annotation.TableName;
+		#break
+	#end
+#end
+
 
 /**
  * <p>
@@ -49,12 +60,18 @@ public class ${table.queryName}{
 					query.orderByDesc(queryBoExt.getOrderColumn());
 				}
 			}
+			//批量的查询条件进行查询
+            #foreach($field in ${table.fields})
+            if(queryBoExt.get${field.capitalName}List()!=null && queryBoExt.get${field.capitalName}List().szie()>0){
+                query.in(${entity}.${field.nameUp},queryBoExt.get${field.capitalName}List());
+            }
+            #end
 		}
 		return query;
 	}
 
 #foreach($field in ${table.fields})
-	#if(${field.propertyName.equals("Boolean")})
+	#if(${field.propertyType.equals("Boolean")})
 		#set($getprefix="is")
 	#else
 		#set($getprefix="get")
@@ -78,7 +95,10 @@ public class ${table.queryName}{
 		this.queryBoExt = queryBoExt;
 	}
 
-	public static class QueryBoExt {
+    /**
+    * 用于排序，和批量的查询
+    */
+    public static class QueryBoExt {
 		/**
 		 * 一般情况下只需要单个列的排序
 		 */
@@ -89,7 +109,26 @@ public class ${table.queryName}{
 		 */
 		private String orderType = OrderType.asc.getValue();
 
-		public String getOrderColumn() {
+		#foreach($field in ${table.fields})
+        /**
+         * ${field.comment}
+         * 集合
+         */
+        private List<${field.propertyType}> ${field.propertyName}List;
+		#end
+
+
+        #foreach($field in ${table.fields})
+        public List<${field.propertyType}> get${field.capitalName}List() {
+            return ${field.propertyName};
+        }
+
+        public void set${field.capitalName}List(List<${field.propertyType}> ${field.propertyName}List) {
+            this.${field.propertyName}List = ${field.propertyName}List;
+        }
+        #end
+
+        public String getOrderColumn() {
 			return orderColumn;
 		}
 

@@ -213,6 +213,11 @@ mvn -DskipTests=true wiki.primo.generator:primo-generator-mybatis-plus-maven-plu
 # 版本更新说明 
 请使用最新版本,从1.0.0开始上传到中央仓库
 
+## 1.0.1-SNAPSHOT
+- 修复设置布尔类型值时，使用is还是get前缀的错误  
+- 实体有java.math.BigDecimal类型时，导入java.math.BigDecimal
+- 扩展查询功能，支持批量的条件查询  
+
 ## 1.0.0
 - 删除query.open开关的配置，强制开启条件分页查询以及相关类生成
 - 将一些配置的数据进行通用的一个抽取，方便后期进行扩展类

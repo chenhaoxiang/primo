@@ -5,7 +5,7 @@
 
     <groupId>wiki.primo.generator</groupId>
     <artifactId>primo-generator-mybatis-plus</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
         <module>primo-generator-mybatis-plus-maven-plugin</module>
