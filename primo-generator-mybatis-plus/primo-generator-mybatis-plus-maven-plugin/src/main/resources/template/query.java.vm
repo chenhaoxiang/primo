@@ -62,7 +62,7 @@ public class ${table.queryName}{
 			}
 			//批量的查询条件进行查询
             #foreach($field in ${table.fields})
-            if(queryBoExt.get${field.capitalName}List()!=null && queryBoExt.get${field.capitalName}List().szie()>0){
+            if(queryBoExt.get${field.capitalName}List()!=null && queryBoExt.get${field.capitalName}List().size()>0){
                 query.in(${entity}.${field.nameUp},queryBoExt.get${field.capitalName}List());
             }
             #end
@@ -120,7 +120,7 @@ public class ${table.queryName}{
 
         #foreach($field in ${table.fields})
         public List<${field.propertyType}> get${field.capitalName}List() {
-            return ${field.propertyName};
+            return ${field.propertyName}List;
         }
 
         public void set${field.capitalName}List(List<${field.propertyType}> ${field.propertyName}List) {
