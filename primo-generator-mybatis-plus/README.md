@@ -152,6 +152,9 @@
 ```
 
 ## 三 mybati plus配置
+
+数据库配置请自行进行配置，可参考demo中的配置。    
+
 ```properties
 ##mybatis-plus mapper xml 文件地址
 mybatis-plus.mapper-locations=classpath*:mapper/*Mapper.xml
