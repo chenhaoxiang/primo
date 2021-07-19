@@ -54,9 +54,9 @@ public class ${table.queryName}{
 		if(queryBoExt!=null){
 			//设置排序
 			if(queryBoExt.getOrderColumn()!=null){
-				if(OrderType.asc.getValue().equalsIgnoreCase(queryBoExt.getOrderType())){
+				if(queryBoExt.isAsc()){
 					query.orderByAsc(queryBoExt.getOrderColumn());
-				}else if(OrderType.desc.getValue().equalsIgnoreCase(queryBoExt.getOrderType())){
+				}else{
 					query.orderByDesc(queryBoExt.getOrderColumn());
 				}
 			}
@@ -105,9 +105,9 @@ public class ${table.queryName}{
 		private String orderColumn;
 
 		/**
-		 * asc / desc
+		 * 默认正序
 		 */
-		private String orderType = OrderType.asc.getValue();
+		private boolean asc = true;
 
 		#foreach($field in ${table.fields})
         /**
@@ -136,32 +136,14 @@ public class ${table.queryName}{
 			this.orderColumn = orderColumn;
 		}
 
-		public String getOrderType() {
-			return orderType;
+		public boolean isAsc() {
+			return asc;
 		}
 
-		public void setOrderType(String orderType) {
-			this.orderType = orderType;
-		}
-	}
-
-	public enum OrderType{
-		asc("正序","asc"),
-		desc("倒序","desc");
-		private String name;
-		private String value;
-
-		public String getName() {
-			return name;
-		}
-
-		public String getValue() {
-			return value;
-		}
-
-		OrderType(String name, String value) {
-			this.name = name;
-			this.value = value;
+		public void setAsc(boolean asc) {
+			this.asc = asc;
 		}
 	}
+
+
 }

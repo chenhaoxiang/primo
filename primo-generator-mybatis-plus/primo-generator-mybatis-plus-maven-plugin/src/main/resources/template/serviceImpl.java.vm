@@ -47,12 +47,22 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
 
     @Override
     public IPage<${entity}> page(QueryWrapper<${entity}> queryWrapper, int pageNo, int pageSize) {
-        if(queryWrapper==null){
+        return getPage(queryWrapper,pageNo,pageSize,true);
+    }
+
+    @Override
+    public IPage<${entity}> pageNoCount(QueryWrapper<${entity}> queryWrapper, int pageNo, int pageSize) {
+        return getPage(queryWrapper,pageNo,pageSize,false);
+    }
+
+    private IPage<${entity}> getPage(QueryWrapper<${entity}> queryWrapper, int pageNo, int pageSize,boolean isSearchCount) {
+        if(queryWrapper ==null){
             return new Page<>();
         }
-        IPage<${entity}> page = new Page<>();
+        Page<${entity}> page = new Page<>();
         page.setCurrent(pageNo);
         page.setSize(pageSize);
+        page.setSearchCount(isSearchCount);
         return this.page(page, queryWrapper);
     }
 

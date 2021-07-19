@@ -36,6 +36,11 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
     IPage<${entity}> page(QueryWrapper<${entity}> queryWrapper,int pageNo,int pageSize);
 
     /**
+     * 按照条件分页查询-不查询总页数，当不需要总页数时，可极大提升查询性能
+     * @param queryWrapper 查询条件
+     */
+    IPage<${entity}> pageNoCount(QueryWrapper<${entity}> queryWrapper, int pageNo, int pageSize);
+    /**
      * 按照条件更新
      * @param entity
      * @param query
