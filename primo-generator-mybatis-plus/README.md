@@ -219,6 +219,7 @@ mvn -DskipTests=true wiki.primo.generator:primo-generator-mybatis-plus-maven-plu
 ## 1.0.2-SNAPSHOT
 - 增加按照条件分页查询-不查询总页数，当不需要总页数时，可极大提升查询性能
 - 优化查询条件中排序的属性，修改为布尔类型值来表示正序倒序  
+- 修改条件查询中的字符串判断 
 
 ## 1.0.1-SNAPSHOT
 - 修复设置布尔类型值时，使用is还是get前缀的错误  

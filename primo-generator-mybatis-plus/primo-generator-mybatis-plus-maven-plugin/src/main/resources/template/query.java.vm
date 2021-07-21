@@ -53,7 +53,7 @@ public class ${table.queryName}{
 
 		if(queryBoExt!=null){
 			//设置排序
-			if(queryBoExt.getOrderColumn()!=null){
+			if(queryBoExt.getOrderColumn()!=null && queryBoExt.getOrderColumn().trim().length()>0 ){
 				if(queryBoExt.isAsc()){
 					query.orderByAsc(queryBoExt.getOrderColumn());
 				}else{
