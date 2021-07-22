@@ -4,13 +4,6 @@
  */
 package wiki.primo.reptile.csdn;
 
-import cn.hutool.http.HttpUtil;
-import org.seimicrawler.xpath.JXDocument;
-import org.seimicrawler.xpath.JXNode;
-
-import java.util.List;
-import java.util.stream.Collectors;
-
 /**
  * @author chenhx
  * @version 0.0.1
@@ -40,21 +33,14 @@ public class CsdnBlog {
      */
     public static final String AUTHOR="//div[@class='article-header']/div[@class='article-info-box']/div[@class='article-bar-top']/div[@class='bar-content']/a[contains(@class,'follow-nickName')]/text()";
 
+
     /**
-     * 获取CSDN文章数据
-     * @param args
+     * 标题
      */
-    public static void main(String[] args) {
-        String url = "https://blog.csdn.net/qq_26525215/article/details/111500185";
-        //超时时间要记得设置
-        String htmlStr = HttpUtil.get(url,30*1000);
-        System.out.println(htmlStr);
-        JXDocument jxDocument = JXDocument.createByUrl(url);
-        String title = jxDocument.selNOne(TITLE).asString();
-        String author = jxDocument.selNOne(AUTHOR).asString();
-        String content = jxDocument.selNOne(CONTENT).asString();
-        List<String> tags = jxDocument.selN(TAG).stream().map(JXNode::asString).collect(Collectors.toList());
-        System.out.println("=====");
-    }
+    public static final String TITLES = "//div[@class='navList-box']/div/div/article[@class='blog-list-box']/a/div[@class='blog-list-box-top']/h4/text()";
+    /**
+     * 链接
+     */
+    public static final String URLS = "//div[@class='navList-box']/div/div/article[@class='blog-list-box']/a/@href";
 
 }
