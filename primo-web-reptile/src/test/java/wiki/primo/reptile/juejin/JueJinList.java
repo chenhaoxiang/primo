@@ -37,8 +37,6 @@ public class JueJinList {
         System.getProperties().setProperty("selenuim_config", "/Users/chenhx/Desktop/config/config.ini");
 
         ChromeOptions chromeOptions = ChromeOptionsUtils.getChrome();
-        //InfoQ有检测 user-agent，必须有这句
-        chromeOptions.addArguments("user-agent=\"Mozilla/5.0 (iPod; U; CPU iPhone OS 2_1 like Mac OS X; ja-jp) AppleWebKit/525.18.1 (KHTML, like Gecko) Version/3.1.1 Mobile/5F137 Safari/525.20\"");
         ChromeDriver webDriver = new ChromeDriver(chromeOptions);
 
         webDriver.get(url);
