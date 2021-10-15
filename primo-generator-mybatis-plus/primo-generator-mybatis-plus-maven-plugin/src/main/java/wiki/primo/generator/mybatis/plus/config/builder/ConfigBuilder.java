@@ -265,6 +265,9 @@ public class ConfigBuilder {
             tableInfo.setControllerName(tableInfo.getEntityName() + ConstVal.CONTROLLER);
             //设置查询类名
             tableInfo.setQueryName(tableInfo.getEntityName() + ConstVal.QUERY);
+            //扩展类
+            tableInfo.setServiceExtName("I" + tableInfo.getEntityName() + ConstVal.SERIVCE_EXT);
+            tableInfo.setServiceExtImplName(tableInfo.getEntityName() + ConstVal.SERVICE_EXT_IMPL);
         }
         return tableList;
     }

@@ -60,6 +60,7 @@ public class ConfigConstant {
         ConstVal.configConstantList.add(constant);
         constant = new ConfigConstant("ServiceImpl", "serviceimpl_path", File.separator + "%sServiceImpl.java", PackageUtils.joinPackage(config.getParent(), config.getServiceImpl()), template.getServiceImpl());
         ConstVal.configConstantList.add(constant);
+
         constant = new ConfigConstant("Controller", "controller_path", File.separator + "%sController.java", PackageUtils.joinPackage(config.getParent(), config.getController()), template.getController());
         ConstVal.configConstantList.add(constant);
         constant = new ConfigConstant("QueryBo", "query_path", File.separator + "%sQueryBo.java", PackageUtils.joinPackage(config.getParent(), config.getQuery()), template.getQuery());
@@ -73,6 +74,15 @@ public class ConfigConstant {
 
         constant = new ConfigConstant("DruidConfig", "mybatis_plus_config", File.separator + "DruidConfig.java", PackageUtils.joinPackage(config.getParent(), "config"), ConstVal.TEMPLATE_DRUID_CONFIG);
         ConstVal.configConstantList.add(constant);
+
+        //增加扩展类
+        constant = new ConfigConstant("ServiceExt", "serivce_ext_path", File.separator + "I%sServiceExt.java", PackageUtils.joinPackage(config.getParent(), config.getServiceExt()), template.getServiceExt());
+        constant.setFileOverride(false);
+        ConstVal.configConstantList.add(constant);
+        constant = new ConfigConstant("ServiceExtImpl", "service_ext_impl_path", File.separator + "%sServiceExtImpl.java", PackageUtils.joinPackage(config.getParent(), config.getServiceExtImpl()), template.getServiceExtImpl());
+        constant.setFileOverride(false);
+        ConstVal.configConstantList.add(constant);
+
     }
 
 

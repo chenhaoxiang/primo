@@ -1,0 +1,22 @@
+package ${package.ServiceExtImpl};
+
+import ${package.ServiceExt}.${table.serviceExtName};
+import ${package.Service}.${table.serviceName};
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+/**
+ * <p>
+ * ${table.comment}  服务实现扩展类，该类不会被自动生成覆盖掉
+ * </p>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+@Service
+public class ${table.serviceExtImplName} implements ${table.serviceExtName} {
+    @Autowired
+    private ${table.serviceName} ${table.strConvertLowerCamel(${table.serviceName})};
+
+
+}

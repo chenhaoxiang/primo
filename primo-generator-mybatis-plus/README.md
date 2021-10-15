@@ -216,6 +216,10 @@ mvn -DskipTests=true wiki.primo.generator:primo-generator-mybatis-plus-maven-plu
 # 版本更新说明 
 请使用最新版本,从1.0.0开始上传到中央仓库
 
+## 1.1.0
+- service层增加扩展实现类，可以自行实现一些service方法，此类绝不会被自动覆盖！自行实现的类均在此层进行实现即可  
+
+
 ## 1.0.2
 - 增加按照条件分页查询-不查询总页数，当不需要总页数时，可极大提升查询性能
 - 优化查询条件中排序的属性，修改为布尔类型值来表示正序倒序  

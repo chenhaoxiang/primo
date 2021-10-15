@@ -18,6 +18,12 @@ public class TemplateConfig {
     @Parameter(defaultValue = ConstVal.TEMPLATE_SERVICEIMPL)
     private String serviceImpl;
 
+    @Parameter(defaultValue = ConstVal.TEMPLATE_SERVICE_EXT)
+    private String serviceExt;
+
+    @Parameter(defaultValue = ConstVal.TEMPLATE_SERVICE_EXT_IMPL)
+    private String serviceExtImpl;
+
     @Parameter(defaultValue = ConstVal.TEMPLATE_MAPPER)
     private String mapper;
 
@@ -67,5 +73,13 @@ public class TemplateConfig {
         return controller;
     }
 
+    public String getServiceExt() {
+        if (serviceExt == null) return ConstVal.TEMPLATE_SERVICE_EXT;
+        return serviceExt;
+    }
 
+    public String getServiceExtImpl() {
+        if (serviceExtImpl == null) return ConstVal.TEMPLATE_SERVICE_EXT_IMPL;
+        return serviceExtImpl;
+    }
 }

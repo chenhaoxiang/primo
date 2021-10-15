@@ -98,7 +98,7 @@ public class GenerateMojo extends AbstractGenerateMojo {
         String superServiceClass = getSuperClassName(config.getSuperServiceClass());
         String superServiceImplClass = getSuperClassName(config.getSuperServiceImplClass());
         String superControllerClass = getSuperClassName(config.getSuperControllerClass());
-        String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 
         /**
          * 设置vm中的值
@@ -179,9 +179,16 @@ public class GenerateMojo extends AbstractGenerateMojo {
         try {
             for (ConfigConstant constant : ConstVal.configConstantList) {
                 String file = String.format(outputFiles.get(constant.getPackageInfoKey()), entityName);
-                if (isCreate(file)) {
-                    vmToFile(context, constant.getTemplatePath(), file);
+                //是否覆盖 - 全局的判断
+                if (!isCreate(file)) {
+                    continue;
                 }
+                //扩展类不进行覆盖，强制,进行判断独立的开关
+                if (!isCreate(file,constant)) {
+                    continue;
+                }
+
+                vmToFile(context, constant.getTemplatePath(), file);
             }
         } catch (IOException e) {
             log.error("无法创建文件，请检查配置信息！", e);
@@ -234,6 +241,11 @@ public class GenerateMojo extends AbstractGenerateMojo {
     private boolean isCreate(String filePath) {
         File file = new File(filePath);
         return !file.exists() || isFileOverride();
+    }
+
+    private boolean isCreate(String filePath,ConfigConstant constant) {
+        File file = new File(filePath);
+        return !file.exists() || constant.getFileOverride();
     }
 
 }

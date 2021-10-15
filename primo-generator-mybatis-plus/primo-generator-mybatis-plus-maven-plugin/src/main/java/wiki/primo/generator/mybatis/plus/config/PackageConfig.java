@@ -40,6 +40,17 @@ public class PackageConfig {
     @Parameter(defaultValue = "service.impl")
     private String serviceImpl;
     /**
+     * Service扩展类包名
+     */
+    @Parameter(defaultValue = "service.ext")
+    private String serviceExt;
+
+    /**
+     * Service Impl扩展类包名
+     */
+    @Parameter(defaultValue = "service.ext.impl")
+    private String serviceExtImpl;
+    /**
      * Mapper包名
      */
     @Parameter(defaultValue = "mapper")
@@ -106,5 +117,19 @@ public class PackageConfig {
             return "controller";
         }
         return controller;
+    }
+
+    public String getServiceExt() {
+        if(StringUtils.isEmpty(serviceExt)){
+            return "service.ext";
+        }
+        return serviceExt;
+    }
+
+    public String getServiceExtImpl() {
+        if(StringUtils.isEmpty(serviceExtImpl)){
+            return "service.ext.impl";
+        }
+        return serviceExtImpl;
     }
 }

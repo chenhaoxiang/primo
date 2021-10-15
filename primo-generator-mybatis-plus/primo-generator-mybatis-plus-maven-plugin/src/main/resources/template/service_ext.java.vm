@@ -1,0 +1,12 @@
+package ${package.ServiceExt};
+
+/**
+ * <p>
+ * 服务类
+ * </p>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+public interface ${table.serviceExtName}{
+}

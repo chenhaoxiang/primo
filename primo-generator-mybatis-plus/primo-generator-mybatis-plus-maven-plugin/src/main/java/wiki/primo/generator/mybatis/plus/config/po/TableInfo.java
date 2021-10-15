@@ -35,6 +35,8 @@ public class TableInfo {
     private String controllerName;
     private String queryName;
 
+    private String serviceExtName;
+    private String serviceExtImplName;
     /**
      * 数据库表字段
      */
@@ -139,6 +141,22 @@ public class TableInfo {
 
     public void setFields(List<TableField> fields) {
         this.fields = fields;
+    }
+
+    public String getServiceExtName() {
+        return serviceExtName;
+    }
+
+    public String getServiceExtImplName() {
+        return serviceExtImplName;
+    }
+
+    public void setServiceExtName(String serviceExtName) {
+        this.serviceExtName = serviceExtName;
+    }
+
+    public void setServiceExtImplName(String serviceExtImplName) {
+        this.serviceExtImplName = serviceExtImplName;
     }
 
     /**

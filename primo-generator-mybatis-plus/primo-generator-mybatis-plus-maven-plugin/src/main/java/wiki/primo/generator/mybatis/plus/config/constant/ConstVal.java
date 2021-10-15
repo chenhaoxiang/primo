@@ -2,7 +2,9 @@ package wiki.primo.generator.mybatis.plus.config.constant;
 
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 定义常量
@@ -13,6 +15,11 @@ import java.util.List;
 public class ConstVal {
 
     public static List<ConfigConstant> configConstantList = new ArrayList<ConfigConstant>();
+    /**
+     * 不进行覆盖的文件名，包含包名
+     * 目前只是扩展类的类名
+     */
+    public static Set<String> extSet = new HashSet<>();
 
     /**
      * 实体包名的KEY 查询配置的key名
@@ -21,6 +28,8 @@ public class ConstVal {
 
     public static final String SERIVCE = "Service";
     public static final String SERVICEIMPL = "ServiceImpl";
+    public static final String SERIVCE_EXT = "ServiceExt";
+    public static final String SERVICE_EXT_IMPL = "ServiceExtImpl";
     public static final String MAPPER = "Mapper";
     public static final String CONTROLLER = "Controller";
     public static final String QUERY = "QueryBo";
@@ -37,13 +46,18 @@ public class ConstVal {
     public static final String TEMPLATE_MAPPER = "/template/mapper.java.vm";
     public static final String TEMPLATE_XML = "/template/mapper.xml.vm";
     public static final String TEMPLATE_SERVICE = "/template/service.java.vm";
-    public static final String TEMPLATE_SERVICEIMPL = "/template/serviceImpl.java.vm";
+    public static final String TEMPLATE_SERVICEIMPL = "/template/service_impl.java.vm";
     public static final String TEMPLATE_CONTROLLER = "/template/controller.java.vm";
     public static final String QUERY_CONTROLLER = "/template/query.java.vm";
     public static final String TEMPLATE_RESULT_CODE_ENUM = "/template/result_code_enum.java.vm";
     public static final String TEMPLATE_RESULT_MODEL = "/template/result_model.java.vm";
     public static final String TEMPLATE_MYBATIS_PLUS_CONFIG = "/template/config/mybatis_plus_config.java.vm";
     public static final String TEMPLATE_DRUID_CONFIG = "/template/config/druid_config.java.vm";
+    /**
+     * 扩展类
+     */
+    public static final String TEMPLATE_SERVICE_EXT = "/template/service_ext.java.vm";
+    public static final String TEMPLATE_SERVICE_EXT_IMPL = "/template/service_ext_impl.java.vm";
 
 
     /**
