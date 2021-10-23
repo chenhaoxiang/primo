@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="wiki.primo.generator.mybatis.plus.springbootdemo.mapper.FundRecordMapper">
+	<!--开启二级缓存-->
+	<cache/>
+
+	<resultMap id="BaseResultMap" type="wiki.primo.generator.mybatis.plus.springbootdemo.entity.FundRecord">
+		<id column="id" property="id" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+		<result column="code" property="code" />
+		<result column="name" property="name" />
+		<result column="worth" property="worth" />
+		<result column="appraisement" property="appraisement" />
+		<result column="yesterday_worth" property="yesterdayWorth" />
+		<result column="time" property="time" />
+		<result column="ups_and_downs_day1" property="upsAndDownsDay1" />
+		<result column="ups_and_downs_day7" property="upsAndDownsDay7" />
+		<result column="ups_and_downs_day30" property="upsAndDownsDay30" />
+		<result column="ups_and_downs_day365" property="upsAndDownsDay365" />
+		<result column="ups_and_downs_day1095" property="upsAndDownsDay1095" />
+		<result column="ups_and_downs_day1825" property="upsAndDownsDay1825" />
+		<result column="ups_and_downs" property="upsAndDowns" />
+		<result column="yesterday_fund_record_id" property="yesterdayFundRecordId" />
+	</resultMap>
+
+    <!-- 通用查询结果列-->
+    <sql id="Base_Column_List">
+        `id`, `create_time` AS `createTime`, `update_time` AS `updateTime`, `code`, `name`, `worth`, `appraisement`, `yesterday_worth` AS `yesterdayWorth`, `time`, `ups_and_downs_day1` AS `upsAndDownsDay1`, `ups_and_downs_day7` AS `upsAndDownsDay7`, `ups_and_downs_day30` AS `upsAndDownsDay30`, `ups_and_downs_day365` AS `upsAndDownsDay365`, `ups_and_downs_day1095` AS `upsAndDownsDay1095`, `ups_and_downs_day1825` AS `upsAndDownsDay1825`, `ups_and_downs` AS `upsAndDowns`, `yesterday_fund_record_id` AS `yesterdayFundRecordId`
+    </sql>
+</mapper>

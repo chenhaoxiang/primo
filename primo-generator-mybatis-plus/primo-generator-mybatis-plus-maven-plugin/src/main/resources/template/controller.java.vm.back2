@@ -12,19 +12,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import ${package.QueryBo}.${table.queryName};
-#if(${table.hasDate})
-import java.util.Date;
-#end
-#foreach($field in ${table.fields})
-    #if(${field.propertyType.equals('BigDecimal')})
-import java.math.BigDecimal;
-        #break
-    #end
-#end
-
 
 /**
+ * <p>
  * ${table.comment}  前端控制器
+ * </p>
  *
  * @author ${author}
  * @since ${date}
@@ -38,26 +30,16 @@ public class ${table.controllerName} {
 
     /**
      * 添加对象
-#foreach($field in ${table.fields})
-#if(${field.keyFlag} && ${idGenType}!="ID_WORKER")
-#else
-     * @param ${field.propertyName} ${field.comment} 类型：${field.propertyType}
-#end
-#end
+     *
+     * @param ${table.strConvertLowerCamel(${entity})} 对象
      * @return ResultModel统一响应结果
      */
     @PostMapping("save")
     @ResponseBody
-    public ResultModel<Object> save(#foreach($field in ${table.fields})#if(${field.keyFlag} && ${idGenType}!="ID_WORKER")#else${field.propertyType} ${field.propertyName}#if($foreach.hasNext),#end#end#end
-        ) {
-        ${entity} ${table.strConvertLowerCamel(${entity})} = new ${entity}();
-        //遍历set
-#foreach($field in ${table.fields})
-#if(${field.keyFlag} && ${idGenType}!="ID_WORKER")
-#else
-        ${table.strConvertLowerCamel(${entity})}.set${field.capitalName}(${field.propertyName});
-#end
-#end
+    public ResultModel<Object> save(${entity} ${table.strConvertLowerCamel(${entity})}) {
+        if(${table.strConvertLowerCamel(${entity})}==null){
+            return ResultModel.parameterError();
+        }
         ${table.strConvertLowerCamel(${table.serviceName})}.save(${table.strConvertLowerCamel(${entity})});
         return ResultModel.success();
     }
@@ -85,28 +67,15 @@ public class ${table.controllerName} {
     /**
      * 根据ID进行修改对象
      *
-#foreach($field in ${table.fields})
-     * @param ${field.propertyName} ${field.comment} 类型：${field.propertyType}
-#end
+     * @param ${table.strConvertLowerCamel(${entity})} 对象中必须有ID主键
      * @return ResultModel统一响应结果
      */
     @PostMapping("update")
     @ResponseBody
-    public ResultModel<Object> update(#foreach($field in ${table.fields})${field.propertyType} ${field.propertyName}#if($foreach.hasNext),#end #end ) {
-        if(#foreach($field in ${table.fields})#if(${field.keyFlag} && ${idGenType}!="ID_WORKER")${field.propertyName}#else#end#end==null){
+    public ResultModel<Object> update(${entity} ${table.strConvertLowerCamel(${entity})}) {
+        if(${table.strConvertLowerCamel(${entity})}==null || ${table.strConvertLowerCamel(${entity})}.getId()==null){
             return ResultModel.parameterError();
         }
-        ${entity} ${table.strConvertLowerCamel(${entity})} = new ${entity}();
-        //遍历set
-#foreach($field in ${table.fields})
-#if(${field.propertyType}=='String')
-        if(${field.propertyName}!=null && ${field.propertyName}.length()>0){
-            ${table.strConvertLowerCamel(${entity})}.set${field.capitalName}(${field.propertyName});
-        }
-#else
-        ${table.strConvertLowerCamel(${entity})}.set${field.capitalName}(${field.propertyName});
-#end
-#end
         boolean success = ${table.strConvertLowerCamel(${table.serviceName})}.updateById(${table.strConvertLowerCamel(${entity})});
         if(success) {
             return ResultModel.success();
@@ -133,33 +102,15 @@ public class ${table.controllerName} {
 
     /**
      * 分页查询
-#foreach($field in ${table.fields})
-     * @param ${field.propertyName} ${field.comment} 类型：${field.propertyType}
-#end
-     * @param pageNo 当前页
-     * @param pageSize 一页的数据量
+     *
      * @return ResultModel统一响应结果
      */
     @PostMapping("page")
     @ResponseBody
-    public ResultModel<IPage<${entity}>> page(#foreach($field in ${table.fields})${field.propertyType} ${field.propertyName},#end Integer pageNo,Integer pageSize) {
-        if(pageNo==null){
-            pageNo=1;
+    public ResultModel<IPage<${entity}>> page(${table.queryName} queryBo,int pageNo,int pageSize) {
+        if(queryBo==null){
+            return ResultModel.parameterError();
         }
-        if(pageSize==null){
-            pageSize=10;
-        }
-        ${table.queryName} queryBo = new ${table.queryName}();
-        //遍历set
-#foreach($field in ${table.fields})
-#if(${field.propertyType}=='String')
-        if(${field.propertyName}!=null && ${field.propertyName}.length()>0){
-            queryBo.set${field.capitalName}(${field.propertyName});
-        }
-#else
-        queryBo.set${field.capitalName}(${field.propertyName});
-#end
-#end
         IPage<${entity}> templateIPage = ${table.strConvertLowerCamel(${table.serviceName})}.page(queryBo,pageNo,pageSize);
         return ResultModel.success(templateIPage);
     }
