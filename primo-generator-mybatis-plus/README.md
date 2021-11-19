@@ -216,6 +216,10 @@ mvn -DskipTests=true wiki.primo.generator:primo-generator-mybatis-plus-maven-plu
 # 版本更新说明 
 请使用最新版本,从1.0.0开始上传到中央仓库
 
+## 1.2.0
+- controller层实体使用req和resp，不再使用数据库实体 
+
+
 ## 1.1.0
 - service层增加扩展实现类，可以自行实现一些service方法，此类绝不会被自动覆盖！自行实现的类均在此层进行实现即可  
 

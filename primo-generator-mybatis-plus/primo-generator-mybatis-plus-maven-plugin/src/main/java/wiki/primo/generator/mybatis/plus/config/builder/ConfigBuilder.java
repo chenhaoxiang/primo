@@ -293,6 +293,7 @@ public class ConfigBuilder {
             ResultSet results = pstate.executeQuery();
             while (results.next()) {
                 String tableName = results.getString(querySQL.getTableName());
+                System.out.println("获取到表名:"+tableName);
                 if (StringUtils.isNotBlank(tableName)) {
                     String tableComment = results.getString(querySQL.getTableComment());
                     TableInfo tableInfo = new TableInfo();
