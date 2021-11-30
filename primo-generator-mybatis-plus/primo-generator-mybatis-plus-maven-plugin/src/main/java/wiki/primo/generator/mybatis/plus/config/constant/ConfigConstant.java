@@ -83,6 +83,11 @@ public class ConfigConstant {
         constant.setFileOverride(false);
         ConstVal.configConstantList.add(constant);
 
+
+        constant = new ConfigConstant("EntityReq", "entity_req_path", File.separator + "%sReq.java", PackageUtils.joinPackage(config.getParent(), config.getEntityReq()), template.getEntityReq());
+        ConstVal.configConstantList.add(constant);
+        constant = new ConfigConstant("EntityResp", "entity_resp_path", File.separator + "%sResp.java", PackageUtils.joinPackage(config.getParent(), config.getEntityResp()), template.getEntityResp());
+        ConstVal.configConstantList.add(constant);
     }
 
 

@@ -5,7 +5,7 @@ package wiki.primo.generator.mybatis.plus.config.po;
  * Date:2020-9-3
  * Describe: 字段信息
  */
-public class TableField {
+public class TableFieldVM {
     private boolean keyFlag;
 
     /**

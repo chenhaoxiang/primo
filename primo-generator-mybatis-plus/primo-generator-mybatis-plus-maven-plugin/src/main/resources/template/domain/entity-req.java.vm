@@ -31,11 +31,6 @@ private static final long serialVersionUID = 1L;
 
 #end
 
-##常量设置
-#foreach($field in ${table.fields})
-	public static final String ${field.nameUp}="${field.name}";
-#end
-
 #foreach($field in ${table.fields})
 	#if(${field.propertyType.equals("Boolean")})
 		#set($getprefix="is")

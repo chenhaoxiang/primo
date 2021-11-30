@@ -4,7 +4,7 @@ package wiki.primo.generator.mybatis.plus;
 import wiki.primo.generator.mybatis.plus.config.constant.ConfigConstant;
 import wiki.primo.generator.mybatis.plus.config.constant.ConstVal;
 import wiki.primo.generator.mybatis.plus.config.builder.ConfigBuilder;
-import wiki.primo.generator.mybatis.plus.config.po.TableInfo;
+import wiki.primo.generator.mybatis.plus.config.po.TableInfoVM;
 import org.apache.commons.lang.StringUtils;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -90,7 +90,7 @@ public class GenerateMojo extends AbstractGenerateMojo {
      * @return 解析数据结果集
      */
     private Map<String, VelocityContext> analyzeData(ConfigBuilder config) {
-        List<TableInfo> tableList = config.getTableInfoList();
+        List<TableInfoVM> tableList = config.getTableInfoList();
         Map<String, String> packageInfo = config.getPackageInfo();
         Map<String, VelocityContext> ctxData = new HashMap<String, VelocityContext>();
         String superEntityClass = getSuperClassName(config.getSuperEntityClass());
@@ -103,7 +103,7 @@ public class GenerateMojo extends AbstractGenerateMojo {
         /**
          * 设置vm中的值
          */
-        for (TableInfo tableInfo : tableList) {
+        for (TableInfoVM tableInfo : tableList) {
             VelocityContext ctx = new VelocityContext();
             ctx.put("package", packageInfo);
             ctx.put("table", tableInfo);

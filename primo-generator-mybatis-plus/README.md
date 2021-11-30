@@ -218,6 +218,7 @@ mvn -DskipTests=true wiki.primo.generator:primo-generator-mybatis-plus-maven-plu
 
 ## 1.2.0
 - controller层实体使用req和resp，不再使用数据库实体 
+- 修复一些bug。数据库表名转驼峰时的一些不兼容问题解决  
 
 
 ## 1.1.0

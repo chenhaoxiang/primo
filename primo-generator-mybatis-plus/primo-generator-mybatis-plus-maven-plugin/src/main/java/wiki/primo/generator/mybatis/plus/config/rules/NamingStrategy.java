@@ -29,16 +29,16 @@ public enum NamingStrategy {
 
     public static String underlineToCamel(String name) {
         // 快速检查
-        if (StringUtils.isBlank(name)) {
+        if (StringUtils.isEmpty(name)) {
             // 没必要转换
             return "";
         }
         StringBuilder result = new StringBuilder();
         // 用下划线将原始字符串分割
-        String camels[] = name.toLowerCase().split(ConstVal.UNDERLINE);
+        String[] camels = name.toLowerCase().split(ConstVal.UNDERLINE);
         for (String camel : camels) {
             // 跳过原始字符串中开头、结尾的下换线或双重下划线
-            if (StringUtils.isBlank(camel)) {
+            if (StringUtils.isEmpty(camel)) {
                 continue;
             }
             // 处理真正的驼峰片段
@@ -47,7 +47,7 @@ public enum NamingStrategy {
                 result.append(camel);
             } else {
                 // 其他的驼峰片段，首字母大写
-                result.append(capitalFirst(camel));
+                result.append(NamingStrategy.capitalFirst(camel));
             }
         }
         return result.toString();
@@ -113,13 +113,34 @@ public enum NamingStrategy {
      * @return 转换后的字符串
      */
     public static String capitalFirst(String name) {
-        if (StringUtils.isNotBlank(name)) {
-            //return name.substring(0, 1).toUpperCase() + name.substring(1);
-            char[] array = name.toCharArray();
-            array[0] -= 32;
-            return String.valueOf(array);
+        if (StringUtils.isEmpty(name)) {
+            return "";
         }
-        return "";
+        //return name.substring(0, 1).toUpperCase() + name.substring(1);
+        char[] array = name.toCharArray();
+        //只有小写字母才进行转换
+        if(NamingStrategy.isLowerCase(array[0])) {
+            array[0] -= 32;
+        }
+        return String.valueOf(array);
+    }
+
+    /**
+     * 是否是大写
+     * @param c
+     * @return
+     */
+    public static boolean isUpperCase(char c) {
+        return c >=65 && c <= 90;
+    }
+
+    /**
+     * 是否是小写
+     * @param c
+     * @return
+     */
+    public static boolean isLowerCase(char c) {
+        return c >=97 && c <= 122;
     }
 
 }

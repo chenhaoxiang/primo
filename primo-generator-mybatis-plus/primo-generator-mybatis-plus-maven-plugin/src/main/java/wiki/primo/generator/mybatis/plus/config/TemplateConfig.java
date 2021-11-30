@@ -12,6 +12,12 @@ public class TemplateConfig {
     @Parameter(defaultValue = ConstVal.TEMPLATE_ENTITY)
     private String entity;
 
+    @Parameter(defaultValue = ConstVal.TEMPLATE_REQ_ENTITY)
+    private String entityReq;
+
+    @Parameter(defaultValue = ConstVal.TEMPLATE_RESP_ENTITY)
+    private String entityResp;
+
     @Parameter(defaultValue = ConstVal.TEMPLATE_SERVICE)
     private String service;
 
@@ -46,6 +52,16 @@ public class TemplateConfig {
     public String getEntity() {
         if (entity == null) return ConstVal.TEMPLATE_ENTITY;
         return entity;
+    }
+
+    public String getEntityReq() {
+        if (entityReq == null) return ConstVal.TEMPLATE_REQ_ENTITY;
+        return entityReq;
+    }
+
+    public String getEntityResp() {
+        if (entityResp == null) return ConstVal.TEMPLATE_RESP_ENTITY;
+        return entityResp;
     }
 
     public String getService() {

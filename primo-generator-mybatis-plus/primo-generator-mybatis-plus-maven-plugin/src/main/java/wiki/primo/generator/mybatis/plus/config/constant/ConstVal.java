@@ -53,6 +53,8 @@ public class ConstVal {
     public static final String TEMPLATE_RESULT_MODEL = "/template/result_model.java.vm";
     public static final String TEMPLATE_MYBATIS_PLUS_CONFIG = "/template/config/mybatis_plus_config.java.vm";
     public static final String TEMPLATE_DRUID_CONFIG = "/template/config/druid_config.java.vm";
+    public static final String TEMPLATE_REQ_ENTITY = "/template/domain/entity-req.java.vm";
+    public static final String TEMPLATE_RESP_ENTITY = "/template/domain/entity-resp.java.vm";
     /**
      * 扩展类
      */

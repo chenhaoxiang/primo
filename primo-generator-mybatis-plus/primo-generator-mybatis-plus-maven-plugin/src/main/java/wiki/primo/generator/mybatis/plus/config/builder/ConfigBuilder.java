@@ -7,8 +7,8 @@ import wiki.primo.generator.mybatis.plus.config.StrategyConfig;
 import wiki.primo.generator.mybatis.plus.config.TemplateConfig;
 import wiki.primo.generator.mybatis.plus.config.constant.ConfigConstant;
 import wiki.primo.generator.mybatis.plus.config.constant.ConstVal;
-import wiki.primo.generator.mybatis.plus.config.po.TableField;
-import wiki.primo.generator.mybatis.plus.config.po.TableInfo;
+import wiki.primo.generator.mybatis.plus.config.po.TableFieldVM;
+import wiki.primo.generator.mybatis.plus.config.po.TableInfoVM;
 import wiki.primo.generator.mybatis.plus.config.rules.DbType;
 import wiki.primo.generator.mybatis.plus.config.rules.NamingStrategy;
 import wiki.primo.generator.mybatis.plus.config.rules.QuerySQL;
@@ -58,7 +58,7 @@ public class ConfigBuilder {
     /**
      * 数据库表信息
      */
-    private List<TableInfo> tableInfoList;
+    private List<TableInfoVM> tableInfoList;
 
     /**
      * 包配置详情
@@ -86,7 +86,7 @@ public class ConfigBuilder {
      */
     public ConfigBuilder(PackageConfig packageConfig, DataSourceConfig dataSourceConfig, StrategyConfig strategyConfig,
                          TemplateConfig template, String outputDir) {
-        //初始化常量数据
+        //1.初始化常量数据
         ConfigConstant.initConstant(packageConfig,template);
         //处理包配置
         handlerPackage(outputDir, packageConfig);
@@ -156,7 +156,7 @@ public class ConfigBuilder {
      *
      * @return 所有表信息
      */
-    public List<TableInfo> getTableInfoList() {
+    public List<TableInfoVM> getTableInfoList() {
         return tableInfoList;
     }
 
@@ -178,7 +178,7 @@ public class ConfigBuilder {
      */
     private void handlerPackage(String outputDir, PackageConfig config) {
         packageInfo = new HashMap<String, String>();
-        //Entity实体包名 查询配置,也就是配置类在项目中的包名
+        //Entity实体包名 查询配置,也就是配置类在项目中的包名。父模块名称
         packageInfo.put(ConstVal.MODULENAME, config.getModuleName());
         //输出路径 查询配置
         pathInfo = new HashMap<String, String>();
@@ -255,8 +255,8 @@ public class ConfigBuilder {
      * @param tablePrefix
      * @return 补充完整信息后的表
      */
-    private List<TableInfo> processTable(List<TableInfo> tableList, NamingStrategy strategy, String tablePrefix) {
-        for (TableInfo tableInfo : tableList) {
+    private List<TableInfoVM> processTable(List<TableInfoVM> tableList, NamingStrategy strategy, String tablePrefix) {
+        for (TableInfoVM tableInfo : tableList) {
             tableInfo.setEntityName(NamingStrategy.capitalFirst(processName(tableInfo.getName(), strategy, tablePrefix)));
             tableInfo.setMapperName(tableInfo.getEntityName() + ConstVal.MAPPER);
             tableInfo.setXmlName(tableInfo.getMapperName());
@@ -277,13 +277,13 @@ public class ConfigBuilder {
      *
      * @return 表信息
      */
-    private List<TableInfo> getTablesInfo(StrategyConfig config) {
+    private List<TableInfoVM> getTablesInfo(StrategyConfig config) {
         boolean isInclude = (null != config.getInclude() && config.getInclude().length > 0);
         boolean isExclude = (null != config.getExclude() && config.getExclude().length > 0);
         if (isInclude && isExclude) {
             throw new RuntimeException("<strategy> 标签中 <include> 与 <exclude> 只能配置一项！");
         }
-        List<TableInfo> tableList = new ArrayList<TableInfo>();
+        List<TableInfoVM> tableList = new ArrayList<TableInfoVM>();
         Set<String> notExistTables = new HashSet<String>();
         NamingStrategy strategy = config.getNaming();
         NamingStrategy fieldStrategy = config.getFieldNaming();
@@ -296,7 +296,7 @@ public class ConfigBuilder {
                 System.out.println("获取到表名:"+tableName);
                 if (StringUtils.isNotBlank(tableName)) {
                     String tableComment = results.getString(querySQL.getTableComment());
-                    TableInfo tableInfo = new TableInfo();
+                    TableInfoVM tableInfo = new TableInfoVM();
                     if (isInclude) {
                         for (String includeTab : config.getInclude()) {
                             if (includeTab.equalsIgnoreCase(tableName)) {
@@ -320,7 +320,7 @@ public class ConfigBuilder {
                         tableInfo.setComment(tableComment);
                     }
                     if (StringUtils.isNotBlank(tableInfo.getName())) {
-                        List<TableField> fieldList = getListFields(tableInfo.getName(), fieldStrategy);
+                        List<TableFieldVM> fieldList = getListFields(tableInfo.getName(), fieldStrategy);
                         tableInfo.setFields(fieldList);
                         tableList.add(tableInfo);
                     }
@@ -329,7 +329,7 @@ public class ConfigBuilder {
                 }
             }
             // 将已经存在的表移除
-            for (TableInfo tabInfo : tableList) {
+            for (TableInfoVM tabInfo : tableList) {
                 notExistTables.remove(tabInfo.getName());
             }
             if (notExistTables.size() > 0) {
@@ -360,15 +360,15 @@ public class ConfigBuilder {
      * @param strategy  命名策略
      * @return 表信息
      */
-    private List<TableField> getListFields(String tableName, NamingStrategy strategy) throws SQLException {
+    private List<TableFieldVM> getListFields(String tableName, NamingStrategy strategy) throws SQLException {
         boolean havedId = false;
 
         PreparedStatement pstate = connection.prepareStatement(String.format(querySQL.getTableFieldsSql(), tableName));
         ResultSet results = pstate.executeQuery();
 
-        List<TableField> fieldList = new ArrayList<TableField>();
+        List<TableFieldVM> fieldList = new ArrayList<TableFieldVM>();
         while (results.next()) {
-            TableField field = new TableField();
+            TableFieldVM field = new TableFieldVM();
             String key = results.getString(querySQL.getFieldKey());
             // 避免多重主键设置，目前只取第一个找到ID，并放到list中的索引为0的位置
             boolean isId = StringUtils.isNotBlank(key) && key.toUpperCase().equals("PRI");

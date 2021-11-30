@@ -1,8 +1,8 @@
 package ${package.Controller};
 
 import ${package.Service}.${table.serviceName};
-import ${package.Entity}.${entity};
 import ${package.ResultModel}.ResultModel;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +12,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import ${package.QueryBo}.${table.queryName};
+import ${package.EntityReq}.${table.entityReqName};
+import ${package.EntityResp}.${table.entityRespName};
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>
@@ -31,16 +35,18 @@ public class ${table.controllerName} {
     /**
      * 添加对象
      *
-     * @param ${table.strConvertLowerCamel(${entity})} 对象
+     * @param ${table.strConvertLowerCamel(${table.entityReqName})} 对象
      * @return ResultModel统一响应结果
      */
     @PostMapping("save")
     @ResponseBody
-    public ResultModel<Object> save(${entity} ${table.strConvertLowerCamel(${entity})}) {
-        if(${table.strConvertLowerCamel(${entity})}==null){
+    public ResultModel<Object> save(${table.entityReqName} ${table.strConvertLowerCamel(${table.entityReqName})}) {
+        if(${table.strConvertLowerCamel(${table.entityReqName})}==null){
             return ResultModel.parameterError();
         }
-        ${table.strConvertLowerCamel(${table.serviceName})}.save(${table.strConvertLowerCamel(${entity})});
+        ${table.entity} ${table.strConvertLowerCamel(${table.entity})} = new ${table.entity}();
+        BeanUtils.copyProperties(${table.strConvertLowerCamel(${table.entityReqName})},${table.strConvertLowerCamel(${table.entity})});
+        ${table.strConvertLowerCamel(${table.serviceName})}.save(${table.strConvertLowerCamel(${table.entity})});
         return ResultModel.success();
     }
 
@@ -67,16 +73,18 @@ public class ${table.controllerName} {
     /**
      * 根据ID进行修改对象
      *
-     * @param ${table.strConvertLowerCamel(${entity})} 对象中必须有ID主键
+     * @param ${table.strConvertLowerCamel(${table.entityReqName})} 对象中必须有ID主键
      * @return ResultModel统一响应结果
      */
     @PostMapping("update")
     @ResponseBody
-    public ResultModel<Object> update(${entity} ${table.strConvertLowerCamel(${entity})}) {
-        if(${table.strConvertLowerCamel(${entity})}==null || ${table.strConvertLowerCamel(${entity})}.getId()==null){
+    public ResultModel<Object> update(${table.entityReqName} ${table.strConvertLowerCamel(${table.entityReqName})}) {
+        if(${table.strConvertLowerCamel(${table.entityReqName})}==null || ${table.strConvertLowerCamel(${table.entityReqName})}.getId()==null){
             return ResultModel.parameterError();
         }
-        boolean success = ${table.strConvertLowerCamel(${table.serviceName})}.updateById(${table.strConvertLowerCamel(${entity})});
+        ${table.entity} ${table.strConvertLowerCamel(${table.entity})} = new ${table.entity}();
+        BeanUtils.copyProperties(${table.strConvertLowerCamel(${table.entityReqName})},${table.strConvertLowerCamel(${table.entity})});
+        boolean success = ${table.strConvertLowerCamel(${table.serviceName})}.updateById(${table.strConvertLowerCamel(${table.entity})});
         if(success) {
             return ResultModel.success();
         }else {
@@ -92,12 +100,14 @@ public class ${table.controllerName} {
      */
     @GetMapping("getById")
     @ResponseBody
-    public ResultModel<${entity}> getById(@RequestParam Integer id) {
+    public ResultModel<${table.entityRespName}> getById(@RequestParam Integer id) {
         if(id==null || id<0){
             return ResultModel.parameterError();
         }
-        ${entity} ${table.strConvertLowerCamel(${entity})} = ${table.strConvertLowerCamel(${table.serviceName})}.getById(id);
-        return ResultModel.success(${table.strConvertLowerCamel(${entity})});
+        ${table.entity} ${table.strConvertLowerCamel(${table.entity})}= ${table.strConvertLowerCamel(${table.serviceName})}.getById(id);
+        ${table.entityRespName} ${table.strConvertLowerCamel(${table.entityReqName})} = new ${table.entityRespName}();
+        BeanUtils.copyProperties(${table.strConvertLowerCamel(${table.entity})},${table.strConvertLowerCamel(${table.entityReqName})});
+        return ResultModel.success(${table.strConvertLowerCamel(${table.entityRespName})});
     }
 
     /**
@@ -107,11 +117,24 @@ public class ${table.controllerName} {
      */
     @PostMapping("page")
     @ResponseBody
-    public ResultModel<IPage<${entity}>> page(${table.queryName} queryBo,int pageNo,int pageSize) {
+    public ResultModel<IPage<${table.entityRespName}>> page(${table.queryName} queryBo,int pageNo,int pageSize) {
         if(queryBo==null){
             return ResultModel.parameterError();
         }
-        IPage<${entity}> templateIPage = ${table.strConvertLowerCamel(${table.serviceName})}.page(queryBo,pageNo,pageSize);
+        IPage<${table.entity}> iPage = ${table.strConvertLowerCamel(${table.serviceName})}.page(queryBo,pageNo,pageSize);
+        IPage<${table.entityRespName}> templateIPage = new Page<>();
+        templateIPage.setPages(iPage.getPages());
+        templateIPage.setCurrent(iPage.getCurrent());
+        templateIPage.setSize(iPage.getSize());
+        templateIPage.setTotal(iPage.getTotal());
+        List<${table.entity}> ${table.strConvertLowerCamel(${table.entity})}List = iPage.getRecords();
+        List<${table.entityRespName}> ${table.strConvertLowerCamel(${table.entity})}List = new ArrayList<>(${table.strConvertLowerCamel(${table.entity})}List.size());
+        for (${table.entity} ${table.strConvertLowerCamel(${table.entity})} : ${table.strConvertLowerCamel(${table.entity})}List) {
+        ${table.entityRespName} ${table.strConvertLowerCamel(${table.entity})} = new ${table.entityRespName}();
+        BeanUtils.copyProperties(${table.strConvertLowerCamel(${table.entity})},${table.strConvertLowerCamel(${table.entity})});
+        ${table.strConvertLowerCamel(${table.entity})}List.add(${table.strConvertLowerCamel(${table.entity})});
+        }
+        templateIPage.setRecords(${table.strConvertLowerCamel(${table.entity})}List);
         return ResultModel.success(templateIPage);
     }
 

@@ -11,7 +11,7 @@ import java.util.List;
  * @author chenhx
  * @since 2020/8/30
  */
-public class TableInfo {
+public class TableInfoVM {
     /**
      * 表名
      */
@@ -24,6 +24,8 @@ public class TableInfo {
      * 实体名（实体的Java类名）
      */
     private String entityName;
+    private String entityReqName;
+    private String entityRespName;
 
     /**
      * Mapper名称
@@ -40,7 +42,7 @@ public class TableInfo {
     /**
      * 数据库表字段
      */
-    private List<TableField> fields;
+    private List<TableFieldVM> fields;
     /**
      * 数据库表的字段名称
      */
@@ -61,6 +63,20 @@ public class TableInfo {
 
     public void setEntityColumnConstant(boolean entityColumnConstant) {
         this.entityColumnConstant = entityColumnConstant;
+    }
+
+    public String getEntityReqName() {
+        if(StringUtils.isEmpty(entityReqName)) {
+            return entityName + "Req";
+        }
+        return entityReqName;
+    }
+
+    public String getEntityRespName() {
+        if(StringUtils.isEmpty(entityRespName)) {
+            return entityName + "Resp";
+        }
+        return entityRespName;
     }
 
     public String getQueryName() {
@@ -135,11 +151,11 @@ public class TableInfo {
         this.controllerName = controllerName;
     }
 
-    public List<TableField> getFields() {
+    public List<TableFieldVM> getFields() {
         return fields;
     }
 
-    public void setFields(List<TableField> fields) {
+    public void setFields(List<TableFieldVM> fields) {
         this.fields = fields;
     }
 
@@ -168,7 +184,7 @@ public class TableInfo {
         if (StringUtils.isBlank(fieldNames)) {
             StringBuilder names = new StringBuilder();
             for (int i = 0; i < fields.size(); i++) {
-                TableField fd = fields.get(i);
+                TableFieldVM fd = fields.get(i);
                 if (i == fields.size() - 1) {
                     names.append(cov2col(fd));
                 } else {
@@ -186,7 +202,7 @@ public class TableInfo {
      * @return 是否
      */
     public boolean isHasDate() {
-        for (TableField fieldInfo : fields) {
+        for (TableFieldVM fieldInfo : fields) {
             if ("Date".equals(fieldInfo.getPropertyType())) {
                 hasDate = true;
                 break;
@@ -201,7 +217,7 @@ public class TableInfo {
      * @param field 字段实体
      * @return 转换后的信息
      */
-    private String cov2col(TableField field) {
+    private String cov2col(TableFieldVM field) {
         if (null != field) {
             return field.isConvert() ? "`"+field.getName()+"`" + " AS "
                     + "`"+field.getPropertyName()+"`" : "`"+field.getName()+"`";

@@ -74,11 +74,37 @@ public class PackageConfig {
     @Parameter(defaultValue = "query")
     private String query;
 
+    /**
+     * entityReq包名
+     */
+    @Parameter(defaultValue = "domain.req")
+    private String entityReq;
+
+    /**
+     * entityResp包名
+     */
+    @Parameter(defaultValue = "domain.resp")
+    private String entityResp;
+
     public String getParent() {
         if (moduleName != null && !"".equals(moduleName.trim())) {
             return parent + "." + moduleName;
         }
         return parent;
+    }
+
+    public String getEntityReq() {
+        if(StringUtils.isEmpty(entityReq)){
+            return "domain.req";
+        }
+        return entityReq;
+    }
+
+    public String getEntityResp() {
+        if(StringUtils.isEmpty(entityResp)){
+            return "domain.resp";
+        }
+        return entityResp;
     }
 
     public String getQuery() {
