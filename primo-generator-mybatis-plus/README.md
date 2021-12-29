@@ -216,6 +216,10 @@ mvn -DskipTests=true wiki.primo.generator:primo-generator-mybatis-plus-maven-plu
 # 版本更新说明 
 请使用最新版本,从1.0.0开始上传到中央仓库
 
+## 1.2.1
+- 修复数据库表名为关键字下的自动生成报错(com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'order' at line 1
+  at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method))。例如表名为"order"的情况下 
+
 ## 1.2.0
 - controller层实体使用req和resp，不再使用数据库实体 
 - 修复一些bug。数据库表名转驼峰时的一些不兼容问题解决  

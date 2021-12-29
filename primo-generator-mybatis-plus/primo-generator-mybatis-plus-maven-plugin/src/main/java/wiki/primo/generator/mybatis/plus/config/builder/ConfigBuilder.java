@@ -362,8 +362,8 @@ public class ConfigBuilder {
      */
     private List<TableFieldVM> getListFields(String tableName, NamingStrategy strategy) throws SQLException {
         boolean havedId = false;
-
-        PreparedStatement pstate = connection.prepareStatement(String.format(querySQL.getTableFieldsSql(), tableName));
+        //避免关键字
+        PreparedStatement pstate = connection.prepareStatement(String.format(querySQL.getTableFieldsSql(), "`"+tableName+"`"));
         ResultSet results = pstate.executeQuery();
 
         List<TableFieldVM> fieldList = new ArrayList<TableFieldVM>();
