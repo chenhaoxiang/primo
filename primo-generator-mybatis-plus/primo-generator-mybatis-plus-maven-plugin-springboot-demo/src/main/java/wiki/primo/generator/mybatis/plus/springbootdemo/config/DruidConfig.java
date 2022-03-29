@@ -15,7 +15,7 @@ import javax.servlet.Servlet;
  * 该方式不需要添加注解：@ServletComponentScan
  *
  * @author chenhx
- * @since 2022-03-29 15:45:24
+ * @since 2022-03-29 18:06:23
  */
 @Configuration
 public class DruidConfig {

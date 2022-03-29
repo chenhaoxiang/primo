@@ -100,6 +100,8 @@
                     <fileOverride>true</fileOverride>
                     <!-- mapper.xml 中添加二级缓存配置(默认true) -->
                     <enableCache>true</enableCache>
+                    <!-- 生成完文件后 是否打开文件夹 -->
+                    <open>false</open>
                     <!-- 开发者名称 -->
                     <author>chenhx</author>
                     <!-- 是否开启 ActiveRecord 模式(默认true) -->
@@ -154,6 +156,20 @@
                         <!-- 定义controller模板的路径 -->
                         <!--<controller>/template/controller1.java.vm</controller>-->
                     </template>
+                    <!--                        扩展配置-->
+                    <extConfig>
+                        <!--                            覆盖一次性文件的开关，默认均为开-->
+                        <buildSwitchConfig>
+                            <!--        生成 DruidConfig 配置开关-->
+                            <druid>false</druid>
+                            <!--        生成 mybatisPlusConfig 配置开关-->
+                            <mybatisPlusConfig>true</mybatisPlusConfig>
+                            <!--        生成 resultCodeEnum 配置开关-->
+                            <resultCodeEnum>true</resultCodeEnum>
+                            <!--        生成 resultModel 配置开关-->
+                            <resultModel>true</resultModel>
+                        </buildSwitchConfig>
+                    </extConfig>
                 </configuration>
                 <dependencies>
                     <dependency>

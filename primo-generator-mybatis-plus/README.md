@@ -218,6 +218,23 @@ mvn -DskipTests=true wiki.primo.generator:primo-generator-mybatis-plus-maven-plu
 
 ## 3.0.0
 - 集成对于单表的增删改查页面操作。可视化修改表数据  
+- 增加扩展配置 
+```xml
+<!--                        扩展配置-->
+  <extConfig>
+  <!--                            覆盖一次性文件的开关，默认均为开-->
+      <buildSwitchConfig>
+<!--        生成 DruidConfig 配置开关-->
+          <druid>false</druid>
+        <!--        生成 mybatisPlusConfig 配置开关-->
+          <mybatisPlusConfig>false</mybatisPlusConfig>
+        <!--        生成 resultCodeEnum 配置开关-->
+          <resultCodeEnum>false</resultCodeEnum>
+        <!--        生成 resultModel 配置开关-->
+          <resultModel>false</resultModel>
+      </buildSwitchConfig>
+  </extConfig>
+```
 
 ## 1.2.2
 - 修复Controller层的代码生成错误

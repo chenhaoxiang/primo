@@ -35,6 +35,7 @@ import java.util.Properties;
 @Mojo(name = "code", threadSafe = true)
 public class GenerateMojo extends AbstractGenerateMojo {
 
+    private ConfigBuilder config;
     /**
      * velocity引擎
      */
@@ -49,7 +50,7 @@ public class GenerateMojo extends AbstractGenerateMojo {
         log.info("==========================准备生成文件...==========================");
         try {
             // 初始化配置
-            initConfig();
+            config = initConfig();
             // 初始化输出文件路径模板，需要遍历list
             initOutputFiles();
             // 创建输出文件路径
@@ -58,12 +59,12 @@ public class GenerateMojo extends AbstractGenerateMojo {
             Map<String, VelocityContext> ctxData = analyzeData(config);
             // 遍历表
             for (Map.Entry<String, VelocityContext> ctx : ctxData.entrySet()) {
-                batchOutput(ctx.getKey(), ctx.getValue());
+                batchOutput(ctx.getKey(), ctx.getValue(),ConstVal.configConstantList);
             }
-            //获取通用的上下文
+            //获取通用的上下文,这里有优化空间
             VelocityContext velocityContext = commonData(config);
             //生成一次的文件
-            batchOneOutput(velocityContext);
+            batchOutput("",velocityContext,ConstVal.oneConfigConstantList);
 
             // 打开输出目录
             if (isOpen()) {
@@ -203,11 +204,10 @@ public class GenerateMojo extends AbstractGenerateMojo {
     private void initOutputFiles() {
         outputFiles = new HashMap<String, String>();
         Map<String, String> pathInfo = config.getPathInfo();
-        for (ConfigConstant constant : ConstVal.configConstantList) {
-            outputFiles.put(constant.getPackageInfoKey(), pathInfo.get(constant.getPathInfoKey()) + constant.getOutputFilesRuleValue());
-        }
-        for (ConfigConstant constant : ConstVal.oneConfigConstantList) {
-            outputFiles.put(constant.getPackageInfoKey(), pathInfo.get(constant.getPathInfoKey()) + constant.getOutputFilesRuleValue());
+        for (List<ConfigConstant> constants : ConstVal.getConfigConstantList()) {
+            for (ConfigConstant constant : constants) {
+                outputFiles.put(constant.getPackageInfoKey(), pathInfo.get(constant.getPathInfoKey()) + constant.getOutputFilesRuleValue());
+            }
         }
     }
 
@@ -215,9 +215,9 @@ public class GenerateMojo extends AbstractGenerateMojo {
      * 合成上下文与模板 表的生成
      * @param context vm上下文
      */
-    private void batchOutput(String entityName, VelocityContext context) {
+    private void batchOutput(String entityName, VelocityContext context,List<ConfigConstant> constants) {
         try {
-            for (ConfigConstant constant : ConstVal.configConstantList) {
+            for (ConfigConstant constant : constants) {
                 String file = String.format(outputFiles.get(constant.getPackageInfoKey()), entityName);
                 //是否覆盖 - 全局的判断
                 if (!isCreate(file)) {
@@ -238,30 +238,6 @@ public class GenerateMojo extends AbstractGenerateMojo {
             e.printStackTrace();
         }
     }
-    private void batchOneOutput(VelocityContext context) {
-        try {
-            for (ConfigConstant constant : ConstVal.oneConfigConstantList) {
-                String file = outputFiles.get(constant.getPackageInfoKey());
-                //是否覆盖 - 全局的判断
-                if (!isCreate(file)) {
-                    continue;
-                }
-                //扩展类不进行覆盖，强制,进行判断独立的开关
-                if (!isCreate(file,constant)) {
-                    continue;
-                }
-
-                vmToFile(context, constant.getTemplatePath(), file);
-            }
-        } catch (IOException e) {
-            log.error("无法创建文件，请检查配置信息！", e);
-            e.printStackTrace();
-        } catch (Exception e) {
-            log.error("创建文件出现异常，请检查配置信息！", e);
-            e.printStackTrace();
-        }
-    }
-
     /**
      * 将模板转化成为文件
      *

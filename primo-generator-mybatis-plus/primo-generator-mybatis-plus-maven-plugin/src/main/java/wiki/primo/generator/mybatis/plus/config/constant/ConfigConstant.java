@@ -4,8 +4,11 @@
  */
 package wiki.primo.generator.mybatis.plus.config.constant;
 
-import wiki.primo.generator.mybatis.plus.config.PackageConfig;
-import wiki.primo.generator.mybatis.plus.config.TemplateConfig;
+import org.apache.maven.plugin.logging.Log;
+import org.apache.maven.plugin.logging.SystemStreamLog;
+import wiki.primo.generator.mybatis.plus.config.external.ExtConfig;
+import wiki.primo.generator.mybatis.plus.config.external.PackageConfig;
+import wiki.primo.generator.mybatis.plus.config.external.TemplateConfig;
 import wiki.primo.generator.mybatis.plus.util.PackageUtils;
 
 import java.io.File;
@@ -17,6 +20,7 @@ import java.io.File;
  * @version 0.0.1
  */
 public class ConfigConstant {
+    private static Log log = new SystemStreamLog();
     /**
      * vm中的包名
      */
@@ -81,15 +85,22 @@ public class ConfigConstant {
         ConstVal.configConstantList.add(constant);
     }
 
-    public static void initOneConstant(PackageConfig config) {
+    public static void initOneConstant(PackageConfig config, ExtConfig extConfig) {
+        log.info("配置的扩展数据："+extConfig);
         //常量,只会有一个类生成的
         ConfigConstant constant = new ConfigConstant("ResultCodeEnum", "result_code_enum", File.separator + "ResultCodeEnum.java", PackageUtils.joinPackage(config.getParent(), "enums"), ConstVal.TEMPLATE_RESULT_CODE_ENUM);
+        //是否覆盖写
+        constant.setFileOverride(extConfig.getBuildSwitchConfig().getResultCodeEnum());
         ConstVal.oneConfigConstantList.add(constant);
         constant = new ConfigConstant("ResultModel", "result_model", File.separator + "ResultModel.java", PackageUtils.joinPackage(config.getParent(), "result"), ConstVal.TEMPLATE_RESULT_MODEL);
+        //是否覆盖写
+        constant.setFileOverride(extConfig.getBuildSwitchConfig().getResultModel());
         ConstVal.oneConfigConstantList.add(constant);
         constant = new ConfigConstant("MybatisPlusConfig", "mybatis_plus_config", File.separator + "MybatisPlusConfig.java", PackageUtils.joinPackage(config.getParent(), "config"), ConstVal.TEMPLATE_MYBATIS_PLUS_CONFIG);
+        constant.setFileOverride(extConfig.getBuildSwitchConfig().getMybatisPlusConfig());
         ConstVal.oneConfigConstantList.add(constant);
-        constant = new ConfigConstant("DruidConfig", "mybatis_plus_config", File.separator + "DruidConfig.java", PackageUtils.joinPackage(config.getParent(), "config"), ConstVal.TEMPLATE_DRUID_CONFIG);
+        constant = new ConfigConstant("DruidConfig", "druid_config", File.separator + "DruidConfig.java", PackageUtils.joinPackage(config.getParent(), "config"), ConstVal.TEMPLATE_DRUID_CONFIG);
+        constant.setFileOverride(extConfig.getBuildSwitchConfig().getDruid());
         ConstVal.oneConfigConstantList.add(constant);
     }
 

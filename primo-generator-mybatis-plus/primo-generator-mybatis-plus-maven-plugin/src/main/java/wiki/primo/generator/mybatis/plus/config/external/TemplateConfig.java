@@ -1,4 +1,4 @@
-package wiki.primo.generator.mybatis.plus.config;
+package wiki.primo.generator.mybatis.plus.config.external;
 
 import wiki.primo.generator.mybatis.plus.config.constant.ConstVal;
 import org.apache.commons.lang.StringUtils;

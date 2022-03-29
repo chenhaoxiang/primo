@@ -22,6 +22,17 @@ public class ConstVal {
      */
     public static List<ConfigConstant> oneConfigConstantList = new ArrayList<ConfigConstant>();
     /**
+     * 注意，生成文件获取需要在这里新增一行
+     * @return
+     */
+    public static List<List<ConfigConstant>> getConfigConstantList(){
+        List<List<ConfigConstant>> conList = new ArrayList<>(2);
+        conList.add(configConstantList);
+        conList.add(oneConfigConstantList);
+        return conList;
+    }
+
+    /**
      * 不进行覆盖的文件名，包含包名
      * 目前只是扩展类的类名
      */

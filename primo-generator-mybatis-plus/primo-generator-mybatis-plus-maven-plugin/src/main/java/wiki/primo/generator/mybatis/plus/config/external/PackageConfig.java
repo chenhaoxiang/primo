@@ -1,4 +1,4 @@
-package wiki.primo.generator.mybatis.plus.config;
+package wiki.primo.generator.mybatis.plus.config.external;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.maven.plugins.annotations.Parameter;

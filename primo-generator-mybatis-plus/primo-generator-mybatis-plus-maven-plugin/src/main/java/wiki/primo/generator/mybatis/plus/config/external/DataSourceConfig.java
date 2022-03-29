@@ -1,4 +1,4 @@
-package wiki.primo.generator.mybatis.plus.config;
+package wiki.primo.generator.mybatis.plus.config.external;
 
 import wiki.primo.generator.mybatis.plus.config.rules.DbType;
 import org.apache.maven.plugins.annotations.Parameter;

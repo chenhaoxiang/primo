@@ -1,10 +1,9 @@
 package wiki.primo.generator.mybatis.plus.config.builder;
 
 
-import wiki.primo.generator.mybatis.plus.config.DataSourceConfig;
-import wiki.primo.generator.mybatis.plus.config.PackageConfig;
-import wiki.primo.generator.mybatis.plus.config.StrategyConfig;
-import wiki.primo.generator.mybatis.plus.config.TemplateConfig;
+import org.apache.maven.plugin.logging.Log;
+import org.apache.maven.plugin.logging.SystemStreamLog;
+import wiki.primo.generator.mybatis.plus.config.external.*;
 import wiki.primo.generator.mybatis.plus.config.constant.ConfigConstant;
 import wiki.primo.generator.mybatis.plus.config.constant.ConstVal;
 import wiki.primo.generator.mybatis.plus.config.po.TableFieldVM;
@@ -34,7 +33,7 @@ import java.util.Set;
  * @since 2020/8/30
  */
 public class ConfigBuilder {
-
+    private static Log log = new SystemStreamLog();
     /**
      * SQL连接
      */
@@ -83,13 +82,15 @@ public class ConfigBuilder {
      * @param strategyConfig   表配置
      * @param outputDir        输出目录
      * @param template        模板配置
+     * @param extConfig        扩展的配置
      */
-    public ConfigBuilder(PackageConfig packageConfig, DataSourceConfig dataSourceConfig, StrategyConfig strategyConfig,
-                         TemplateConfig template, String outputDir) {
+    public ConfigBuilder(PackageConfig packageConfig, DataSourceConfig dataSourceConfig,
+                         StrategyConfig strategyConfig,TemplateConfig template,
+                         String outputDir,ExtConfig extConfig) {
         //1.初始化表的常量数据
         ConfigConstant.initTableConstant(packageConfig,template);
         //2.初始化一次的文件数据
-        ConfigConstant.initOneConstant(packageConfig);
+        ConfigConstant.initOneConstant(packageConfig,extConfig);
 
         //处理包配置
         handlerPackage(outputDir, packageConfig);
@@ -186,9 +187,11 @@ public class ConfigBuilder {
         //输出路径 查询配置
         pathInfo = new HashMap<String, String>();
 
-        for (ConfigConstant constant : ConstVal.configConstantList) {
-            packageInfo.put(constant.getPackageInfoKey(), constant.getPackageValue());
-            pathInfo.put(constant.getPathInfoKey(), joinPath(outputDir, constant.getPackageValue()));
+        for (List<ConfigConstant> constants : ConstVal.getConfigConstantList()) {
+            for (ConfigConstant constant : constants) {
+                packageInfo.put(constant.getPackageInfoKey(), constant.getPackageValue());
+                pathInfo.put(constant.getPathInfoKey(), joinPath(outputDir, constant.getPackageValue()));
+            }
         }
     }
 

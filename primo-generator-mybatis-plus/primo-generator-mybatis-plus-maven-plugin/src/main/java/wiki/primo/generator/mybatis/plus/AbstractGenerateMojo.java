@@ -1,11 +1,11 @@
 package wiki.primo.generator.mybatis.plus;
 
 
-import wiki.primo.generator.mybatis.plus.config.*;
 import wiki.primo.generator.mybatis.plus.config.builder.ConfigBuilder;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.plugins.annotations.Parameter;
+import wiki.primo.generator.mybatis.plus.config.external.*;
 
 /**
  * 插件基类，用于属性配置 设计成抽象类主要是用于后期可扩展，共享参数配置。
@@ -15,7 +15,6 @@ import org.apache.maven.plugins.annotations.Parameter;
  */
 public abstract class AbstractGenerateMojo extends AbstractMojo {
 
-    protected ConfigBuilder config;
     /**
      * 日志工具
      */
@@ -79,10 +78,8 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
     /**
      * 初始化配置
      */
-    protected void initConfig() {
-        if (null == config) {
-            config = new ConfigBuilder(packageInfo, dataSource, strategy, template, outputDir);
-        }
+    protected ConfigBuilder initConfig() {
+        return new ConfigBuilder(packageInfo, dataSource, strategy, template, outputDir,extConfig);
     }
 
     public String getOutputDir() {
@@ -109,4 +106,7 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
         return activeRecord;
     }
 
+    public ExtConfig getExtConfig() {
+        return extConfig;
+    }
 }
