@@ -132,12 +132,12 @@ public class JavaClassInfo {
             //判断系统
             String osName = System.getProperty("os.name");
             if (osName == null) {
-                setTypeName(absolutePath.substring(absolutePath.lastIndexOf("/") + 1, absolutePath.lastIndexOf(".")));
+                typeName = absolutePath.substring(absolutePath.lastIndexOf("/") + 1, absolutePath.lastIndexOf("."));
             }else {
                 if (osName.contains("Windows")) {
-                    setTypeName(absolutePath.substring(absolutePath.lastIndexOf("\\") + 1, absolutePath.lastIndexOf(".")));
+                    typeName = absolutePath.substring(absolutePath.lastIndexOf("\\") + 1, absolutePath.lastIndexOf("."));
                 } else {
-                    setTypeName(absolutePath.substring(absolutePath.lastIndexOf("/") + 1, absolutePath.lastIndexOf(".")));
+                    typeName = absolutePath.substring(absolutePath.lastIndexOf("/") + 1, absolutePath.lastIndexOf("."));
                 }
             }
 
@@ -182,7 +182,7 @@ public class JavaClassInfo {
      */
     public void setFullyTypeName(String fullyTypeName) {
         if (StringUtils.isEmpty(typeName)) {
-            setTypeName(fullyTypeName.substring(fullyTypeName.lastIndexOf("/") + 1, fullyTypeName.lastIndexOf(".")));
+            typeName = fullyTypeName.substring(fullyTypeName.lastIndexOf("/") + 1, fullyTypeName.lastIndexOf("."));
         }
         this.fullyTypeName = fullyTypeName;
     }

@@ -50,16 +50,21 @@ public class GenerateMojo extends AbstractGenerateMojo {
         try {
             // 初始化配置
             initConfig();
-            // 初始化输出文件路径模板
+            // 初始化输出文件路径模板，需要遍历list
             initOutputFiles();
             // 创建输出文件路径
             mkdirs(config.getPathInfo());
-            // 获取上下文
+            // 获取上下文 - 初始化每个表的数据
             Map<String, VelocityContext> ctxData = analyzeData(config);
-            // 循环生成文件
+            // 遍历表
             for (Map.Entry<String, VelocityContext> ctx : ctxData.entrySet()) {
                 batchOutput(ctx.getKey(), ctx.getValue());
             }
+            //获取通用的上下文
+            VelocityContext velocityContext = commonData(config);
+            //生成一次的文件
+            batchOneOutput(velocityContext);
+
             // 打开输出目录
             if (isOpen()) {
                 try {
@@ -99,7 +104,6 @@ public class GenerateMojo extends AbstractGenerateMojo {
         String superServiceImplClass = getSuperClassName(config.getSuperServiceImplClass());
         String superControllerClass = getSuperClassName(config.getSuperControllerClass());
         String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-
         /**
          * 设置vm中的值
          */
@@ -127,6 +131,40 @@ public class GenerateMojo extends AbstractGenerateMojo {
             ctxData.put(tableInfo.getEntityName(), ctx);
         }
         return ctxData;
+    }
+
+    /**
+     * 一些通用的设置
+     * @param config
+     * @return
+     */
+    private VelocityContext commonData(ConfigBuilder config) {
+        Map<String, String> packageInfo = config.getPackageInfo();
+        String superEntityClass = getSuperClassName(config.getSuperEntityClass());
+        String superMapperClass = getSuperClassName(config.getSuperMapperClass());
+        String superServiceClass = getSuperClassName(config.getSuperServiceClass());
+        String superServiceImplClass = getSuperClassName(config.getSuperServiceImplClass());
+        String superControllerClass = getSuperClassName(config.getSuperControllerClass());
+        String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+
+        VelocityContext ctx = new VelocityContext();
+        ctx.put("package", packageInfo);
+        ctx.put("idGenType", config.getIdType());
+        ctx.put("superEntityClassPackage", config.getSuperEntityClass());
+        ctx.put("superEntityClass", superEntityClass);
+        ctx.put("superMapperClassPackage", config.getSuperMapperClass());
+        ctx.put("superMapperClass", superMapperClass);
+        ctx.put("superServiceClassPackage", config.getSuperServiceClass());
+        ctx.put("superServiceClass", superServiceClass);
+        ctx.put("superServiceImplClassPackage", config.getSuperServiceImplClass());
+        ctx.put("superServiceImplClass", superServiceImplClass);
+        ctx.put("superControllerClassPackage", config.getSuperControllerClass());
+        ctx.put("superControllerClass", superControllerClass);
+        ctx.put("enableCache", isEnableCache());
+        ctx.put("author", getAuthor());
+        ctx.put("activeRecord", isActiveRecord());
+        ctx.put("date", date);
+        return ctx;
     }
 
     /**
@@ -160,7 +198,7 @@ public class GenerateMojo extends AbstractGenerateMojo {
     }
 
     /**
-     * 初始化输出目录
+     * 初始化输出目录，遍历configList
      */
     private void initOutputFiles() {
         outputFiles = new HashMap<String, String>();
@@ -168,17 +206,42 @@ public class GenerateMojo extends AbstractGenerateMojo {
         for (ConfigConstant constant : ConstVal.configConstantList) {
             outputFiles.put(constant.getPackageInfoKey(), pathInfo.get(constant.getPathInfoKey()) + constant.getOutputFilesRuleValue());
         }
+        for (ConfigConstant constant : ConstVal.oneConfigConstantList) {
+            outputFiles.put(constant.getPackageInfoKey(), pathInfo.get(constant.getPathInfoKey()) + constant.getOutputFilesRuleValue());
+        }
     }
 
     /**
-     * 合成上下文与模板
-     *
+     * 合成上下文与模板 表的生成
      * @param context vm上下文
      */
     private void batchOutput(String entityName, VelocityContext context) {
         try {
             for (ConfigConstant constant : ConstVal.configConstantList) {
                 String file = String.format(outputFiles.get(constant.getPackageInfoKey()), entityName);
+                //是否覆盖 - 全局的判断
+                if (!isCreate(file)) {
+                    continue;
+                }
+                //扩展类不进行覆盖，强制,进行判断独立的开关
+                if (!isCreate(file,constant)) {
+                    continue;
+                }
+
+                vmToFile(context, constant.getTemplatePath(), file);
+            }
+        } catch (IOException e) {
+            log.error("无法创建文件，请检查配置信息！", e);
+            e.printStackTrace();
+        } catch (Exception e) {
+            log.error("创建文件出现异常，请检查配置信息！", e);
+            e.printStackTrace();
+        }
+    }
+    private void batchOneOutput(VelocityContext context) {
+        try {
+            for (ConfigConstant constant : ConstVal.oneConfigConstantList) {
+                String file = outputFiles.get(constant.getPackageInfoKey());
                 //是否覆盖 - 全局的判断
                 if (!isCreate(file)) {
                     continue;

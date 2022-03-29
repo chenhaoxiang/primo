@@ -13,8 +13,14 @@ import java.util.Set;
  * @since 2020/8/31
  */
 public class ConstVal {
-
+    /**
+     * 表循环需要生成的文件
+     */
     public static List<ConfigConstant> configConstantList = new ArrayList<ConfigConstant>();
+    /**
+     * 只需要生成一次的文件数据
+     */
+    public static List<ConfigConstant> oneConfigConstantList = new ArrayList<ConfigConstant>();
     /**
      * 不进行覆盖的文件名，包含包名
      * 目前只是扩展类的类名

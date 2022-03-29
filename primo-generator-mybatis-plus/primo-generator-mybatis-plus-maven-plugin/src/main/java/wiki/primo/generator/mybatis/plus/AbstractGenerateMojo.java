@@ -1,10 +1,7 @@
 package wiki.primo.generator.mybatis.plus;
 
 
-import wiki.primo.generator.mybatis.plus.config.DataSourceConfig;
-import wiki.primo.generator.mybatis.plus.config.PackageConfig;
-import wiki.primo.generator.mybatis.plus.config.StrategyConfig;
-import wiki.primo.generator.mybatis.plus.config.TemplateConfig;
+import wiki.primo.generator.mybatis.plus.config.*;
 import wiki.primo.generator.mybatis.plus.config.builder.ConfigBuilder;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.logging.Log;
@@ -33,6 +30,11 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
      */
     @Parameter
     private StrategyConfig strategy;
+    /**
+     * 扩展配置
+     */
+    @Parameter
+    private ExtConfig extConfig;
     /**
      * 包 相关配置
      */

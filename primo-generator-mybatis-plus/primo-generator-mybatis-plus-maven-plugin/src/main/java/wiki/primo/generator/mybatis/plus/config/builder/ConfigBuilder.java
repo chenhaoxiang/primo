@@ -86,8 +86,11 @@ public class ConfigBuilder {
      */
     public ConfigBuilder(PackageConfig packageConfig, DataSourceConfig dataSourceConfig, StrategyConfig strategyConfig,
                          TemplateConfig template, String outputDir) {
-        //1.初始化常量数据
-        ConfigConstant.initConstant(packageConfig,template);
+        //1.初始化表的常量数据
+        ConfigConstant.initTableConstant(packageConfig,template);
+        //2.初始化一次的文件数据
+        ConfigConstant.initOneConstant(packageConfig);
+
         //处理包配置
         handlerPackage(outputDir, packageConfig);
         //数据源配置，解析

@@ -12,6 +12,7 @@ import java.io.File;
 
 /**
  * 一些常量的配置
+ *
  * @author chenhx
  * @version 0.0.1
  */
@@ -46,10 +47,10 @@ public class ConfigConstant {
     /**
      * 初始化常量数据
      *
-     * @param config 包配置
+     * @param config   包配置
      * @param template 模板配置
      */
-    public static void initConstant(PackageConfig config, TemplateConfig template) {
+    public static void initTableConstant(PackageConfig config, TemplateConfig template) {
         ConfigConstant constant = new ConfigConstant("Entity", "entity_path", File.separator + "%s.java", PackageUtils.joinPackage(config.getParent(), config.getEntity()), template.getEntity());
         ConstVal.configConstantList.add(constant);
         constant = new ConfigConstant("Mapper", "mapper_path", File.separator + "%sMapper.java", PackageUtils.joinPackage(config.getParent(), config.getMapper()), template.getMapper());
@@ -65,15 +66,6 @@ public class ConfigConstant {
         ConstVal.configConstantList.add(constant);
         constant = new ConfigConstant("QueryBo", "query_path", File.separator + "%sQueryBo.java", PackageUtils.joinPackage(config.getParent(), config.getQuery()), template.getQuery());
         ConstVal.configConstantList.add(constant);
-        constant = new ConfigConstant("ResultCodeEnum", "result_code_enum", File.separator + "ResultCodeEnum.java", PackageUtils.joinPackage(config.getParent(), "enums"), ConstVal.TEMPLATE_RESULT_CODE_ENUM);
-        ConstVal.configConstantList.add(constant);
-        constant = new ConfigConstant("ResultModel", "result_model", File.separator + "ResultModel.java", PackageUtils.joinPackage(config.getParent(), "result"), ConstVal.TEMPLATE_RESULT_MODEL);
-        ConstVal.configConstantList.add(constant);
-        constant = new ConfigConstant("MybatisPlusConfig", "mybatis_plus_config", File.separator + "MybatisPlusConfig.java", PackageUtils.joinPackage(config.getParent(), "config"), ConstVal.TEMPLATE_MYBATIS_PLUS_CONFIG);
-        ConstVal.configConstantList.add(constant);
-
-        constant = new ConfigConstant("DruidConfig", "mybatis_plus_config", File.separator + "DruidConfig.java", PackageUtils.joinPackage(config.getParent(), "config"), ConstVal.TEMPLATE_DRUID_CONFIG);
-        ConstVal.configConstantList.add(constant);
 
         //增加扩展类
         constant = new ConfigConstant("ServiceExt", "serivce_ext_path", File.separator + "I%sServiceExt.java", PackageUtils.joinPackage(config.getParent(), config.getServiceExt()), template.getServiceExt());
@@ -83,11 +75,22 @@ public class ConfigConstant {
         constant.setFileOverride(false);
         ConstVal.configConstantList.add(constant);
 
-
         constant = new ConfigConstant("EntityReq", "entity_req_path", File.separator + "%sReq.java", PackageUtils.joinPackage(config.getParent(), config.getEntityReq()), template.getEntityReq());
         ConstVal.configConstantList.add(constant);
         constant = new ConfigConstant("EntityResp", "entity_resp_path", File.separator + "%sResp.java", PackageUtils.joinPackage(config.getParent(), config.getEntityResp()), template.getEntityResp());
         ConstVal.configConstantList.add(constant);
+    }
+
+    public static void initOneConstant(PackageConfig config) {
+        //常量,只会有一个类生成的
+        ConfigConstant constant = new ConfigConstant("ResultCodeEnum", "result_code_enum", File.separator + "ResultCodeEnum.java", PackageUtils.joinPackage(config.getParent(), "enums"), ConstVal.TEMPLATE_RESULT_CODE_ENUM);
+        ConstVal.oneConfigConstantList.add(constant);
+        constant = new ConfigConstant("ResultModel", "result_model", File.separator + "ResultModel.java", PackageUtils.joinPackage(config.getParent(), "result"), ConstVal.TEMPLATE_RESULT_MODEL);
+        ConstVal.oneConfigConstantList.add(constant);
+        constant = new ConfigConstant("MybatisPlusConfig", "mybatis_plus_config", File.separator + "MybatisPlusConfig.java", PackageUtils.joinPackage(config.getParent(), "config"), ConstVal.TEMPLATE_MYBATIS_PLUS_CONFIG);
+        ConstVal.oneConfigConstantList.add(constant);
+        constant = new ConfigConstant("DruidConfig", "mybatis_plus_config", File.separator + "DruidConfig.java", PackageUtils.joinPackage(config.getParent(), "config"), ConstVal.TEMPLATE_DRUID_CONFIG);
+        ConstVal.oneConfigConstantList.add(constant);
     }
 
 
