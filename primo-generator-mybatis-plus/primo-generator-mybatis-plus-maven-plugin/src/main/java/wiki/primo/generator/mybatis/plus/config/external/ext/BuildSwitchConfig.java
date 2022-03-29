@@ -7,11 +7,10 @@ package wiki.primo.generator.mybatis.plus.config.external.ext;
 import org.apache.maven.plugins.annotations.Parameter;
 
 /**
+ * 构建开关
  * @author chenhx
  * @version 0.0.1
- * @className BuildSwitchConfig.java
- * @date 2022-03-29 5:38 下午
- * @description 构建开关
+ * @since 2022-03-29 5:38 下午
  */
 public class BuildSwitchConfig {
     /**

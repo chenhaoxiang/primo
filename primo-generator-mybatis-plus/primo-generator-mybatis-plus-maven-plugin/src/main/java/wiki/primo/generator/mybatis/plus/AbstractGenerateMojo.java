@@ -77,6 +77,7 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
 
     /**
      * 初始化配置
+     * @return 构建好的ConfigBuilder数据
      */
     protected ConfigBuilder initConfig() {
         return new ConfigBuilder(packageInfo, dataSource, strategy, template, outputDir,extConfig);

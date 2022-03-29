@@ -22,8 +22,9 @@ public class ConstVal {
      */
     public static List<ConfigConstant> oneConfigConstantList = new ArrayList<ConfigConstant>();
     /**
+     * 包含表中循环生成的文件，以及单个生成一次的文件
      * 注意，生成文件获取需要在这里新增一行
-     * @return
+     * @return 返回list，如果有新增的，在这里要添加进去。
      */
     public static List<List<ConfigConstant>> getConfigConstantList(){
         List<List<ConfigConstant>> conList = new ArrayList<>(2);

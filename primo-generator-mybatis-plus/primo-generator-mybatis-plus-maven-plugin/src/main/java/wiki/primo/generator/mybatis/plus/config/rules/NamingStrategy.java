@@ -127,8 +127,8 @@ public enum NamingStrategy {
 
     /**
      * 是否是大写
-     * @param c
-     * @return
+     * @param c 字符
+     * @return true-大写，false-不是大写
      */
     public static boolean isUpperCase(char c) {
         return c >=65 && c <= 90;
@@ -136,8 +136,8 @@ public enum NamingStrategy {
 
     /**
      * 是否是小写
-     * @param c
-     * @return
+     * @param c 字符
+     * @return true-小写
      */
     public static boolean isLowerCase(char c) {
         return c >=97 && c <= 122;
