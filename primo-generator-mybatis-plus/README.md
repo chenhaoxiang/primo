@@ -28,7 +28,7 @@
 <plugin>
     <groupId>wiki.primo.generator</groupId>
     <artifactId>primo-generator-mybatis-plus-maven-plugin</artifactId>
-    <version>1.0.0</version> 
+    <version>1.2.3</version> 
     <configuration>
         <!-- 输出目录(默认java.io.tmpdir) ,项目路径下-->
         <outputDir>src/main/java/</outputDir>
@@ -38,6 +38,8 @@
         <enableCache>true</enableCache>
         <!-- 开发者名称 -->
         <author>chenhx</author>
+        <!-- 生成完文件后 是否打开文件夹 -->
+        <open>false</open>
         <!-- 是否开启 ActiveRecord 模式(默认true) -->
         <activeRecord>false</activeRecord>
 <!--query.open 此配置数据在0.0.5版本已经进行删除-->
@@ -96,6 +98,20 @@
             <!-- 定义controller模板的路径 -->
             <!--<controller>/template/controller1.java.vm</controller>-->
         </template>
+      <!--                        扩展配置-->
+      <extConfig>
+        <!--                            覆盖一次性文件的开关，默认均为开-->
+        <buildSwitchConfig>
+          <!--        生成 DruidConfig 配置开关-->
+          <druid>false</druid>
+          <!--        生成 mybatisPlusConfig 配置开关-->
+          <mybatisPlusConfig>true</mybatisPlusConfig>
+          <!--        生成 resultCodeEnum 配置开关-->
+          <resultCodeEnum>true</resultCodeEnum>
+          <!--        生成 resultModel 配置开关-->
+          <resultModel>true</resultModel>
+        </buildSwitchConfig>
+      </extConfig>
     </configuration>
     <dependencies>
         <dependency>
