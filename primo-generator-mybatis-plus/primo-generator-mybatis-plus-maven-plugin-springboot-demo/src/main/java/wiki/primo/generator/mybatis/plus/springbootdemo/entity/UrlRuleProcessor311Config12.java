@@ -13,7 +13,7 @@ import java.util.Date;
  * </p>
  *
  * @author chenhx
- * @since 2022-03-29 18:10:15
+ * @since 2022-03-30 17:28:09
  */
 @TableName("`url_rule_processor_311_config_12`")
 public class UrlRuleProcessor311Config12 implements Serializable {

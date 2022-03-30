@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 #end
 import com.baomidou.mybatisplus.annotation.TableField;
-#if(${addTabeName})
+#if(${addTableName})
 import com.baomidou.mybatisplus.annotation.TableName;
 #end
 import java.io.Serializable;
@@ -30,7 +30,7 @@ import java.math.BigDecimal;
  * @author ${author}
  * @since ${date}
  */
-#if(${addTabeName})
+#if(${addTableName})
 @TableName("`${table.name}`")
 #end
 #if(${activeRecord})

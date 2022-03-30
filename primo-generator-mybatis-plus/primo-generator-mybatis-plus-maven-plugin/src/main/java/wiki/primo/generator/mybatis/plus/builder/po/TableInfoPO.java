@@ -1,4 +1,4 @@
-package wiki.primo.generator.mybatis.plus.config.po;
+package wiki.primo.generator.mybatis.plus.builder.po;
 
 
 import org.apache.commons.lang.StringUtils;
@@ -11,7 +11,7 @@ import java.util.List;
  * @author chenhx
  * @since 2020/8/30
  */
-public class TableInfoVM {
+public class TableInfoPO {
     /**
      * 表名
      */
@@ -42,7 +42,7 @@ public class TableInfoVM {
     /**
      * 数据库表字段
      */
-    private List<TableFieldVM> fields;
+    private List<TableFieldPO> fields;
     /**
      * 数据库表的字段名称
      */
@@ -151,11 +151,11 @@ public class TableInfoVM {
         this.controllerName = controllerName;
     }
 
-    public List<TableFieldVM> getFields() {
+    public List<TableFieldPO> getFields() {
         return fields;
     }
 
-    public void setFields(List<TableFieldVM> fields) {
+    public void setFields(List<TableFieldPO> fields) {
         this.fields = fields;
     }
 
@@ -184,7 +184,7 @@ public class TableInfoVM {
         if (StringUtils.isBlank(fieldNames)) {
             StringBuilder names = new StringBuilder();
             for (int i = 0; i < fields.size(); i++) {
-                TableFieldVM fd = fields.get(i);
+                TableFieldPO fd = fields.get(i);
                 if (i == fields.size() - 1) {
                     names.append(cov2col(fd));
                 } else {
@@ -202,7 +202,7 @@ public class TableInfoVM {
      * @return 是否
      */
     public boolean isHasDate() {
-        for (TableFieldVM fieldInfo : fields) {
+        for (TableFieldPO fieldInfo : fields) {
             if ("Date".equals(fieldInfo.getPropertyType())) {
                 hasDate = true;
                 break;
@@ -217,7 +217,7 @@ public class TableInfoVM {
      * @param field 字段实体
      * @return 转换后的信息
      */
-    private String cov2col(TableFieldVM field) {
+    private String cov2col(TableFieldPO field) {
         if (null != field) {
             return field.isConvert() ? "`"+field.getName()+"`" + " AS "
                     + "`"+field.getPropertyName()+"`" : "`"+field.getName()+"`";

@@ -1,11 +1,11 @@
-package wiki.primo.generator.mybatis.plus.config.po;
+package wiki.primo.generator.mybatis.plus.builder.po;
 
 /**
  * Developer:chenhx
  * Date:2020-9-3
  * Describe: 字段信息
  */
-public class TableFieldVM {
+public class TableFieldPO {
     private boolean keyFlag;
 
     /**

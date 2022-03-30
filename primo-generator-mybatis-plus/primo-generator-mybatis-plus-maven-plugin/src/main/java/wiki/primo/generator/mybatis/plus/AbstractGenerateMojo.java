@@ -1,10 +1,10 @@
 package wiki.primo.generator.mybatis.plus;
 
 
-import wiki.primo.generator.mybatis.plus.config.builder.ConfigBuilder;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.plugins.annotations.Parameter;
+import wiki.primo.generator.mybatis.plus.builder.ConfigBuilder;
 import wiki.primo.generator.mybatis.plus.config.external.*;
 
 /**
