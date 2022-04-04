@@ -12,8 +12,17 @@ public class TableFieldPO {
      * 表的数据库列名
      */
     private String name;
+    /**
+     * 数据库类型
+     */
     private String type;
+    /**
+     * java属性变量名称
+     */
     private String propertyName;
+    /**
+     * Java类型
+     */
     private String propertyType;
     private String comment;
 

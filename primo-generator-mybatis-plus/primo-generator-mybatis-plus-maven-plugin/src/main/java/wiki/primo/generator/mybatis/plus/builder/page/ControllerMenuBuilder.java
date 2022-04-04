@@ -4,13 +4,20 @@
  */
 package wiki.primo.generator.mybatis.plus.builder.page;
 
+import lombok.Data;
+
+import java.io.Serializable;
+
 /**
  * 每个页面的菜单数据
  * @author chenhx
  * @version 0.0.1
  * @since  2022-03-30 4:57 下午
  */
-public class ControllerMenuBuilder {
+@Data
+public class ControllerMenuBuilder implements Serializable {
+
+    private static final long serialVersionUID = 8919318695225823334L;
     /**
      * 菜单名
      */

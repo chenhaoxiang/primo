@@ -4,6 +4,9 @@
  */
 package wiki.primo.generator.mybatis.plus.builder.page;
 
+import lombok.Data;
+
+import java.io.Serializable;
 import java.util.Set;
 
 /**
@@ -13,7 +16,10 @@ import java.util.Set;
  * @version 0.0.1
  * @since  2022-03-30 4:57 下午
  */
-public class ControllerUrlBuilder {
+@Data
+public class ControllerUrlBuilder implements Serializable {
+
+    private static final long serialVersionUID = 4853358316384435663L;
     /**
      * 操作类型
      * 增、删、改、查详情、分页查列表
@@ -29,7 +35,7 @@ public class ControllerUrlBuilder {
     private String url;
 
     /**
-     * 请求的参数名称,表单中name对应的也是这个值
+     * 请求的参数名称,表单中name对应的也是这个值，对应
      */
     private Set<String> params;
 }

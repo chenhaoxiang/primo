@@ -1,7 +1,9 @@
 package wiki.primo.generator.mybatis.plus;
+import wiki.primo.generator.mybatis.plus.builder.page.ControllerMenuBuilder;
 
 
 import wiki.primo.generator.mybatis.plus.builder.ConfigBuilder;
+import wiki.primo.generator.mybatis.plus.builder.page.ControllerPageBuilder;
 import wiki.primo.generator.mybatis.plus.config.constant.ConfigConstant;
 import wiki.primo.generator.mybatis.plus.config.constant.ConstVal;
 import wiki.primo.generator.mybatis.plus.builder.po.TableInfoPO;
@@ -20,11 +22,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 
 /**
  * 生成文件
@@ -44,7 +42,7 @@ public class GenerateMojo extends AbstractGenerateMojo {
     /**
      * 输出文件
      */
-    private Map<String, String> outputFiles;
+    private Map<String, String> classOutputFiles;
 
     public void execute() throws MojoExecutionException, MojoFailureException {
         log.info("==========================准备生成文件...==========================");
@@ -56,7 +54,7 @@ public class GenerateMojo extends AbstractGenerateMojo {
             // 创建输出文件路径
             mkdirs(config.getPathInfo());
             // 获取上下文 - 初始化每个表的数据
-            Map<String, VelocityContext> ctxData = analyzeData(config);
+            Map<String, VelocityContext> ctxData = loadJavaData(config);
             // 遍历表
             for (Map.Entry<String, VelocityContext> ctx : ctxData.entrySet()) {
                 batchOutput(ctx.getKey(), ctx.getValue(),ConstVal.configConstantList);
@@ -65,6 +63,11 @@ public class GenerateMojo extends AbstractGenerateMojo {
             VelocityContext velocityContext = commonData(config);
             //生成一次的文件
             batchOutput("",velocityContext,ConstVal.oneConfigConstantList);
+
+            // 获取上下文 - 初始化每个页面需要的的数据
+            List<ControllerPageBuilder> controllerPageBuilders = loadPageData(config);
+            //生成文件
+            batchOutput(controllerPageBuilders);
 
             // 打开输出目录
             if (isOpen()) {
@@ -90,12 +93,34 @@ public class GenerateMojo extends AbstractGenerateMojo {
     }
 
     /**
-     * 分析数据
+     * 初始化每个页面需要的的数据
+     * @param config
+     * @return
+     */
+    private List<ControllerPageBuilder> loadPageData(ConfigBuilder config) {
+        List<ControllerPageBuilder> controllerPageBuilders = new ArrayList<>();
+        List<TableInfoPO> tableList = config.getTableInfoList();
+        for (TableInfoPO tableInfo : tableList) {
+            ControllerPageBuilder controllerPageBuilder = new ControllerPageBuilder();
+            ControllerMenuBuilder controllerMenuBuilder = new ControllerMenuBuilder();
+            controllerMenuBuilder.setName(tableInfo.getName());
+            controllerMenuBuilder.setUrl("/"+TableInfoPO.strConvertLowerCamel(tableInfo.getEntityName()));
+//            controllerPageBuilder.setControllerUrlBuilder(controllerUrlBuilder);
+            controllerPageBuilder.setFileName(TableInfoPO.strConvertLowerCamel(tableInfo.getEntityName()) + ".ftl");
+            controllerPageBuilder.setControllerMenuBuilder(controllerMenuBuilder);
+            controllerPageBuilder.setTableInfoPO(tableInfo);
+            controllerPageBuilders.add(controllerPageBuilder);
+        }
+        return controllerPageBuilders;
+    }
+
+    /**
+     * 分析数据，生成Java类所需要的数据
      *
      * @param config 总配置信息
      * @return 解析数据结果集
      */
-    private Map<String, VelocityContext> analyzeData(ConfigBuilder config) {
+    private Map<String, VelocityContext> loadJavaData(ConfigBuilder config) {
         List<TableInfoPO> tableList = config.getTableInfoList();
         Map<String, String> packageInfo = config.getPackageInfo();
         Map<String, VelocityContext> ctxData = new HashMap<String, VelocityContext>();
@@ -202,11 +227,11 @@ public class GenerateMojo extends AbstractGenerateMojo {
      * 初始化输出目录，遍历configList
      */
     private void initOutputFiles() {
-        outputFiles = new HashMap<String, String>();
+        classOutputFiles = new HashMap<String, String>();
         Map<String, String> pathInfo = config.getPathInfo();
         for (List<ConfigConstant> constants : ConstVal.getConfigConstantList()) {
             for (ConfigConstant constant : constants) {
-                outputFiles.put(constant.getPackageInfoKey(), pathInfo.get(constant.getPathInfoKey()) + constant.getOutputFilesRuleValue());
+                classOutputFiles.put(constant.getPackageInfoKey(), pathInfo.get(constant.getPathInfoKey()) + constant.getOutputFilesRuleValue());
             }
         }
     }
@@ -218,7 +243,7 @@ public class GenerateMojo extends AbstractGenerateMojo {
     private void batchOutput(String entityName, VelocityContext context,List<ConfigConstant> constants) {
         try {
             for (ConfigConstant constant : constants) {
-                String file = String.format(outputFiles.get(constant.getPackageInfoKey()), entityName);
+                String file = String.format(classOutputFiles.get(constant.getPackageInfoKey()), entityName);
                 //是否覆盖 - 全局的判断
                 if (!isCreate(file)) {
                     continue;
@@ -229,6 +254,40 @@ public class GenerateMojo extends AbstractGenerateMojo {
                 }
 
                 vmToFile(context, constant.getTemplatePath(), file);
+            }
+        } catch (IOException e) {
+            log.error("无法创建文件，请检查配置信息！", e);
+            e.printStackTrace();
+        } catch (Exception e) {
+            log.error("创建文件出现异常，请检查配置信息！", e);
+            e.printStackTrace();
+        }
+    }
+    private void batchOutput(List<ControllerPageBuilder> controllerPageBuilders) {
+        try {
+            //获取路径
+            String path = getFtlConfig().getBasePath() + getFtlConfig().getTablePath();
+            String temp = getFtlConfig().getTableTemplatePath();
+            if(StringUtils.isEmpty(temp)){
+                temp = ConstVal.TEMPLATE_PAGE_TABLE;
+            }
+            if(!path.endsWith(File.separator)){
+                path = path + File.separator;
+            }
+            //获取table
+            for (ControllerPageBuilder controllerPageBuilder : controllerPageBuilders) {
+
+            }
+            for (ControllerPageBuilder controllerPageBuilder : controllerPageBuilders) {
+                String file = path + controllerPageBuilder.getFileName();
+                //是否覆盖 - 全局的判断
+                if (!isCreate(file)) {
+                    continue;
+                }
+                VelocityContext context = new VelocityContext();
+                context.put("data",controllerPageBuilder);
+                context.put("data",controllerPageBuilder);
+                vmToFile(context, temp, file);
             }
         } catch (IOException e) {
             log.error("无法创建文件，请检查配置信息！", e);

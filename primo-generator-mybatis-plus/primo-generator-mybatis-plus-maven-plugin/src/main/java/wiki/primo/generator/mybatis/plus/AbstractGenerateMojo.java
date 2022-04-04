@@ -76,6 +76,12 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
     private boolean activeRecord;
 
     /**
+     * ftl文件的一些配置
+     */
+    @Parameter
+    private FtlConfig ftlConfig;
+
+    /**
      * 初始化配置
      * @return 构建好的ConfigBuilder数据
      */
@@ -109,5 +115,9 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
 
     public ExtConfig getExtConfig() {
         return extConfig;
+    }
+
+    public FtlConfig getFtlConfig() {
+        return ftlConfig;
     }
 }

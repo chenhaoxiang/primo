@@ -74,6 +74,10 @@ public class ConstVal {
     public static final String TEMPLATE_REQ_ENTITY = "/template/domain/entity-req.java.vm";
     public static final String TEMPLATE_RESP_ENTITY = "/template/domain/entity-resp.java.vm";
     /**
+     *
+     */
+    public static final String TEMPLATE_PAGE_TABLE = "/template/page/table.ftl.vm";
+    /**
      * 扩展类
      */
     public static final String TEMPLATE_SERVICE_EXT = "/template/service_ext.java.vm";
