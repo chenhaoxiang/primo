@@ -1,4 +1,5 @@
 package wiki.primo.generator.mybatis.plus;
+import com.alibaba.fastjson.JSON;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.util.ResourceUtils;
@@ -75,9 +76,9 @@ public class GenerateMojo extends AbstractGenerateMojo {
             Resource[] resources = new PathMatchingResourcePatternResolver().getResources(ResourceUtils.CLASSPATH_URL_PREFIX + "template/page/static/**/*");
             log.info("获取的resources静态文件数量:" + resources.length);
             for (Resource resource : resources) {
+                log.info("resource="+ JSON.toJSONString(resource));
                 //下载到本地
-                File resourceFile = resource.getFile();
-                String resourcePath = resourceFile.getPath();
+                String resourcePath = resource.getDescription();
 
                 //创建文件路径
                 String saveDir = "src"+ File.separator +"resources" + File.separator + resourcePath.substring(resourcePath.indexOf("template/page/"));
