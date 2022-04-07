@@ -9,7 +9,7 @@ import java.util.Date;
  * </p>
  *
  * @author chenhx
- * @since 2022-04-07 18:52:31
+ * @since 2022-04-07 18:53:48
  */
 public class UrlRuleProcessor311Config12Resp implements Serializable {
 

@@ -80,23 +80,27 @@ public class GenerateMojo extends AbstractGenerateMojo {
                     log.info("获取的是目录："+resource.getFilename());
                     continue;
                 }
-                //下载到本地
-                String resourcePath = resource.getDescription();
+//                log.info("4resource="+ JSON.toJSONString(resource.getURL().getFile()));
 
-                //创建文件路径
-                String saveDir = "src"+ File.separator +"main" + File.separator +"resources" + File.separator + resourcePath.substring(resourcePath.indexOf("template/page/"));
-                createPath(saveDir);
+                //下载到本地,jar包内文件的绝对路径
+                String resourcePath = resource.getURL().getFile();
+
+                //创建文件路径 TODO 如果路径中包含 static 会有问题的，隐藏bug
+                String saveDir = "src"+ File.separator +"main" + File.separator +"resources" + File.separator + resourcePath.substring(resourcePath.indexOf("static"));
+                //获取目录
+                String savePath = saveDir.substring(0,saveDir.lastIndexOf(File.separator));
+                createPath(savePath);
                 //得到输入流
                 InputStream inputStream = resource.getInputStream();
                 //获取自己数组
                 byte[] getData = FileUtils.readInputStream(inputStream);
 
-                File file = new File(saveDir + File.separator + resource.getFilename());
+                File file = new File(saveDir);
                 FileOutputStream fos = new FileOutputStream(file);
                 fos.write(getData);
                 fos.close();
                 inputStream.close();
-                log.info("下载静态文件【"+resourcePath+"】成功，保存路径：" + saveDir + ",文件名：" + resource.getFilename());
+                log.info("路径："+savePath+"，下载静态文件【"+resourcePath+"】成功，保存路径：" + saveDir + ",文件名：" + resource.getFilename());
             }
 
             // 打开输出目录
