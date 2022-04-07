@@ -39,7 +39,11 @@ public class ControllerPageBuilder implements Serializable {
     private String templateFilePath;
 
     /**
-     * 生成的文件路径 + 文件名
+     * 文件名
+     */
+    private String saveFilePathName;
+    /**
+     * 保存的路径
      */
     private String saveFilePath;
 

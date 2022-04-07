@@ -109,7 +109,8 @@ public class GenerateMojo extends AbstractGenerateMojo {
             controllerMenuBuilder.setUrl("/"+TableInfoPO.strConvertLowerCamel(tableInfo.getEntityName())+"/table");
 //            controllerPageBuilder.setControllerUrlBuilder(controllerUrlBuilder);
             controllerPageBuilder.setTemplateFilePath(ConstVal.TEMPLATE_PAGE_TABLE);
-            controllerPageBuilder.setSaveFilePath(getOutputResourcesDir() + "template" + File.separator + "tables"  + File.separator +  TableInfoPO.strConvertLowerCamel(tableInfo.getEntityName()) + ".ftl");
+            controllerPageBuilder.setSaveFilePath(getOutputResourcesDir() + "template" + File.separator + "tables"  + File.separator);
+            controllerPageBuilder.setSaveFilePathName(TableInfoPO.strConvertLowerCamel(tableInfo.getEntityName()) + ".ftl");
             controllerPageBuilder.setControllerMenuBuilder(controllerMenuBuilder);
             controllerPageBuilder.setTableInfoPO(tableInfo);
 
@@ -265,12 +266,20 @@ public class GenerateMojo extends AbstractGenerateMojo {
      */
     private void mkdirs(Map<String, String> pathInfo) {
         for (Map.Entry<String, String> entry : pathInfo.entrySet()) {
-            File dir = new File(entry.getValue());
-            if (!dir.exists()) {
-                boolean result = dir.mkdirs();
-                if (result) {
-                    log.info("创建目录： [" + entry.getValue() + "]成功");
-                }
+            createPath(entry.getValue());
+        }
+    }
+
+    /**
+     * 创建目录
+     * @param value
+     */
+    private void createPath(String value) {
+        File dir = new File(value);
+        if (!dir.exists()) {
+            boolean result = dir.mkdirs();
+            if (result) {
+                log.info("创建目录： [" + value + "]成功");
             }
         }
     }
@@ -320,7 +329,10 @@ public class GenerateMojo extends AbstractGenerateMojo {
         try {
             //获取table
             for (ControllerPageBuilder controllerPageBuilder : controllerPageBuilders) {
-                String file = controllerPageBuilder.getSaveFilePath();
+                //目录是否存在判断
+                createPath(controllerPageBuilder.getSaveFilePath());
+
+                String file = controllerPageBuilder.getSaveFilePath() + controllerPageBuilder.getSaveFilePathName();
                 //是否覆盖 - 全局的判断
                 if (!isCreate(file)) {
                     continue;
