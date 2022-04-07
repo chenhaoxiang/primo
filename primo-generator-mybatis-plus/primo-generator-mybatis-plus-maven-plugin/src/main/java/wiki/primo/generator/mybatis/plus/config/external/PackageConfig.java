@@ -85,12 +85,36 @@ public class PackageConfig {
      */
     @Parameter(defaultValue = "domain.resp")
     private String entityResp;
+    /**
+     * page包名
+     */
+    @Parameter(defaultValue = "domain.vo.resp")
+    private String pageVoResp;
+    /**
+     * page包名
+     */
+    @Parameter(defaultValue = "domain.vo.req")
+    private String pageVoReq;
 
     public String getParent() {
         if (moduleName != null && !"".equals(moduleName.trim())) {
             return parent + "." + moduleName;
         }
         return parent;
+    }
+
+    public String getPageVoResp() {
+        if(StringUtils.isEmpty(pageVoResp)){
+            return "domain.vo.resp";
+        }
+        return pageVoResp;
+    }
+
+    public String getPageVoReq() {
+        if(StringUtils.isEmpty(pageVoReq)){
+            return "domain.vo.req";
+        }
+        return pageVoReq;
     }
 
     public String getEntityReq() {

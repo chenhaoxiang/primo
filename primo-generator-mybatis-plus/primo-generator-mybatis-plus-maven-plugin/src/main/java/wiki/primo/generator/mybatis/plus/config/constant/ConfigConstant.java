@@ -83,6 +83,9 @@ public class ConfigConstant {
         ConstVal.configConstantList.add(constant);
         constant = new ConfigConstant("EntityResp", "entity_resp_path", File.separator + "%sResp.java", PackageUtils.joinPackage(config.getParent(), config.getEntityResp()), template.getEntityResp());
         ConstVal.configConstantList.add(constant);
+
+        constant = new ConfigConstant("PageVOReq", "page_vo_req", File.separator + "%sPageVOReq.java", PackageUtils.joinPackage(config.getParent(), config.getPageVoReq()),  ConstVal.TEMPLATE_PAGE_REQ_ENTITY);
+        ConstVal.configConstantList.add(constant);
     }
 
     public static void initOneConstant(PackageConfig config, ExtConfig extConfig) {
@@ -101,6 +104,10 @@ public class ConfigConstant {
         ConstVal.oneConfigConstantList.add(constant);
         constant = new ConfigConstant("DruidConfig", "druid_config", File.separator + "DruidConfig.java", PackageUtils.joinPackage(config.getParent(), "config"), ConstVal.TEMPLATE_DRUID_CONFIG);
         constant.setFileOverride(extConfig.getBuildSwitchConfig().getDruid());
+        ConstVal.oneConfigConstantList.add(constant);
+
+        constant = new ConfigConstant("PageVOResp", "page_vo_resp", File.separator + "PageVOResp.java", PackageUtils.joinPackage(config.getParent(), config.getPageVoResp()), ConstVal.TEMPLATE_PAGE_RESP_ENTITY);
+        constant.setFileOverride(true);
         ConstVal.oneConfigConstantList.add(constant);
     }
 

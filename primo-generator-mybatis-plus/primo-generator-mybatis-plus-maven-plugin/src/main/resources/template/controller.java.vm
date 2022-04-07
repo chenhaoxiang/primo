@@ -5,11 +5,7 @@ import ${package.ResultModel}.ResultModel;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import ${package.QueryBo}.${table.queryName};
@@ -42,7 +38,7 @@ public class ${table.controllerName} {
      */
     @PostMapping("save")
     @ResponseBody
-    public ResultModel<Object> save(${table.entityReqName} ${table.strConvertLowerCamel(${table.entityReqName})}) {
+    public ResultModel<Object> save(@RequestBody ${table.entityReqName} ${table.strConvertLowerCamel(${table.entityReqName})}) {
         if(${table.strConvertLowerCamel(${table.entityReqName})}==null){
             return ResultModel.parameterError();
         }
@@ -80,7 +76,7 @@ public class ${table.controllerName} {
      */
     @PostMapping("update")
     @ResponseBody
-    public ResultModel<Object> update(${table.entityReqName} ${table.strConvertLowerCamel(${table.entityReqName})}) {
+    public ResultModel<Object> update(@RequestBody ${table.entityReqName} ${table.strConvertLowerCamel(${table.entityReqName})}) {
         if(${table.strConvertLowerCamel(${table.entityReqName})}==null || ${table.strConvertLowerCamel(${table.entityReqName})}.getId()==null){
             return ResultModel.parameterError();
         }
@@ -119,12 +115,9 @@ public class ${table.controllerName} {
      */
     @PostMapping("page")
     @ResponseBody
-    public ResultModel<IPage<${table.entityRespName}>> page(${table.queryName} queryBo,int pageNo,int pageSize) {
-        if(queryBo==null){
-            return ResultModel.parameterError();
-        }
-        IPage<${entity}> iPage = ${table.strConvertLowerCamel(${table.serviceName})}.page(queryBo,pageNo,pageSize);
-        IPage<${table.entityRespName}> templateIPage = new Page<>();
+    public ResultModel<PageVOResp<${table.entityRespName}>> page(@RequestBody ${table.queryName} pageVOReq) {
+        IPage<${entity}> iPage = ${table.strConvertLowerCamel(${table.serviceName})}.page(pageVOReq.getQueryBo(),pageVOReq.getPageNo(),pageVOReq.getPageSize());
+        PageVOResp<${table.entityRespName}> templateIPage = new PageVOResp<>();
         templateIPage.setPages(iPage.getPages());
         templateIPage.setCurrent(iPage.getCurrent());
         templateIPage.setSize(iPage.getSize());
@@ -136,6 +129,7 @@ public class ${table.controllerName} {
             BeanUtils.copyProperties(${table.strConvertLowerCamel(${entity})},${table.strConvertLowerCamel(${table.entityRespName})});
             ${table.strConvertLowerCamel(${table.entityRespName})}List.add(${table.strConvertLowerCamel(${table.entityRespName})});
         }
+        templateIPage.setDraw(pageVOReq.getDraw());
         templateIPage.setRecords(${table.strConvertLowerCamel(${table.entityRespName})}List);
         return ResultModel.success(templateIPage);
     }

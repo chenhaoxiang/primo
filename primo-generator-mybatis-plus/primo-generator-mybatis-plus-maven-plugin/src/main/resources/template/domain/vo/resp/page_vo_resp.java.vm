@@ -1,0 +1,105 @@
+package ${package.PageVOResp};
+
+import java.io.Serializable;
+import java.util.Collections;
+import java.util.List;
+
+/**
+ * 分页数据-返回
+ * @author ${author}
+ * @since ${date}
+ */
+public class PageVOResp<T> implements Serializable {
+    private static final long serialVersionUID = 723315024834662654L;
+    /**
+     * 查询数据列表
+     */
+    private List<T> records = Collections.emptyList();
+
+    /**
+     * 总数
+     */
+    private Long total;
+    /**
+     * 每页显示条数，默认 10
+     */
+    private Long size;
+
+    /**
+     * 当前页
+     */
+    private Long current;
+
+    /**
+     * 总页数
+     */
+    private Long pages;
+
+    /**
+     * 表格需要
+     */
+    private Long draw;
+
+    public List<T> getRecords() {
+        return records;
+    }
+
+    public void setRecords(List<T> records) {
+        this.records = records;
+    }
+
+    public Long getTotal() {
+        return total;
+    }
+
+    public void setTotal(Long total) {
+        this.total = total;
+    }
+
+    public Long getSize() {
+        return size;
+    }
+
+    public void setSize(Long size) {
+        this.size = size;
+    }
+
+    public Long getCurrent() {
+        return current;
+    }
+
+    public void setCurrent(Long current) {
+        this.current = current;
+    }
+
+    public Long getPages() {
+        return pages;
+    }
+
+    public void setPages(Long pages) {
+        this.pages = pages;
+    }
+
+    public Long getDraw() {
+        return draw;
+    }
+
+    public void setDraw(Long draw) {
+        this.draw = draw;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("PageVOResp{");
+        sb.append(super.toString());
+        sb.append(",");
+        sb.append("                records=").append(records);
+        sb.append(",                 total=").append(total);
+        sb.append(",                 size=").append(size);
+        sb.append(",                 current=").append(current);
+        sb.append(",                 pages=").append(pages);
+        sb.append(",                 draw=").append(draw);
+        sb.append('}');
+        return sb.toString();
+    }
+}

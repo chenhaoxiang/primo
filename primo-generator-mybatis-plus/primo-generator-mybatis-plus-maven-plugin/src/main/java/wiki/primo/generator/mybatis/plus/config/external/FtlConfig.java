@@ -21,17 +21,17 @@ public class FtlConfig implements Serializable {
 
    private static final long serialVersionUID = 8614424445657327618L;
     /**
-     * 基类路径
+     * 基类路径 - 必填
+     * 默认为项目的resources目录
      */
     @Parameter
    private String basePath;
     /**
-     * 表的操作 ftl文件生成的路径
+     * 表的操作 ftl文件生成的路径,默认在 /template 下
      * 最终路径是 ：basePath + tablePath
      */
     @Parameter
    private String tablePath;
-
     /**
      * 模板地址 ,可自行配置，默认：/template/page/table.ftl.vm
      */

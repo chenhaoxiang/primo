@@ -188,7 +188,46 @@ mybatis-plus.configuration.lazy-loading-enabled=true
 数据源配置、druid监控配置以及其他的配置，请查看演示项目下的application.properties文件  
 
 后续若有其他功能，会及时更新演示项目的配置  
- 
+
+## 五 配置Freemarker
+
+如果没有开启Freemarker，可以进行忽略 
+引入依赖（版本根据你的SpringBoot版本来）：
+```xml
+<!-- freemarker -->
+<dependency>
+  <groupId>org.springframework.boot</groupId>
+  <artifactId>spring-boot-starter-freemarker</artifactId>
+  <version>2.3.5.RELEASE</version>
+</dependency>
+```
+
+配置文件：
+```properties
+## Freemarker 配置 start
+#设定静态文件路径，不需要配置，默认在 static的目录下
+## 文件配置路径
+spring.freemarker.template-loader-path=classpath:/templates/
+# 是否缓存，开发模式下设置为false，避免改了模板还要重启服务器，线上设置为true，可以提高性能。
+spring.freemarker.cache=true
+spring.freemarker.charset=UTF-8
+# 是否检查模板位置是否存在
+spring.freemarker.check-template-location=true
+spring.freemarker.content-type=text/html
+spring.freemarker.expose-request-attributes=true
+spring.freemarker.expose-session-attributes=true
+spring.freemarker.request-context-attribute=request
+# 设定模板的后缀
+spring.freemarker.suffix=.ftl
+spring.freemarker.settings.template_update_delay=0
+# 全局设置数字中不用逗号
+spring.freemarker.settings.number_format=0.##
+# 模块日志输出
+spring.freemarker.settings.log_template_exceptions=false
+## end 
+
+```
+
 # 使用演示
 
 ## primo-generator-maven-plugin-spring-boot-demo

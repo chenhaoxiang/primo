@@ -51,6 +51,7 @@ public class ConstVal {
     public static final String MAPPER = "Mapper";
     public static final String CONTROLLER = "Controller";
     public static final String QUERY = "QueryBo";
+    public static final String PAGE_VO_REQ = "PageVOReq";
 
     /**
      * Java输入输出临时路径
@@ -73,10 +74,6 @@ public class ConstVal {
     public static final String TEMPLATE_DRUID_CONFIG = "/template/config/druid_config.java.vm";
     public static final String TEMPLATE_REQ_ENTITY = "/template/domain/entity-req.java.vm";
     public static final String TEMPLATE_RESP_ENTITY = "/template/domain/entity-resp.java.vm";
-    /**
-     *
-     */
-    public static final String TEMPLATE_PAGE_TABLE = "/template/page/table.ftl.vm";
     /**
      * 扩展类
      */
@@ -102,5 +99,16 @@ public class ConstVal {
      * service实现类默认继承的类
      */
     public static final String SUPERD_SERVICEIMPL_CLASS = "com.baomidou.mybatisplus.extension.service.impl.ServiceImpl";
+
+//    page
+    public static final String TEMPLATE_PAGE_REQ_ENTITY = "/template/domain/vo/req/page_vo_req.java.vm";
+    /**
+     * 只生成一次
+     */
+    public static final String TEMPLATE_PAGE_RESP_ENTITY = "/template/domain/vo/resq/page_vo_resp.java.vm";
+    /**
+     * 表格页面
+     */
+    public static final String TEMPLATE_PAGE_TABLE = "/template/page/table.ftl.vm";
 
 }
