@@ -52,4 +52,11 @@ public class PageFieldBuilder implements Serializable {
      */
     private Boolean canFuzzy;
 
+    /**
+     * 获取数量加1的值
+     * @return
+     */
+    public Integer sizeSubtract(Integer size){
+        return size-1;
+    }
 }

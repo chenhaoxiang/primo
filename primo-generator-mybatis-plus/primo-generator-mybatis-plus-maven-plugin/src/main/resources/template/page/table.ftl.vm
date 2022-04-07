@@ -345,15 +345,15 @@
                             <div class="collapse" id="add-data">
                                 <div class="card card-body">
                                     <form id="form-add">
-                                        <#list tablesData.fieldResps as list>
-                                            <#if !list.majorKey>
+                                    #foreach (${list} in ${tablesData.fieldResps})
+                                        #if (${list.majorKey}==false)
 <#--                                                不是主键-->
                                                 <div class="form-floating mb-3 mt-3">
                                                     <input type="text" class="form-control" id="${list.javaName}-add">
                                                     <label for="${list.javaName}-add" class="form-label" title="${list.fieldDescribe}">${list.javaName}</label>
                                                 </div>
-                                            </#if>
-                                        </#list>
+                                          #end
+                                     #end
                                         <button type="button" class="btn btn-success" id="btn-add">
                                             添加
                                         </button>
@@ -364,12 +364,12 @@
                             <div class="collapse" id="view-data">
                                 <div class="card card-body">
                                     <form>
-                                        <#list tablesData.fieldResps as list>
+                                    #foreach (${list} in ${tablesData.fieldResps})
                                             <div class="mb-3 mt-3">
                                                 <label for="${list.javaName}-view" class="form-label" title="${list.fieldDescribe}">${list.javaName} - ${list.fieldDescribe}：</label>
                                                 <div id="${list.javaName}-view"></div>
                                             </div>
-                                        </#list>
+                                     #end
                                     </form>
                                 </div>
                             </div>
@@ -378,19 +378,19 @@
                                 <div class="card card-body">
                                     <span>需要在表格中的编辑点击才会有数据</span>
                                     <form id="form-edit">
-                                        <#list tablesData.fieldResps as list>
-                                            <#if list.majorKey>
+                                    #foreach (${list} in ${tablesData.fieldResps})
+                                        #if(${list.majorKey}==true)
                                                 <div class="form-floating mb-3 mt-3">
                                                     <input type="text" class="form-control" id="${list.javaName}-edit" disabled>
                                                     <label for="${list.javaName}-edit" class="form-label"  title="${list.fieldDescribe}">${list.javaName}</label>
                                                 </div>
-                                            <#else >
+                                        #else
                                                 <div class="form-floating mb-3 mt-3">
                                                     <input type="text" class="form-control" id="${list.javaName}-edit">
                                                     <label for="${list.javaName}-edit" class="form-label"  title="${list.fieldDescribe}">${list.javaName}</label>
                                                 </div>
-                                            </#if>
-                                        </#list>
+                                        #end
+                                     #end
                                         <button type="button" class="btn btn-success" id="btn-edit">
                                             保存更改
                                         </button>
@@ -407,9 +407,9 @@
                                     <div class="btn-toolbar">
                                         <div class="col-md-3">
                                             <input type="text" class="form-control" id="fuzzy-search"
-                                                   placeholder="<#list tablesData.getCanFuzzyList() as list>${list.javaName}/</#list>"/>
+                                                   placeholder="#foreach(${list} in ${tablesData.getCanFuzzyList}) ${list.javaName}/#end"/>
                                         </div>
-                                        <button type="button" class="btn btn-success" id="btn-simple-search" data-bs-toggle="tooltip" data-bs-placement="top" title="<#list tablesData.getCanFuzzyList() as list>${list.javaName}/</#list>">模糊查询</button>
+                                        <button type="button" class="btn btn-success" id="btn-simple-search" data-bs-toggle="tooltip" data-bs-placement="top" title="#foreach(${list} in ${tablesData.getCanFuzzyList()}) ${list.javaName}/#end">模糊查询</button>
                                         <button class="btn btn-primary" type="button" data-bs-toggle="collapse"
                                                 data-bs-target="#collapseExample" aria-expanded="false"
                                                 aria-controls="collapseExample" id="toggle-advanced-search"
@@ -424,12 +424,12 @@
                             <div class="collapse" id="collapseExample">
                                 <div class="card card-body">
                                     <form>
-                                        <#list tablesData.fieldResps as list>
+                                    #foreach (${list} in ${tablesData.fieldResps})
                                             <div class="form-floating mb-3 mt-3">
                                                 <input type="text" class="form-control" id="${list.javaName}-search">
                                                 <label for="${list.javaName}-search" class="form-label" title="${list.fieldDescribe}">${list.javaName}</label>
                                             </div>
-                                        </#list>
+                                    #end
                                         <button type="button" class="btn btn-success" id="btn-advanced-search">
                                             查询
                                         </button>
@@ -455,9 +455,9 @@
                                             <th>
                                                 <input type="checkbox" name="cb-check-all">
                                             </th>
-                                            <#list tablesData.fieldResps as field>
-                                                <th title="${field.fieldDescribe}">${field.javaName}</th>
-                                            </#list>
+                                    #foreach (${list} in ${tablesData.fieldResps})
+                                                <th title="${list.fieldDescribe}">${list.javaName}</th>
+                                    #end
                                             <th>操作</th>
                                         </tr>
                                         </thead>
@@ -468,10 +468,10 @@
                                             <th>
                                                 <input type="checkbox" name="cb-check-all">
                                             </th>
-                                            <#list tablesData.fieldResps as field>
+                                    #foreach (${list} in ${tablesData.fieldResps})
                                             <#--                                               TODO  时间需要转换-->
-                                                <th title="${field.fieldDescribe}">${field.javaName}</th>
-                                            </#list>
+                                                <th title="${list.fieldDescribe}">${list.javaName}</th>
+                                    #end
                                             <th>操作</th>
                                         </tr>
                                         </tfoot>
@@ -566,7 +566,7 @@
     };
     var tableUser = $('#table-user');
     $(function () {
-        var $wrapper = $('#div-table-container');
+        var wrapper = $('#div-table-container');
         var _table = tableUser.dataTable($.extend(true, {}, CONSTANT.DATA_TABLES.DEFAULT_OPTION, {
             ajax: function (data, callback, settings) {//ajax配置为function,手动调用异步查询
                 //封装请求参数
@@ -577,26 +577,27 @@
             //根据数据库字段长度的计算：16字符内，默认80px，32字符内，默认120px，32-128字符，默认160px，128-512字符，默认200px。超过512-使用300px，且使用省略
             columns: [
                 CONSTANT.DATA_TABLES.COLUMN.CHECKBOX
-                <#list tablesData.fieldResps as field>
+
+        #foreach (${list} in ${tablesData.fieldResps})
                 ,
                 {
                     className: "wordwrap",
-                    <#if field.maxLength<=16>
+                    #if(${list.maxLength}<=16)
                     width: "80px",
-                    <#elseif field.maxLength<=32>
+                    #elseif(${list.maxLength}<=32)
                     width: "120px",
-                    <#elseif field.maxLength<=128>
+                    #elseif(${list.maxLength}<=128)
                     width: "160px",
-                    <#elseif field.maxLength<=256>
+                    #elseif(${list.maxLength}<=256)
                     width: "200px",
-                    <#else>
+                    #else
                     width: "300px",
                     //切记设置table样式为table-layout:fixed; 否则列宽不会强制为指定宽度，也不会出现省略号。
                     render: CONSTANT.DATA_TABLES.RENDER.ELLIPSIS,
-                    </#if>
-                    data: "${field.javaName}"
+                    #end
+                    data: "${list.javaName}"
                 }
-                </#list>
+        #end
                 ,
                 {
                     className: "td-operation",
@@ -618,12 +619,12 @@
                 var btnEdit = $('<button type="button" class="btn btn-primary btn-style-light btn-small btn-edit">修改</button>');
                 var btnDel = $('<button type="button" class="btn btn-danger btn-style-light btn-small btn-del">删除</button>');
                 //操作
-                $('td', row).eq(${tablesData.getSizeAdd1()}).append(btnEdit).append(btnDel);
+                $('td', row).eq(${tablesData.sizeAdd(${tablesData.fieldResps.size()},1)}).append(btnEdit).append(btnDel);
             },
             "drawCallback": function (settings) {
                 //渲染完毕后的回调
                 //清空全选状态
-                $(":checkbox[name='cb-check-all']", $wrapper).prop('checked', false);
+                $(":checkbox[name='cb-check-all']", wrapper).prop('checked', false);
                 //默认选中第一行 - 会有第一行点击的监听 ,不进行选中,避免数据为空
                 $("tbody tr", tableUser).eq(0).click();
             }
@@ -760,14 +761,14 @@
                 //记录数
                 returnData.data = result.data.records;
                 //关闭遮罩
-                // $wrapper.spinModal(false);
+                // wrapper.spinModal(false);
                 //调用DataTables提供的callback方法，代表数据已封装完成并传回DataTables进行渲染
                 //此时的数据需确保正确无误，异常判断应在执行此回调前自行处理完毕
                 callback(returnData);
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 // $.dialog.alert("查询失败");
-                // $wrapper.spinModal(false);
+                // wrapper.spinModal(false);
                 confirmReminder("数据查询","查询失败");
             }
         });
@@ -789,11 +790,13 @@
                 //默认正序
                 param.queryBo.queryBoExt.asc = true;
                 switch (data.order[0].column) {
-                    <#list tablesData.fieldResps as field>
-                    case ${field_index+1}:
-                        param.queryBo.queryBoExt.orderColumn = "${field.fieldName}";
+
+        #foreach (${list} in ${tablesData.fieldResps})
+##        velocityCount是循环内计数，初始1
+                    case ${velocityCount}:
+                        param.queryBo.queryBoExt.orderColumn = "${list.fieldName}";
                         break;
-                    </#list>
+        #end
                     default:
                         //这块默认的搜索需要处理 - 默认id
                         param.queryBo.queryBoExt.orderColumn = "id";
@@ -812,21 +815,21 @@
                 // 模糊查询的属性
                 var value =  $("#fuzzy-search").val();
                 if(value!==''){
-                <#list tablesData.getCanFuzzyList() as list>
-                    //TODO 这块要确定下来模糊查询的个数
-                    param.queryBo.queryBoFuzzyList[${list_index}] = {};
-                    param.queryBo.queryBoFuzzyList[${list_index}].column = "${list.fieldName}";
-                    param.queryBo.queryBoFuzzyList[${list_index}].value = value;
-                </#list>
+        #foreach (${list} in ${tablesData.getCanFuzzyList()})
+    ##        velocityCount是循环内计数，初始1
+                    param.queryBo.queryBoFuzzyList[${list.sizeSubtract(${velocityCount})}] = {};
+                    param.queryBo.queryBoFuzzyList[${list.sizeSubtract(${velocityCount})}].column = "${list.fieldName}";
+                    param.queryBo.queryBoFuzzyList[${list.sizeSubtract(${velocityCount})}].value = value;
+        #end
                 }
             } else {
                 //遍历,精准查询
-                <#list tablesData.fieldResps as list>
+        #foreach (${list} in ${tablesData.fieldResps})
                 var ${list.javaName}Value = $("#${list.javaName}-search").val();
                 if(${list.javaName}Value!=='') {
                     param.queryBo.${list.javaName} = ${list.javaName}Value;
                 }
-                </#list>
+        #end
             }
             //组装分页参数，开始页数 //开始的记录序号
             // param.startIndex = data.start;
@@ -842,9 +845,9 @@
         },
         // 显示具体行的数据
         showItemDetail: function (item) {
-            <#list tablesData.fieldResps as list>
+        #foreach (${list} in ${tablesData.fieldResps})
             $("#${list.javaName}-view").text(item.${list.javaName});
-            </#list>
+        #end
         },
         //添加数据
         addItemInit: function () {
@@ -862,20 +865,20 @@
             if(item==null){
                 return;
             }
-            <#list tablesData.fieldResps as list>
+        #foreach (${list} in ${tablesData.fieldResps})
             $("#${list.javaName}-edit").val(item.${list.javaName});
-            </#list>
+        #end
         },
         //发起添加数据
         addItemSubmit: function () {
             //获取参数
             var param = {};
-            <#list tablesData.fieldResps as list>
-            <#if !list.majorKey>
+        #foreach (${list} in ${tablesData.fieldResps})
+            #if(${list.majorKey}==false)
             // 非主键
             param.${list.javaName} =  $("#${list.javaName}-add").val();
-            </#if>
-            </#list>
+            #end
+        #end
             //发起请求
             confirm(addItem,param,"新增数据提示","确定保存当前添加数据，参数数据："+JSON.stringify(param));
         },
@@ -883,9 +886,9 @@
         editItemSubmit: function () {
             //获取参数
             var param = {};
-            <#list tablesData.fieldResps as list>
+        #foreach (${list} in ${tablesData.fieldResps})
             param.${list.javaName} =  $("#${list.javaName}-edit").val();
-            </#list>
+        #end
             //发起请求
             confirm(editItem,param,"修改数据提示","确定修改当前数据，参数数据："+JSON.stringify(param));
         },

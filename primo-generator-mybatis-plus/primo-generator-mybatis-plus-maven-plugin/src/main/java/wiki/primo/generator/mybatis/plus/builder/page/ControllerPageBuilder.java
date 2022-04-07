@@ -56,11 +56,8 @@ public class ControllerPageBuilder implements Serializable {
      * 获取数量加1的值
      * @return
      */
-    public Integer getSizeAdd1(){
-        if(fieldResps==null){
-            return 1;
-        }
-        return fieldResps.size()+1;
+    public Integer sizeAdd(Integer size,Integer add){
+        return size+add;
     }
 
     /**
