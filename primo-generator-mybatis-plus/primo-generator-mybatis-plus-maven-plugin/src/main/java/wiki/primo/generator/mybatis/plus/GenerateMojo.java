@@ -1,4 +1,7 @@
 package wiki.primo.generator.mybatis.plus;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.util.ResourceUtils;
 import wiki.primo.generator.mybatis.plus.builder.page.ControllerMenuBuilder;
 
 
@@ -17,12 +20,9 @@ import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
 import org.apache.velocity.app.VelocityEngine;
+import wiki.primo.generator.mybatis.plus.util.FileUtils;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -70,6 +70,30 @@ public class GenerateMojo extends AbstractGenerateMojo {
             List<ControllerPageBuilder> controllerPageBuilders = loadPageData(config);
             //生成文件
             batchOutput(controllerPageBuilders);
+
+            //获取jar包下class 下的所有文件 参考mybatis注解扫描类@MapperScan来实现
+            Resource[] resources = new PathMatchingResourcePatternResolver().getResources(ResourceUtils.CLASSPATH_URL_PREFIX + "template/page/static/**/*");
+            log.info("获取的resources静态文件数量:" + resources.length);
+            for (Resource resource : resources) {
+                //下载到本地
+                File resourceFile = resource.getFile();
+                String resourcePath = resourceFile.getPath();
+
+                //创建文件路径
+                String saveDir = "src"+ File.separator +"resources" + File.separator + resourcePath.substring(resourcePath.indexOf("template/page/"));
+                createPath(saveDir);
+                //得到输入流
+                InputStream inputStream = resource.getInputStream();
+                //获取自己数组
+                byte[] getData = FileUtils.readInputStream(inputStream);
+
+                File file = new File(saveDir + File.separator + resource.getFilename());
+                FileOutputStream fos = new FileOutputStream(file);
+                fos.write(getData);
+                fos.close();
+                inputStream.close();
+                log.info("下载静态文件【"+resourcePath+"】成功，保存路径：" + saveDir + ",文件名：" + resource.getFilename());
+            }
 
             // 打开输出目录
             if (isOpen()) {
