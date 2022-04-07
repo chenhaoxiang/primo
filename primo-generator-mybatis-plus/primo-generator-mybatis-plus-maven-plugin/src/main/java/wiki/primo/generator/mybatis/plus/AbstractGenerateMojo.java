@@ -50,6 +50,11 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
     @Parameter
     private String outputDir;
     /**
+     * 项目模块下 resource的目录，默认是 src/main/resources/
+     */
+    @Parameter(defaultValue = "src/main/resources/")
+    private String outputResourcesDir;
+    /**
      * 是否覆盖已有文件 - 全局的覆盖，这个开启覆盖后，独立的覆盖才会生效
      */
     @Parameter(defaultValue = "false")
@@ -87,6 +92,10 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
      */
     protected ConfigBuilder initConfig() {
         return new ConfigBuilder(packageInfo, dataSource, strategy, template, outputDir,extConfig);
+    }
+
+    public String getOutputResourcesDir() {
+        return outputResourcesDir;
     }
 
     public String getOutputDir() {

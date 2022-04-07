@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * </p>
  *
  * @author chenhx
- * @since 2022-04-07 15:17:33
+ * @since 2022-04-07 16:05:53
  */
 public interface UrlRuleProcessor311Config12Mapper extends BaseMapper<UrlRuleProcessor311Config12> {
 

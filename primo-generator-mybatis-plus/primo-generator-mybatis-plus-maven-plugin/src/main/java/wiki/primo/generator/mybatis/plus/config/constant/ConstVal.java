@@ -21,6 +21,13 @@ public class ConstVal {
      * 只需要生成一次的文件数据
      */
     public static List<ConfigConstant> oneConfigConstantList = new ArrayList<ConfigConstant>();
+
+    /**
+     * 表循环需要生成的文件
+     * ftl的文件
+     */
+//    public static List<ConfigConstant> configFtlConstantList = new ArrayList<ConfigConstant>();
+
     /**
      * 包含表中循环生成的文件，以及单个生成一次的文件
      * 注意，生成文件获取需要在这里新增一行
@@ -28,6 +35,7 @@ public class ConstVal {
      */
     public static List<List<ConfigConstant>> getConfigConstantList(){
         List<List<ConfigConstant>> conList = new ArrayList<>(2);
+//        conList.add(configFtlConstantList);
         conList.add(configConstantList);
         conList.add(oneConfigConstantList);
         return conList;
@@ -53,6 +61,7 @@ public class ConstVal {
     public static final String QUERY = "QueryBo";
     public static final String PAGE_VO_REQ = "PageVOReq";
     public static final String ENTITY_VO_REQ = "EntityVOReq";
+    public static final String FTL_TABLE = "table";
 
     /**
      * Java输入输出临时路径

@@ -6,6 +6,8 @@ package wiki.primo.generator.mybatis.plus.config.external;
 
 import lombok.Data;
 import org.apache.maven.plugins.annotations.Parameter;
+import wiki.primo.generator.mybatis.plus.config.constant.ConstVal;
+import wiki.primo.generator.mybatis.plus.util.StringUtils;
 
 import java.io.Serializable;
 
@@ -47,6 +49,9 @@ public class FtlConfig implements Serializable {
     }
 
     public String getTableTemplatePath() {
+        if(StringUtils.isEmpty(tableTemplatePath)){
+            return ConstVal.TEMPLATE_PAGE_TABLE;
+        }
         return tableTemplatePath;
     }
 }

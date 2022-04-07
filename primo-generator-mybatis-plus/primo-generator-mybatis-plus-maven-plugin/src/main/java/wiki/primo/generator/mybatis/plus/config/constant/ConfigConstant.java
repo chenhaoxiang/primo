@@ -89,6 +89,10 @@ public class ConfigConstant {
 
         constant = new ConfigConstant("EntityVOReq", "entity_vo_req", File.separator + "%s"+ConstVal.ENTITY_VO_REQ+".java", PackageUtils.joinPackage(config.getParent(), config.getEntityVoReq()),  ConstVal.TEMPLATE_ENTITY_VO_REQ_ENTITY);
         ConstVal.configConstantList.add(constant);
+
+        //ftl文件处理
+//        constant = new ConfigConstant("FtlTable", "ftl_table", File.separator + ConstVal.FTL_TABLE + File.separator + "%s.frl", PackageUtils.joinPackage(config.getParent(), config.getEntityVoReq()),  ConstVal.TEMPLATE_PAGE_TABLE);
+//        ConstVal.configFtlConstantList.add(constant);
     }
 
     public static void initOneConstant(PackageConfig config, ExtConfig extConfig) {

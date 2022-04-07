@@ -390,6 +390,7 @@ public class ConfigBuilder {
             field.setPropertyType(processFiledType(field.getType()));
             field.setComment(results.getString(querySQL.getFieldComment()));
             fieldList.add(field);
+            log.info("字段信息："+field);
         }
         return fieldList;
     }

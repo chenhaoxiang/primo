@@ -8,6 +8,8 @@ import lombok.Data;
 import wiki.primo.generator.mybatis.plus.builder.po.TableInfoPO;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -32,7 +34,42 @@ public class ControllerPageBuilder implements Serializable {
      */
     private TableInfoPO tableInfoPO;
     /**
-     * 文件名
+     * 模板的文件名路径 + 文件名
      */
-    private String fileName;
+    private String templateFilePath;
+
+    /**
+     * 生成的文件路径 + 文件名
+     */
+    private String saveFilePath;
+
+    /**
+     * 博客中，实体类字段的名称 - 返回给前端生成th的
+     */
+    private List<PageFieldBuilder> fieldResps;
+
+    /**
+     * 获取数量加1的值
+     * @return
+     */
+    public Integer getSizeAdd1(){
+        if(fieldResps==null){
+            return 1;
+        }
+        return fieldResps.size()+1;
+    }
+
+    /**
+     * 获取可以模糊搜索的字段
+     * @return
+     */
+    public List<PageFieldBuilder> getCanFuzzyList(){
+        List<PageFieldBuilder> fieldRespList = new ArrayList<>();
+        for (PageFieldBuilder fieldResp : fieldResps) {
+            if(fieldResp.getCanFuzzy()){
+                fieldRespList.add(fieldResp);
+            }
+        }
+        return fieldRespList;
+    }
 }

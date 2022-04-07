@@ -6,6 +6,9 @@ package wiki.primo.generator.mybatis.plus.builder.po;
  * Describe: 字段信息
  */
 public class TableFieldPO {
+    /**
+     * 是否是主键id
+     */
     private boolean keyFlag;
 
     /**
@@ -24,6 +27,10 @@ public class TableFieldPO {
      * Java类型
      */
     private String propertyType;
+
+    /**
+     * 描述
+     */
     private String comment;
 
     /**
@@ -94,5 +101,21 @@ public class TableFieldPO {
 
     public String getCapitalName() {
         return propertyName.substring(0, 1).toUpperCase() + propertyName.substring(1);
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("TableFieldPO{");
+        sb.append(super.toString());
+        sb.append(",");
+        sb.append("                keyFlag=").append(keyFlag);
+        sb.append(",                 name='").append(name).append('\'');
+        sb.append(",                 type='").append(type).append('\'');
+        sb.append(",                 propertyName='").append(propertyName).append('\'');
+        sb.append(",                 propertyType='").append(propertyType).append('\'');
+        sb.append(",                 comment='").append(comment).append('\'');
+        sb.append(",                 nameUp='").append(nameUp).append('\'');
+        sb.append('}');
+        return sb.toString();
     }
 }

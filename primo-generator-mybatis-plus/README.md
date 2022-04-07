@@ -32,6 +32,8 @@
     <configuration>
         <!-- 输出目录(默认java.io.tmpdir) ,项目路径下-->
         <outputDir>src/main/java/</outputDir>
+        <!--                    项目模块下 resource的目录，默认是 src/main/resources/-->
+        <outputResourcesDir>src/main/resources/</outputResourcesDir>
         <!-- 是否覆盖同名文件(默认false) -->
         <fileOverride>true</fileOverride>
         <!-- mapper.xml 中添加二级缓存配置(默认true) -->
@@ -273,6 +275,11 @@ mvn -DskipTests=true wiki.primo.generator:primo-generator-mybatis-plus-maven-plu
 
 ## 3.0.0
 - 集成对于单表的增删改查页面操作。可视化修改表数据
+- 增加配置属性
+```xml
+<!--                    项目模块下 resource的目录，默认是 src/main/resources/-->
+<outputResourcesDir>src/main/resources/</outputResourcesDir>
+```
 
 ## 1.2.3
 - 增加扩展配置 

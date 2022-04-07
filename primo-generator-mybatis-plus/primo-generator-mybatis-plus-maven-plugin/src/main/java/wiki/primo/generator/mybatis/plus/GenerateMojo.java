@@ -4,6 +4,8 @@ import wiki.primo.generator.mybatis.plus.builder.page.ControllerMenuBuilder;
 
 import wiki.primo.generator.mybatis.plus.builder.ConfigBuilder;
 import wiki.primo.generator.mybatis.plus.builder.page.ControllerPageBuilder;
+import wiki.primo.generator.mybatis.plus.builder.page.PageFieldBuilder;
+import wiki.primo.generator.mybatis.plus.builder.po.TableFieldPO;
 import wiki.primo.generator.mybatis.plus.config.constant.ConfigConstant;
 import wiki.primo.generator.mybatis.plus.config.constant.ConstVal;
 import wiki.primo.generator.mybatis.plus.builder.po.TableInfoPO;
@@ -65,9 +67,9 @@ public class GenerateMojo extends AbstractGenerateMojo {
             batchOutput("",velocityContext,ConstVal.oneConfigConstantList);
 
             // 获取上下文 - 初始化每个页面需要的的数据
-//            List<ControllerPageBuilder> controllerPageBuilders = loadPageData(config);
+            List<ControllerPageBuilder> controllerPageBuilders = loadPageData(config);
             //生成文件
-//            batchOutput(controllerPageBuilders);
+            batchOutput(controllerPageBuilders);
 
             // 打开输出目录
             if (isOpen()) {
@@ -104,14 +106,64 @@ public class GenerateMojo extends AbstractGenerateMojo {
             ControllerPageBuilder controllerPageBuilder = new ControllerPageBuilder();
             ControllerMenuBuilder controllerMenuBuilder = new ControllerMenuBuilder();
             controllerMenuBuilder.setName(tableInfo.getName());
-            controllerMenuBuilder.setUrl("/"+TableInfoPO.strConvertLowerCamel(tableInfo.getEntityName()));
+            controllerMenuBuilder.setUrl("/"+TableInfoPO.strConvertLowerCamel(tableInfo.getEntityName())+"/table");
 //            controllerPageBuilder.setControllerUrlBuilder(controllerUrlBuilder);
-            controllerPageBuilder.setFileName(TableInfoPO.strConvertLowerCamel(tableInfo.getEntityName()) + ".ftl");
+            controllerPageBuilder.setTemplateFilePath(ConstVal.TEMPLATE_PAGE_TABLE);
+            controllerPageBuilder.setSaveFilePath(getOutputResourcesDir() + "template" + File.separator + "table"  + File.separator +  TableInfoPO.strConvertLowerCamel(tableInfo.getEntityName()) + ".ftl");
             controllerPageBuilder.setControllerMenuBuilder(controllerMenuBuilder);
             controllerPageBuilder.setTableInfoPO(tableInfo);
+
+            //设置字段信息
+            List<PageFieldBuilder> fieldResps = new ArrayList<>();
+            for (TableFieldPO field : tableInfo.getFields()) {
+                PageFieldBuilder pageFieldBuilder = new PageFieldBuilder();
+                pageFieldBuilder.setJavaName(field.getPropertyName());
+                pageFieldBuilder.setJavaType(field.getPropertyType());
+                pageFieldBuilder.setFieldName(field.getName());
+                pageFieldBuilder.setFieldType(field.getType());
+                pageFieldBuilder.setFieldDescribe(field.getComment());
+                pageFieldBuilder.setMajorKey(field.isKeyFlag());
+                pageFieldBuilder.setCanFuzzy(false);
+                //暂时定，对于varchar 128以下的字段开启模糊查询
+                if(field.getType().startsWith("varchar")) {
+                    Integer length = getMaxLength(field.getType());
+                    if(length>0 && length<=128) {
+                        pageFieldBuilder.setCanFuzzy(true);
+                    }
+                }
+                pageFieldBuilder.setMaxLength(getMaxLength(field.getType()));
+                fieldResps.add(pageFieldBuilder);
+            }
+            controllerPageBuilder.setFieldResps(fieldResps);
             controllerPageBuilders.add(controllerPageBuilder);
         }
         return controllerPageBuilders;
+    }
+
+    /**
+     * 根据数据库字段类型获取最大的长度
+     * @param jdbcType
+     * @return
+     */
+    public Integer getMaxLength(String jdbcType){
+        if(StringUtils.isEmpty(jdbcType)){
+            return 0;
+        }
+        if(jdbcType.startsWith("json")){
+            return 102400;
+        }
+        if(jdbcType.startsWith("text")){
+            return 102400;
+        }
+        if(jdbcType.startsWith("datetime")){
+            return 32;
+        }
+        Integer length = wiki.primo.generator.mybatis.plus.util.StringUtils.getNumber(jdbcType);
+        if(length==null){
+            log.warn("未匹配到具体的数据长度，可对维护者进行反馈。jdbcType="+jdbcType);
+            return 0;
+        }
+        return length;
     }
 
     /**
@@ -231,6 +283,7 @@ public class GenerateMojo extends AbstractGenerateMojo {
         Map<String, String> pathInfo = config.getPathInfo();
         for (List<ConfigConstant> constants : ConstVal.getConfigConstantList()) {
             for (ConfigConstant constant : constants) {
+                //通过key获取输出路径
                 classOutputFiles.put(constant.getPackageInfoKey(), pathInfo.get(constant.getPathInfoKey()) + constant.getOutputFilesRuleValue());
             }
         }
@@ -265,28 +318,16 @@ public class GenerateMojo extends AbstractGenerateMojo {
     }
     private void batchOutput(List<ControllerPageBuilder> controllerPageBuilders) {
         try {
-            //获取路径
-            String path = getFtlConfig().getBasePath() + getFtlConfig().getTablePath();
-            String temp = getFtlConfig().getTableTemplatePath();
-            if(StringUtils.isEmpty(temp)){
-                temp = ConstVal.TEMPLATE_PAGE_TABLE;
-            }
-            if(!path.endsWith(File.separator)){
-                path = path + File.separator;
-            }
             //获取table
             for (ControllerPageBuilder controllerPageBuilder : controllerPageBuilders) {
-
-            }
-            for (ControllerPageBuilder controllerPageBuilder : controllerPageBuilders) {
-                String file = path + controllerPageBuilder.getFileName();
+                String file = controllerPageBuilder.getSaveFilePath();
                 //是否覆盖 - 全局的判断
                 if (!isCreate(file)) {
                     continue;
                 }
+                String temp = controllerPageBuilder.getTemplateFilePath();
                 VelocityContext context = new VelocityContext();
-                context.put("data",controllerPageBuilder);
-                context.put("data",controllerPageBuilder);
+                context.put("tablesData",controllerPageBuilder);
                 vmToFile(context, temp, file);
             }
         } catch (IOException e) {
