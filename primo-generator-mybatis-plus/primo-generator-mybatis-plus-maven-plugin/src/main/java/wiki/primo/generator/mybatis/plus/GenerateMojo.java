@@ -76,12 +76,15 @@ public class GenerateMojo extends AbstractGenerateMojo {
             Resource[] resources = new PathMatchingResourcePatternResolver().getResources(ResourceUtils.CLASSPATH_URL_PREFIX + "template/page/static/**/*");
             log.info("获取的resources静态文件数量:" + resources.length);
             for (Resource resource : resources) {
-                log.info("resource="+ JSON.toJSONString(resource));
+                if(StringUtils.isEmpty(resource.getFilename())){
+                    log.info("获取的是目录："+resource.getFilename());
+                    continue;
+                }
                 //下载到本地
                 String resourcePath = resource.getDescription();
 
                 //创建文件路径
-                String saveDir = "src"+ File.separator +"resources" + File.separator + resourcePath.substring(resourcePath.indexOf("template/page/"));
+                String saveDir = "src"+ File.separator +"main" + File.separator +"resources" + File.separator + resourcePath.substring(resourcePath.indexOf("template/page/"));
                 createPath(saveDir);
                 //得到输入流
                 InputStream inputStream = resource.getInputStream();
