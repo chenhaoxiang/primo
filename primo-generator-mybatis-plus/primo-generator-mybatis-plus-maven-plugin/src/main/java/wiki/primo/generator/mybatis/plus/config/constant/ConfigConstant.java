@@ -84,7 +84,10 @@ public class ConfigConstant {
         constant = new ConfigConstant("EntityResp", "entity_resp_path", File.separator + "%sResp.java", PackageUtils.joinPackage(config.getParent(), config.getEntityResp()), template.getEntityResp());
         ConstVal.configConstantList.add(constant);
 
-        constant = new ConfigConstant("PageVOReq", "page_vo_req", File.separator + "%sPageVOReq.java", PackageUtils.joinPackage(config.getParent(), config.getPageVoReq()),  ConstVal.TEMPLATE_PAGE_REQ_ENTITY);
+        constant = new ConfigConstant("PageVOReq", "page_vo_req", File.separator + "%s"+ConstVal.PAGE_VO_REQ+".java", PackageUtils.joinPackage(config.getParent(), config.getPageVoReq()),  ConstVal.TEMPLATE_PAGE_REQ_ENTITY);
+        ConstVal.configConstantList.add(constant);
+
+        constant = new ConfigConstant("EntityVOReq", "entity_vo_req", File.separator + "%s"+ConstVal.ENTITY_VO_REQ+".java", PackageUtils.joinPackage(config.getParent(), config.getEntityVoReq()),  ConstVal.TEMPLATE_ENTITY_VO_REQ_ENTITY);
         ConstVal.configConstantList.add(constant);
     }
 

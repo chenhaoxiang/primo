@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.List;
 
 															
-
 /**
  * <p>
  * 抓取URL的配置规则
@@ -14,12 +13,17 @@ import java.util.List;
  * </p>
  *
  * @author chenhx
- * @since 2022-03-30 17:28:09
+ * @since 2022-04-07 15:17:33
  */
 public class UrlRuleProcessor311Config12QueryBo{
-
+	/**
+	 * 排序，批量查询
+	 */
 	private QueryBoExt queryBoExt;
-
+	/**
+	 * 模糊查询
+	 */
+	private List<QueryBoFuzzy> queryBoFuzzyList;
 	/**
 	 * 
 	 */
@@ -149,6 +153,17 @@ public class UrlRuleProcessor311Config12QueryBo{
 			query.eq(UrlRuleProcessor311Config12.STATUS,status);
 		}
 	
+		//模糊查询
+		if(queryBoFuzzyList!=null && queryBoFuzzyList.size()>0){
+			for (QueryBoFuzzy queryBoFuzzy : queryBoFuzzyList) {
+				if(queryBoFuzzy.getValue()==null || queryBoFuzzy.getValue().trim().length()==0){
+					continue;
+				}
+				query.or(blogsQueryWrapper -> {
+					blogsQueryWrapper.like(queryBoFuzzy.getColumn(),queryBoFuzzy.getValue().trim());
+				});
+			}
+		}
 		if(queryBoExt!=null){
 			//设置排序
 			if(queryBoExt.getOrderColumn()!=null && queryBoExt.getOrderColumn().trim().length()>0 ){
@@ -330,6 +345,14 @@ public class UrlRuleProcessor311Config12QueryBo{
     }
 
 
+	public List<QueryBoFuzzy> getQueryBoFuzzyList() {
+		return queryBoFuzzyList;
+	}
+
+	public void setQueryBoFuzzyList(List<QueryBoFuzzy> queryBoFuzzyList) {
+		this.queryBoFuzzyList = queryBoFuzzyList;
+	}
+
 	public QueryBoExt getQueryBoExt() {
 		return queryBoExt;
 	}
@@ -338,6 +361,46 @@ public class UrlRuleProcessor311Config12QueryBo{
 		this.queryBoExt = queryBoExt;
 	}
 
+	/**
+	* 模糊查询的字段 - 注意，是全模糊
+	*/
+	public static class QueryBoFuzzy {
+		/**
+		 * 字符名称 - 数据库的
+		 */
+		private String column;
+		/**
+		 * 值
+		 */
+		private String value;
+
+		public String getColumn() {
+			return column;
+		}
+
+		public void setColumn(String column) {
+			this.column = column;
+		}
+
+		public String getValue() {
+			return value;
+		}
+
+		public void setValue(String value) {
+			this.value = value;
+		}
+
+		@Override
+		public String toString() {
+			final StringBuilder sb = new StringBuilder("QueryBoFuzzy{");
+			sb.append(super.toString());
+			sb.append(",");
+			sb.append("                column='").append(column).append('\'');
+			sb.append(",                 value='").append(value).append('\'');
+			sb.append('}');
+			return sb.toString();
+		}
+	}
     /**
     * 用于排序，和批量的查询
     */

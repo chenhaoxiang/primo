@@ -265,6 +265,8 @@ public class ConfigBuilder {
             tableInfo.setServiceImplName(tableInfo.getEntityName() + ConstVal.SERVICEIMPL);
             tableInfo.setControllerName(tableInfo.getEntityName() + ConstVal.CONTROLLER);
             tableInfo.setPageVOReqName(tableInfo.getEntityName() + ConstVal.PAGE_VO_REQ);
+            tableInfo.setEntityVOReqName(tableInfo.getEntityName() + ConstVal.ENTITY_VO_REQ);
+
             //设置查询类名
             tableInfo.setQueryName(tableInfo.getEntityName() + ConstVal.QUERY);
             //扩展类

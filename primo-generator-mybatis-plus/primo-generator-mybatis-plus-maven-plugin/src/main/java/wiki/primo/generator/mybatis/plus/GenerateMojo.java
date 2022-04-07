@@ -65,9 +65,9 @@ public class GenerateMojo extends AbstractGenerateMojo {
             batchOutput("",velocityContext,ConstVal.oneConfigConstantList);
 
             // 获取上下文 - 初始化每个页面需要的的数据
-            List<ControllerPageBuilder> controllerPageBuilders = loadPageData(config);
+//            List<ControllerPageBuilder> controllerPageBuilders = loadPageData(config);
             //生成文件
-            batchOutput(controllerPageBuilders);
+//            batchOutput(controllerPageBuilders);
 
             // 打开输出目录
             if (isOpen()) {

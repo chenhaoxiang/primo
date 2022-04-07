@@ -27,11 +27,11 @@ public class ${table.pageVOReqName} implements Serializable {
      */
     private Long draw;
 
-    public BlogsQueryBo getQueryBo() {
+    public ${table.queryName} getQueryBo() {
         return queryBo;
     }
 
-    public void setQueryBo(BlogsQueryBo queryBo) {
+    public void setQueryBo(${table.queryName} queryBo) {
         this.queryBo = queryBo;
     }
 

@@ -7,13 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import ${package.QueryBo}.${table.queryName};
 import ${package.EntityReq}.${table.entityReqName};
 import ${package.EntityResp}.${table.entityRespName};
 import ${package.Entity}.${entity};
 import java.util.ArrayList;
 import java.util.List;
+import ${package.PageVOResp}.PageVOResp;
+import ${package.PageVOReq}.${table.pageVOReqName};
+import ${package.EntityVOReq}.${table.entityVOReqName};
 
 /**
  * <p>
@@ -33,17 +35,17 @@ public class ${table.controllerName} {
     /**
      * 添加对象
      *
-     * @param ${table.strConvertLowerCamel(${table.entityReqName})} 对象
+     * @param ${table.strConvertLowerCamel(${table.entityVOReqName})} 对象
      * @return ResultModel统一响应结果
      */
     @PostMapping("save")
     @ResponseBody
-    public ResultModel<Object> save(@RequestBody ${table.entityReqName} ${table.strConvertLowerCamel(${table.entityReqName})}) {
-        if(${table.strConvertLowerCamel(${table.entityReqName})}==null){
+    public ResultModel<Object> save(@RequestBody ${table.entityVOReqName} ${table.strConvertLowerCamel(${table.entityVOReqName})}) {
+        if(${table.strConvertLowerCamel(${table.entityVOReqName})}==null){
             return ResultModel.parameterError();
         }
         ${entity} ${table.strConvertLowerCamel(${entity})} = new ${entity}();
-        BeanUtils.copyProperties(${table.strConvertLowerCamel(${table.entityReqName})},${table.strConvertLowerCamel(${entity})});
+        BeanUtils.copyProperties(${table.strConvertLowerCamel(${table.entityVOReqName})},${table.strConvertLowerCamel(${entity})});
         ${table.strConvertLowerCamel(${table.serviceName})}.save(${table.strConvertLowerCamel(${entity})});
         return ResultModel.success();
     }
@@ -71,17 +73,17 @@ public class ${table.controllerName} {
     /**
      * 根据ID进行修改对象
      *
-     * @param ${table.strConvertLowerCamel(${table.entityReqName})} 对象中必须有ID主键
+     * @param ${table.strConvertLowerCamel(${table.entityVOReqName})} 对象中必须有ID主键
      * @return ResultModel统一响应结果
      */
     @PostMapping("update")
     @ResponseBody
-    public ResultModel<Object> update(@RequestBody ${table.entityReqName} ${table.strConvertLowerCamel(${table.entityReqName})}) {
-        if(${table.strConvertLowerCamel(${table.entityReqName})}==null || ${table.strConvertLowerCamel(${table.entityReqName})}.getId()==null){
+    public ResultModel<Object> update(@RequestBody ${table.entityVOReqName} ${table.strConvertLowerCamel(${table.entityVOReqName})}) {
+        if(${table.strConvertLowerCamel(${table.entityVOReqName})}==null || ${table.strConvertLowerCamel(${table.entityVOReqName})}.getId()==null){
             return ResultModel.parameterError();
         }
         ${entity} ${table.strConvertLowerCamel(${entity})} = new ${entity}();
-        BeanUtils.copyProperties(${table.strConvertLowerCamel(${table.entityReqName})},${table.strConvertLowerCamel(${entity})});
+        BeanUtils.copyProperties(${table.strConvertLowerCamel(${table.entityVOReqName})},${table.strConvertLowerCamel(${entity})});
         boolean success = ${table.strConvertLowerCamel(${table.serviceName})}.updateById(${table.strConvertLowerCamel(${entity})});
         if(success) {
             return ResultModel.success();
@@ -115,7 +117,7 @@ public class ${table.controllerName} {
      */
     @PostMapping("page")
     @ResponseBody
-    public ResultModel<PageVOResp<${table.entityRespName}>> page(@RequestBody ${table.queryName} pageVOReq) {
+    public ResultModel<PageVOResp<${table.entityRespName}>> page(@RequestBody ${table.pageVOReqName} pageVOReq) {
         IPage<${entity}> iPage = ${table.strConvertLowerCamel(${table.serviceName})}.page(pageVOReq.getQueryBo(),pageVOReq.getPageNo(),pageVOReq.getPageSize());
         PageVOResp<${table.entityRespName}> templateIPage = new PageVOResp<>();
         templateIPage.setPages(iPage.getPages());

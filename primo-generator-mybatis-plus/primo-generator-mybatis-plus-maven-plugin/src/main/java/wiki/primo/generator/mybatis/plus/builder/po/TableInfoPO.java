@@ -37,6 +37,7 @@ public class TableInfoPO {
     private String controllerName;
     private String queryName;
     private String pageVOReqName;
+    private String entityVOReqName;
 
     private String serviceExtName;
     private String serviceExtImplName;
@@ -78,6 +79,14 @@ public class TableInfoPO {
             return entityName + "Resp";
         }
         return entityRespName;
+    }
+
+    public String getEntityVOReqName() {
+        return entityVOReqName;
+    }
+
+    public void setEntityVOReqName(String entityVOReqName) {
+        this.entityVOReqName = entityVOReqName;
     }
 
     public String getPageVOReqName() {

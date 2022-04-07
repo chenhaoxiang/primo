@@ -37,4 +37,16 @@ public class FtlConfig implements Serializable {
      */
     @Parameter
     private String tableTemplatePath;
+
+    public String getBasePath() {
+        return basePath;
+    }
+
+    public String getTablePath() {
+        return tablePath;
+    }
+
+    public String getTableTemplatePath() {
+        return tableTemplatePath;
+    }
 }
