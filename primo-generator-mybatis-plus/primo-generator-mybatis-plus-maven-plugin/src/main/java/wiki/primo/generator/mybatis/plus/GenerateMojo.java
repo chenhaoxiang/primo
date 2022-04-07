@@ -109,7 +109,7 @@ public class GenerateMojo extends AbstractGenerateMojo {
             controllerMenuBuilder.setUrl("/"+TableInfoPO.strConvertLowerCamel(tableInfo.getEntityName())+"/table");
 //            controllerPageBuilder.setControllerUrlBuilder(controllerUrlBuilder);
             controllerPageBuilder.setTemplateFilePath(ConstVal.TEMPLATE_PAGE_TABLE);
-            controllerPageBuilder.setSaveFilePath(getOutputResourcesDir() + "template" + File.separator + "table"  + File.separator +  TableInfoPO.strConvertLowerCamel(tableInfo.getEntityName()) + ".ftl");
+            controllerPageBuilder.setSaveFilePath(getOutputResourcesDir() + "template" + File.separator + "tables"  + File.separator +  TableInfoPO.strConvertLowerCamel(tableInfo.getEntityName()) + ".ftl");
             controllerPageBuilder.setControllerMenuBuilder(controllerMenuBuilder);
             controllerPageBuilder.setTableInfoPO(tableInfo);
 

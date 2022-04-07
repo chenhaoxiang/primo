@@ -33,6 +33,14 @@ public class ${table.controllerName} {
     private ${table.serviceName} ${table.strConvertLowerCamel(${table.serviceName})};
 
     /**
+    * 表格页面
+    */
+    @RequestMapping({"tables"})
+    public String tables() {
+        return "tables/${table.strConvertLowerCamel(${table.entityName})}";
+    }
+
+    /**
      * 添加对象
      *
      * @param ${table.strConvertLowerCamel(${table.entityVOReqName})} 对象
