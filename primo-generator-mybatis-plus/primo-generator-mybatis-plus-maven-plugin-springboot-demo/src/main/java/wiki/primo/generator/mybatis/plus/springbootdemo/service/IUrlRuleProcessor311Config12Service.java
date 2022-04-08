@@ -13,7 +13,7 @@ import java.util.List;
  * </p>
  *
  * @author chenhx
- * @since 2022-04-08 13:55:19
+ * @since 2022-04-08 14:02:39
  */
 public interface IUrlRuleProcessor311Config12Service extends IService<UrlRuleProcessor311Config12> {
     /**

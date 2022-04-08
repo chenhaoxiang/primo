@@ -114,6 +114,10 @@
           <resultModel>true</resultModel>
         </buildSwitchConfig>
       </extConfig>
+      <ftlConfig>
+        <!--                        ftl文件生成的开关-->
+        <open>true</open>
+      </ftlConfig>
     </configuration>
     <dependencies>
         <dependency>
@@ -279,6 +283,10 @@ mvn -DskipTests=true wiki.primo.generator:primo-generator-mybatis-plus-maven-plu
 ```xml
 <!--                    项目模块下 resource的目录，默认是 src/main/resources/-->
 <outputResourcesDir>src/main/resources/</outputResourcesDir>
+<ftlConfig>
+<!--                        ftl文件生成的开关-->
+    <open>true</open>
+</ftlConfig>
 ```
 
 ## 1.2.3

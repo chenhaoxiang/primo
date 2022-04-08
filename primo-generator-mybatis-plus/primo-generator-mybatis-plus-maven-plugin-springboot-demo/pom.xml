@@ -138,6 +138,8 @@
                         <!-- 要包含的表 与exclude 二选一配置-->
                         <include>
                             <property>url_rule_processor_311_config_12</property>
+                            <property>url_rule_processor_config</property>
+                            <property>url_rule_web_driver_config</property>
 <!--                            <property>table1</property>-->
                         </include>
                         <!-- 要排除的表 -->
@@ -181,7 +183,7 @@
                     </extConfig>
                     <ftlConfig>
 <!--                        ftl文件生成的开关-->
-                        <open>false</open>
+                        <open>true</open>
                     </ftlConfig>
                 </configuration>
                 <dependencies>

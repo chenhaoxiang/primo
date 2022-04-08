@@ -8,7 +8,7 @@ import java.io.Serializable;
  * 前后端交互对象
  *
  * @author chenhx
- * @since 2022-04-08 13:55:19
+ * @since 2022-04-08 14:02:39
  */
 public class ResultModel<T> implements Serializable {
 	private static final long serialVersionUID = 8951721595994792067L;
