@@ -29,7 +29,7 @@ public class FtlConfig implements Serializable {
     @Parameter
    private String basePath;
     /**
-     * 表的操作 ftl文件生成的路径,默认在 /template 下
+     * 表的操作 ftl文件生成的路径,默认在 /templates 下
      * 最终路径是 ：basePath + tablePath
      */
     @Parameter
