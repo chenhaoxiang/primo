@@ -18,7 +18,7 @@ import java.util.List;
  * </p>
  *
  * @author chenhx
- * @since 2022-04-08 10:58:58
+ * @since 2022-04-08 11:10:55
  */
 @Service
 public class UrlRuleProcessor311Config12ServiceImpl extends ServiceImpl<UrlRuleProcessor311Config12Mapper, UrlRuleProcessor311Config12> implements IUrlRuleProcessor311Config12Service {

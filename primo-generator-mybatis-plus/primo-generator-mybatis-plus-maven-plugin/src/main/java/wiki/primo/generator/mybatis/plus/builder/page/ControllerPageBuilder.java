@@ -23,7 +23,7 @@ import java.util.List;
 public class ControllerPageBuilder implements Serializable {
     private static final long serialVersionUID = -5776714046494430656L;
     /**
-     * 父包名称
+     * 父包名称 - 注意，作为URL时，该值需要全小写
      * @see PackageConfig#moduleName 取的是该值
      */
     private String moduleName;
