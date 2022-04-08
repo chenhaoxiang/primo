@@ -124,7 +124,7 @@
                 </a>
             </div>
         </div>
-        <!--            侧边栏 开始-->
+        <!--  侧边栏 开始 -->
         <div class="app-menu">
             <ul class="accordion-menu">
                 <li class="sidebar-title">
@@ -133,10 +133,19 @@
                 <li class="active-page">
                     <a href="/index"><i class="material-icons-two-tone">dashboard</i>首页统计</a>
                 </li>
+                <li>
+                    <a href="#"><i class="material-icons-two-tone">grid_on</i>表数据操作<i class="material-icons has-sub-menu">keyboard_arrow_right</i></a>
+                    <ul class="sub-menu">
+                                                    <li>
+                                <a href="/urlruleprocessor311config12/table">url_rule_processor_311_config_12</a>
+                            </li>
+                                             </ul>
+                </li>
             </ul>
         </div>
-
     </div>
+
+    <!--    顶部栏 开始-->
     <div class="app-container">
         <div class="search">
             <form>
@@ -1069,7 +1078,7 @@
         lastTableCallback = callback;
         $.ajax({
             type: "POST",
-            url: "/urlRuleProcessor311Config12/page",
+            url: "/urlruleprocessor311config12/page",
             cache: false,	//禁用缓存
             data: param,	//传入已封装的参数
             dataType: "json",
@@ -1397,7 +1406,7 @@
     };
     // 添加数据
     function addItem(parameter){
-        ajaxPostRequestBody("/urlRuleProcessor311Config12/save",JSON.stringify(parameter),resetFormData,true,$("#form-add")[0]);
+        ajaxPostRequestBody("/urlruleprocessor311config12/save",JSON.stringify(parameter),resetFormData,true,$("#form-add")[0]);
 
     }
     function resetFormData(response,form){
@@ -1411,7 +1420,7 @@
     // 添加数据
     function editItem(parameter){
         //表单重置,应该是请求成功再重置
-        ajaxPostRequestBody("/urlRuleProcessor311Config12/update",JSON.stringify(parameter),resetFormData,true,$("#form-edit")[0]);
+        ajaxPostRequestBody("/urlruleprocessor311config12/update",JSON.stringify(parameter),resetFormData,true,$("#form-edit")[0]);
     }
 
 </script>

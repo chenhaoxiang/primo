@@ -69,6 +69,11 @@ public class ConfigBuilder {
     private TemplateConfig template;
 
     /**
+     * 模板路径配置信息
+     */
+    private FtlConfig ftlConfig;
+
+    /**
      *
      * 在构造器中处理配置
      *
@@ -81,7 +86,9 @@ public class ConfigBuilder {
      */
     public ConfigBuilder(PackageConfig packageConfig, DataSourceConfig dataSourceConfig,
                          StrategyConfig strategyConfig, TemplateConfig template,
-                         String outputDir, ExtConfig extConfig) {
+                         String outputDir, ExtConfig extConfig,
+                         FtlConfig ftlConfig
+    ) {
         //1.初始化表的常量数据
         ConfigConstant.initTableConstant(packageConfig,template);
         //2.初始化一次的文件数据
@@ -94,6 +101,7 @@ public class ConfigBuilder {
         //处理数据库表 加载数据库表、列、注释相关数据集
         handlerStrategy(strategyConfig);
         this.template = template;
+        this.ftlConfig = ftlConfig;
     }
 
     // ************************ 曝露方法 BEGIN*****************************
@@ -168,6 +176,9 @@ public class ConfigBuilder {
         return template == null ? new TemplateConfig() : template;
     }
 
+    public FtlConfig getFtlConfig() {
+        return ftlConfig == null ? new FtlConfig() : ftlConfig;
+    }
     // ****************************** 曝露方法 END**********************************
 
     /**

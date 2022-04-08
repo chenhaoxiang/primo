@@ -4,7 +4,7 @@ package wiki.primo.generator.mybatis.plus.springbootdemo.enums;
  * 响应码枚举，参考HTTP状态码的语义
  *
  * @author chenhx
- * @since 2022-04-08 11:10:55
+ * @since 2022-04-08 13:55:19
  */
 public enum ResultCodeEnum {
     /**

@@ -9,6 +9,7 @@ import org.apache.maven.plugins.annotations.Parameter;
 import wiki.primo.generator.mybatis.plus.config.constant.ConstVal;
 import wiki.primo.generator.mybatis.plus.util.StringUtils;
 
+import java.io.File;
 import java.io.Serializable;
 
 /**
@@ -18,19 +19,12 @@ import java.io.Serializable;
  * @date 2022-03-31 3:42 下午
  * @description ftl文件配置
  */
-@Data
 public class FtlConfig implements Serializable {
 
    private static final long serialVersionUID = 8614424445657327618L;
     /**
-     * 基类路径 - 必填
-     * 默认为项目的resources目录
-     */
-    @Parameter
-   private String basePath;
-    /**
-     * 表的操作 ftl文件生成的路径,默认在 /templates 下
-     * 最终路径是 ：basePath + tablePath
+     * 表的操作 ftl文件生成的路径,默认在 templates/tables 下
+     * 最终路径是 ：resources目录 + "/" + tablePath
      */
     @Parameter
    private String tablePath;
@@ -39,12 +33,33 @@ public class FtlConfig implements Serializable {
      */
     @Parameter
     private String tableTemplatePath;
+    /**
+     * 生成ftl文件的开关,默认开启
+     */
+    @Parameter
+    private Boolean open;
 
-    public String getBasePath() {
-        return basePath;
+    public void setTablePath(String tablePath) {
+        this.tablePath = tablePath;
     }
 
+    public void setTableTemplatePath(String tableTemplatePath) {
+        this.tableTemplatePath = tableTemplatePath;
+    }
+
+    public Boolean getOpen() {
+        return open;
+    }
+
+    public void setOpen(Boolean open) {
+        this.open = open;
+    }
+
+
     public String getTablePath() {
+        if(StringUtils.isEmpty(tablePath)){
+            return "templates" + File.separator + "tables"  + File.separator;
+        }
         return tablePath;
     }
 
@@ -54,4 +69,5 @@ public class FtlConfig implements Serializable {
         }
         return tableTemplatePath;
     }
+
 }

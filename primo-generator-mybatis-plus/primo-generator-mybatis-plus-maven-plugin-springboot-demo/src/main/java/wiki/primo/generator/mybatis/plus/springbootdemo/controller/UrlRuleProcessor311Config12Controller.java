@@ -23,10 +23,10 @@ import wiki.primo.generator.mybatis.plus.springbootdemo.domain.vo.req.UrlRulePro
  * </p>
  *
  * @author chenhx
- * @since 2022-04-08 11:10:55
+ * @since 2022-04-08 13:55:19
  */
 @Controller
-@RequestMapping("/urlRuleProcessor311Config12")
+@RequestMapping("/urlruleprocessor311config12")
 public class UrlRuleProcessor311Config12Controller {
 
     @Autowired

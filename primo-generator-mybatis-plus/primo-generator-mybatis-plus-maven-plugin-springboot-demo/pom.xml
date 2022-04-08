@@ -179,6 +179,10 @@
                             <resultModel>true</resultModel>
                         </buildSwitchConfig>
                     </extConfig>
+                    <ftlConfig>
+<!--                        ftl文件生成的开关-->
+                        <open>false</open>
+                    </ftlConfig>
                 </configuration>
                 <dependencies>
                     <dependency>

@@ -69,38 +69,41 @@ public class GenerateMojo extends AbstractGenerateMojo {
 
             // 获取上下文 - 初始化每个页面需要的的数据
             List<ControllerPageBuilder> controllerPageBuilders = loadPageData(config);
-            //生成文件
-            batchOutput(controllerPageBuilders);
+            //判断ftl文件的开关是否开启
+            if(config.getFtlConfig().getOpen()) {
+                //生成文件
+                batchOutput(controllerPageBuilders);
 
-            //获取jar包下class 下的所有文件 参考mybatis注解扫描类@MapperScan来实现
-            Resource[] resources = new PathMatchingResourcePatternResolver().getResources(ResourceUtils.CLASSPATH_URL_PREFIX + "template/page/static/**/*");
-            log.info("获取的resources静态文件数量:" + resources.length);
-            for (Resource resource : resources) {
-                if(StringUtils.isEmpty(resource.getFilename())){
-                    log.info("获取的是目录："+resource.getFilename());
-                    continue;
-                }
+                //获取jar包下class 下的所有文件 参考mybatis注解扫描类@MapperScan来实现
+                Resource[] resources = new PathMatchingResourcePatternResolver().getResources(ResourceUtils.CLASSPATH_URL_PREFIX + "template/page/static/**/*");
+                log.info("获取的resources静态文件数量:" + resources.length);
+                for (Resource resource : resources) {
+                    if (StringUtils.isEmpty(resource.getFilename())) {
+                        log.info("获取的是目录：" + resource.getFilename());
+                        continue;
+                    }
 //                log.info("4resource="+ JSON.toJSONString(resource.getURL().getFile()));
 
-                //下载到本地,jar包内文件的绝对路径
-                String resourcePath = resource.getURL().getFile();
+                    //下载到本地,jar包内文件的绝对路径
+                    String resourcePath = resource.getURL().getFile();
 
-                //创建文件路径 TODO 如果路径中包含 static 会有问题的，隐藏bug
-                String saveDir = "src"+ File.separator +"main" + File.separator +"resources" + File.separator + resourcePath.substring(resourcePath.indexOf("static"));
-                //获取目录
-                String savePath = saveDir.substring(0,saveDir.lastIndexOf(File.separator));
-                createPath(savePath);
-                //得到输入流
-                InputStream inputStream = resource.getInputStream();
-                //获取自己数组
-                byte[] getData = FileUtils.readInputStream(inputStream);
+                    //创建文件路径 TODO 如果路径中包含 static 会有问题的，隐藏bug
+                    String saveDir = "src" + File.separator + "main" + File.separator + "resources" + File.separator + resourcePath.substring(resourcePath.indexOf("static"));
+                    //获取目录
+                    String savePath = saveDir.substring(0, saveDir.lastIndexOf(File.separator));
+                    createPath(savePath);
+                    //得到输入流
+                    InputStream inputStream = resource.getInputStream();
+                    //获取自己数组
+                    byte[] getData = FileUtils.readInputStream(inputStream);
 
-                File file = new File(saveDir);
-                FileOutputStream fos = new FileOutputStream(file);
-                fos.write(getData);
-                fos.close();
-                inputStream.close();
-                log.info("路径："+savePath+"，下载静态文件【"+resourcePath+"】成功，保存路径：" + saveDir + ",文件名：" + resource.getFilename());
+                    File file = new File(saveDir);
+                    FileOutputStream fos = new FileOutputStream(file);
+                    fos.write(getData);
+                    fos.close();
+                    inputStream.close();
+                    log.info("路径：" + savePath + "，下载静态文件【" + resourcePath + "】成功，保存路径：" + saveDir + ",文件名：" + resource.getFilename());
+                }
             }
 
             // 打开输出目录
@@ -150,8 +153,8 @@ public class GenerateMojo extends AbstractGenerateMojo {
 
             controllerPageBuilder.setControllerMenuBuilder(controllerMenuBuilder);
 //            controllerPageBuilder.setControllerUrlBuilder(controllerUrlBuilder);
-            controllerPageBuilder.setTemplateFilePath(ConstVal.TEMPLATE_PAGE_TABLE);
-            controllerPageBuilder.setSaveFilePath(getOutputResourcesDir() + "templates" + File.separator + "tables"  + File.separator);
+            controllerPageBuilder.setTemplateFilePath(config.getFtlConfig().getTableTemplatePath());
+            controllerPageBuilder.setSaveFilePath(getOutputResourcesDir() + config.getFtlConfig().getTablePath());
             controllerPageBuilder.setSaveFilePathName(TableInfoPO.strConvertLowerCamel(tableInfo.getEntityName()) + ".ftl");
             controllerPageBuilder.setTableInfoPO(tableInfo);
 

@@ -91,7 +91,7 @@ public abstract class AbstractGenerateMojo extends AbstractMojo {
      * @return 构建好的ConfigBuilder数据
      */
     protected ConfigBuilder initConfig() {
-        return new ConfigBuilder(packageInfo, dataSource, strategy, template, outputDir,extConfig);
+        return new ConfigBuilder(packageInfo, dataSource, strategy, template, outputDir,extConfig,ftlConfig);
     }
 
     public String getOutputResourcesDir() {

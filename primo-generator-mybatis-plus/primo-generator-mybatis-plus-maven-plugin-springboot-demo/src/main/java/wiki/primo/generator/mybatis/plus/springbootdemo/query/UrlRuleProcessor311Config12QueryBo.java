@@ -13,7 +13,7 @@ import java.util.List;
  * </p>
  *
  * @author chenhx
- * @since 2022-04-08 11:10:55
+ * @since 2022-04-08 13:55:19
  */
 public class UrlRuleProcessor311Config12QueryBo{
 	/**
