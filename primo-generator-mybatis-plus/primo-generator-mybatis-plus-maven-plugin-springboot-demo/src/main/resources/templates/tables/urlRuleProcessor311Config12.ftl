@@ -1290,6 +1290,9 @@
         },
         // 显示具体行的数据
         showItemDetail: function (item) {
+            if(item===null || item === undefined){
+                return;
+            }
                     $("#id-view").text(item.id);
                     $("#platformNameEn-view").text(item.platformNameEn);
                     $("#referer-view").text(item.referer);

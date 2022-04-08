@@ -856,6 +856,9 @@
         },
         // 显示具体行的数据
         showItemDetail: function (item) {
+            if(item===null || item === undefined){
+                return;
+            }
         #foreach (${list} in ${tablesData.fieldResps})
             $("#${list.javaName}-view").text(item.${list.javaName});
         #end
