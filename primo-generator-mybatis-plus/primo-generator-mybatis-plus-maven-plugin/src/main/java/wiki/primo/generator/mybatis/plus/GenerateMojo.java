@@ -145,6 +145,8 @@ public class GenerateMojo extends AbstractGenerateMojo {
             controllerPageBuilder.setSaveFilePathName(TableInfoPO.strConvertLowerCamel(tableInfo.getEntityName()) + ".ftl");
             controllerPageBuilder.setControllerMenuBuilder(controllerMenuBuilder);
             controllerPageBuilder.setTableInfoPO(tableInfo);
+            //设置父包名称 - 便于分包
+            controllerPageBuilder.setModuleName(config.getPackageInfo().getOrDefault(ConstVal.MODULENAME,""));
 
             //设置字段信息
             List<PageFieldBuilder> fieldResps = new ArrayList<>();

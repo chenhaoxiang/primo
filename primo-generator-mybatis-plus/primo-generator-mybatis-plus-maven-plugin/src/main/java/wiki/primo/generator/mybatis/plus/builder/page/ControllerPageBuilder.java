@@ -6,6 +6,7 @@ package wiki.primo.generator.mybatis.plus.builder.page;
 
 import lombok.Data;
 import wiki.primo.generator.mybatis.plus.builder.po.TableInfoPO;
+import wiki.primo.generator.mybatis.plus.config.external.PackageConfig;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -21,6 +22,11 @@ import java.util.List;
 @Data
 public class ControllerPageBuilder implements Serializable {
     private static final long serialVersionUID = -5776714046494430656L;
+    /**
+     * 父包名称
+     * @see PackageConfig#moduleName 取的是该值
+     */
+    private String moduleName;
     /**
      * 构建请求的url时需要，请求后端
      */

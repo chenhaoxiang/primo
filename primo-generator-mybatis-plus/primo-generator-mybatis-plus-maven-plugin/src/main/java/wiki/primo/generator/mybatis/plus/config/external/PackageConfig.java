@@ -20,6 +20,7 @@ public class PackageConfig {
     /**
      * 父包模块名
      */
+    @Parameter
     private String moduleName;
 
     /**
