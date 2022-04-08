@@ -146,9 +146,9 @@ public class GenerateMojo extends AbstractGenerateMojo {
             controllerMenuBuilder.setName(tableInfo.getName());
             //有个模块需要判断
             if(StringUtils.isEmpty(controllerPageBuilder.getModuleName())){
-                controllerMenuBuilder.setUrl("/"+tableInfo.getEntityName().toLowerCase()+"/table");
+                controllerMenuBuilder.setUrl("/"+tableInfo.getEntityName().toLowerCase()+"/tables");
             }else {
-                controllerMenuBuilder.setUrl("/"+controllerPageBuilder.getModuleName().toLowerCase()+"/"+TableInfoPO.strConvertLowerCamel(tableInfo.getEntityName())+"/table");
+                controllerMenuBuilder.setUrl("/"+controllerPageBuilder.getModuleName().toLowerCase()+"/"+TableInfoPO.strConvertLowerCamel(tableInfo.getEntityName())+"/tables");
             }
 
             controllerPageBuilder.setControllerMenuBuilder(controllerMenuBuilder);
