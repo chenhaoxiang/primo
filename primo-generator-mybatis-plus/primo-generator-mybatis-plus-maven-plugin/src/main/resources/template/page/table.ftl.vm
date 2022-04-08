@@ -124,7 +124,7 @@
                 </a>
             </div>
         </div>
-        <!--            侧边栏 开始-->
+        <!--  侧边栏 开始 -->
         <div class="app-menu">
             <ul class="accordion-menu">
                 <li class="sidebar-title">
@@ -133,10 +133,21 @@
                 <li class="active-page">
                     <a href="/index"><i class="material-icons-two-tone">dashboard</i>首页统计</a>
                 </li>
+                <li>
+                    <a href="#"><i class="material-icons-two-tone">grid_on</i>表数据操作<i class="material-icons has-sub-menu">keyboard_arrow_right</i></a>
+                    <ul class="sub-menu">
+                        #foreach (${list} in ${tablesMenu})
+                            <li>
+                                <a href="${list.url}">${list.name}</a>
+                            </li>
+                         #end
+                    </ul>
+                </li>
             </ul>
         </div>
-
     </div>
+
+    <!--    顶部栏 开始-->
     <div class="app-container">
         <div class="search">
             <form>

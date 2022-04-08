@@ -28,11 +28,11 @@ public class ControllerPageBuilder implements Serializable {
      */
     private String moduleName;
     /**
-     * 构建请求的url时需要，请求后端
+     * TODO 构建请求的url时需要，请求后端 - 暂未使用
      */
     private ControllerUrlBuilder controllerUrlBuilder;
     /**
-     * 菜单
+     * 当前数据表的表格菜单
      */
     private ControllerMenuBuilder controllerMenuBuilder;
     /**

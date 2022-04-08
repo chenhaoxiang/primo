@@ -23,7 +23,11 @@ public class ControllerMenuBuilder implements Serializable {
      */
     private String name;
     /**
-     * 菜单url地址
+     * 菜单url地址 - URL都是需要小写的
      */
     private String url;
+    /**
+     * TODO 菜单图标
+     */
+    private String ico;
 }

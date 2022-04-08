@@ -136,17 +136,24 @@ public class GenerateMojo extends AbstractGenerateMojo {
         List<TableInfoPO> tableList = config.getTableInfoList();
         for (TableInfoPO tableInfo : tableList) {
             ControllerPageBuilder controllerPageBuilder = new ControllerPageBuilder();
+            //设置父包名称 - 便于分包
+            controllerPageBuilder.setModuleName(config.getPackageInfo().getOrDefault(ConstVal.MODULENAME,""));
+
             ControllerMenuBuilder controllerMenuBuilder = new ControllerMenuBuilder();
             controllerMenuBuilder.setName(tableInfo.getName());
-            controllerMenuBuilder.setUrl("/"+TableInfoPO.strConvertLowerCamel(tableInfo.getEntityName())+"/table");
+            //有个模块需要判断
+            if(StringUtils.isEmpty(controllerPageBuilder.getModuleName())){
+                controllerMenuBuilder.setUrl("/"+tableInfo.getEntityName().toLowerCase()+"/table");
+            }else {
+                controllerMenuBuilder.setUrl("/"+controllerPageBuilder.getModuleName().toLowerCase()+"/"+TableInfoPO.strConvertLowerCamel(tableInfo.getEntityName())+"/table");
+            }
+
+            controllerPageBuilder.setControllerMenuBuilder(controllerMenuBuilder);
 //            controllerPageBuilder.setControllerUrlBuilder(controllerUrlBuilder);
             controllerPageBuilder.setTemplateFilePath(ConstVal.TEMPLATE_PAGE_TABLE);
             controllerPageBuilder.setSaveFilePath(getOutputResourcesDir() + "templates" + File.separator + "tables"  + File.separator);
             controllerPageBuilder.setSaveFilePathName(TableInfoPO.strConvertLowerCamel(tableInfo.getEntityName()) + ".ftl");
-            controllerPageBuilder.setControllerMenuBuilder(controllerMenuBuilder);
             controllerPageBuilder.setTableInfoPO(tableInfo);
-            //设置父包名称 - 便于分包
-            controllerPageBuilder.setModuleName(config.getPackageInfo().getOrDefault(ConstVal.MODULENAME,""));
 
             //设置字段信息
             List<PageFieldBuilder> fieldResps = new ArrayList<>();
@@ -361,6 +368,11 @@ public class GenerateMojo extends AbstractGenerateMojo {
     }
     private void batchOutput(List<ControllerPageBuilder> controllerPageBuilders) {
         try {
+            List<ControllerMenuBuilder> controllerMenuBuilderList = new ArrayList<>();
+            for (ControllerPageBuilder controllerPageBuilder : controllerPageBuilders) {
+                controllerMenuBuilderList.add(controllerPageBuilder.getControllerMenuBuilder());
+            }
+
             //获取table
             for (ControllerPageBuilder controllerPageBuilder : controllerPageBuilders) {
                 //目录是否存在判断
@@ -374,6 +386,7 @@ public class GenerateMojo extends AbstractGenerateMojo {
                 String temp = controllerPageBuilder.getTemplateFilePath();
                 VelocityContext context = new VelocityContext();
                 context.put("tablesData",controllerPageBuilder);
+                context.put("tablesMenu",controllerMenuBuilderList);
                 vmToFile(context, temp, file);
             }
         } catch (IOException e) {
