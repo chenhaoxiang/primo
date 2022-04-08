@@ -372,11 +372,6 @@
                                                 </div>
                                                                                                                        <#--                                                不是主键-->
                                                 <div class="form-floating mb-3 mt-3">
-                                                    <input type="text" class="form-control" id="urlPrefix-add">
-                                                    <label for="urlPrefix-add" class="form-label" title="访问的前缀">urlPrefix</label>
-                                                </div>
-                                                                                                                       <#--                                                不是主键-->
-                                                <div class="form-floating mb-3 mt-3">
                                                     <input type="text" class="form-control" id="urlRuleJson-add">
                                                     <label for="urlRuleJson-add" class="form-label" title="抓取URL的规则">urlRuleJson</label>
                                                 </div>
@@ -453,10 +448,6 @@
                                                 <div id="referer-view"></div>
                                             </div>
                                                                                  <div class="mb-3 mt-3">
-                                                <label for="urlPrefix-view" class="form-label" title="访问的前缀">urlPrefix - 访问的前缀：</label>
-                                                <div id="urlPrefix-view"></div>
-                                            </div>
-                                                                                 <div class="mb-3 mt-3">
                                                 <label for="urlRuleJson-view" class="form-label" title="抓取URL的规则">urlRuleJson - 抓取URL的规则：</label>
                                                 <div id="urlRuleJson-view"></div>
                                             </div>
@@ -519,10 +510,6 @@
                                                                                                                                                                      <div class="form-floating mb-3 mt-3">
                                                     <input type="text" class="form-control" id="referer-edit">
                                                     <label for="referer-edit" class="form-label"  title="访问时，来源链接">referer</label>
-                                                </div>
-                                                                                                                                                                     <div class="form-floating mb-3 mt-3">
-                                                    <input type="text" class="form-control" id="urlPrefix-edit">
-                                                    <label for="urlPrefix-edit" class="form-label"  title="访问的前缀">urlPrefix</label>
                                                 </div>
                                                                                                                                                                      <div class="form-floating mb-3 mt-3">
                                                     <input type="text" class="form-control" id="urlRuleJson-edit">
@@ -614,10 +601,6 @@
                                                 <label for="referer-search" class="form-label" title="访问时，来源链接">referer</label>
                                             </div>
                                                                                 <div class="form-floating mb-3 mt-3">
-                                                <input type="text" class="form-control" id="urlPrefix-search">
-                                                <label for="urlPrefix-search" class="form-label" title="访问的前缀">urlPrefix</label>
-                                            </div>
-                                                                                <div class="form-floating mb-3 mt-3">
                                                 <input type="text" class="form-control" id="urlRuleJson-search">
                                                 <label for="urlRuleJson-search" class="form-label" title="抓取URL的规则">urlRuleJson</label>
                                             </div>
@@ -689,7 +672,6 @@
                                                                                     <th title="">id</th>
                                                                                     <th title="平台名称-英文名称">platformNameEn</th>
                                                                                     <th title="访问时，来源链接">referer</th>
-                                                                                    <th title="访问的前缀">urlPrefix</th>
                                                                                     <th title="抓取URL的规则">urlRuleJson</th>
                                                                                     <th title="抓取标题的规则">titleRuleJson</th>
                                                                                     <th title="发表时间的规则">pulishTimeRuleJson</th>
@@ -717,8 +699,6 @@
                                                 <th title="平台名称-英文名称">platformNameEn</th>
                                                                                 <#--                                               TODO  时间需要转换-->
                                                 <th title="访问时，来源链接">referer</th>
-                                                                                <#--                                               TODO  时间需要转换-->
-                                                <th title="访问的前缀">urlPrefix</th>
                                                                                 <#--                                               TODO  时间需要转换-->
                                                 <th title="抓取URL的规则">urlRuleJson</th>
                                                                                 <#--                                               TODO  时间需要转换-->
@@ -868,12 +848,6 @@
                         ,
                 {
                     className: "wordwrap",
-                                        width: "80px",
-                                        data: "urlPrefix"
-                }
-                        ,
-                {
-                    className: "wordwrap",
                                         width: "300px",
                     //切记设置table样式为table-layout:fixed; 否则列宽不会强制为指定宽度，也不会出现省略号。
                     render: CONSTANT.DATA_TABLES.RENDER.ELLIPSIS,
@@ -968,7 +942,7 @@
                 var btnEdit = $('<button type="button" class="btn btn-primary btn-style-light btn-small btn-edit">修改</button>');
                 var btnDel = $('<button type="button" class="btn btn-danger btn-style-light btn-small btn-del">删除</button>');
                 //操作
-                $('td', row).eq(16).append(btnEdit).append(btnDel);
+                $('td', row).eq(15).append(btnEdit).append(btnDel);
             },
             "drawCallback": function (settings) {
                 //渲染完毕后的回调
@@ -1084,7 +1058,7 @@
         lastTableCallback = callback;
         $.ajax({
             type: "POST",
-            url: "/urlruleprocessor311config12/page",
+            url: "/urlrulewebdriverconfig/page",
             cache: false,	//禁用缓存
             data: param,	//传入已封装的参数
             dataType: "json",
@@ -1150,39 +1124,36 @@
                         param.queryBo.queryBoExt.orderColumn = "referer";
                         break;
                             case 4:
-                        param.queryBo.queryBoExt.orderColumn = "url_prefix";
-                        break;
-                            case 5:
                         param.queryBo.queryBoExt.orderColumn = "url_rule_json";
                         break;
-                            case 6:
+                            case 5:
                         param.queryBo.queryBoExt.orderColumn = "title_rule_json";
                         break;
-                            case 7:
+                            case 6:
                         param.queryBo.queryBoExt.orderColumn = "pulish_time_rule_json";
                         break;
-                            case 8:
+                            case 7:
                         param.queryBo.queryBoExt.orderColumn = "author_rule_json";
                         break;
-                            case 9:
+                            case 8:
                         param.queryBo.queryBoExt.orderColumn = "tags_rule_json";
                         break;
-                            case 10:
+                            case 9:
                         param.queryBo.queryBoExt.orderColumn = "date_delete";
                         break;
-                            case 11:
+                            case 10:
                         param.queryBo.queryBoExt.orderColumn = "domain";
                         break;
-                            case 12:
+                            case 11:
                         param.queryBo.queryBoExt.orderColumn = "blogs_author_index_url_type";
                         break;
-                            case 13:
+                            case 12:
                         param.queryBo.queryBoExt.orderColumn = "create_time";
                         break;
-                            case 14:
+                            case 13:
                         param.queryBo.queryBoExt.orderColumn = "update_time";
                         break;
-                            case 15:
+                            case 14:
                         param.queryBo.queryBoExt.orderColumn = "status";
                         break;
                             default:
@@ -1226,10 +1197,6 @@
                         var refererValue = $("#referer-search").val();
                 if(refererValue!=='') {
                     param.queryBo.referer = refererValue;
-                }
-                        var urlPrefixValue = $("#urlPrefix-search").val();
-                if(urlPrefixValue!=='') {
-                    param.queryBo.urlPrefix = urlPrefixValue;
                 }
                         var urlRuleJsonValue = $("#urlRuleJson-search").val();
                 if(urlRuleJsonValue!=='') {
@@ -1293,7 +1260,6 @@
                     $("#id-view").text(item.id);
                     $("#platformNameEn-view").text(item.platformNameEn);
                     $("#referer-view").text(item.referer);
-                    $("#urlPrefix-view").text(item.urlPrefix);
                     $("#urlRuleJson-view").text(item.urlRuleJson);
                     $("#titleRuleJson-view").text(item.titleRuleJson);
                     $("#pulishTimeRuleJson-view").text(item.pulishTimeRuleJson);
@@ -1325,7 +1291,6 @@
                     $("#id-edit").val(item.id);
                     $("#platformNameEn-edit").val(item.platformNameEn);
                     $("#referer-edit").val(item.referer);
-                    $("#urlPrefix-edit").val(item.urlPrefix);
                     $("#urlRuleJson-edit").val(item.urlRuleJson);
                     $("#titleRuleJson-edit").val(item.titleRuleJson);
                     $("#pulishTimeRuleJson-edit").val(item.pulishTimeRuleJson);
@@ -1346,8 +1311,6 @@
             param.platformNameEn =  $("#platformNameEn-add").val();
                                             // 非主键
             param.referer =  $("#referer-add").val();
-                                            // 非主键
-            param.urlPrefix =  $("#urlPrefix-add").val();
                                             // 非主键
             param.urlRuleJson =  $("#urlRuleJson-add").val();
                                             // 非主键
@@ -1380,7 +1343,6 @@
                     param.id =  $("#id-edit").val();
                     param.platformNameEn =  $("#platformNameEn-edit").val();
                     param.referer =  $("#referer-edit").val();
-                    param.urlPrefix =  $("#urlPrefix-edit").val();
                     param.urlRuleJson =  $("#urlRuleJson-edit").val();
                     param.titleRuleJson =  $("#titleRuleJson-edit").val();
                     param.pulishTimeRuleJson =  $("#pulishTimeRuleJson-edit").val();
@@ -1412,7 +1374,7 @@
     };
     // 添加数据
     function addItem(parameter){
-        ajaxPostRequestBody("/urlruleprocessor311config12/save",JSON.stringify(parameter),resetFormData,true,$("#form-add")[0]);
+        ajaxPostRequestBody("/urlrulewebdriverconfig/save",JSON.stringify(parameter),resetFormData,true,$("#form-add")[0]);
 
     }
     function resetFormData(response,form){
@@ -1426,7 +1388,7 @@
     // 添加数据
     function editItem(parameter){
         //表单重置,应该是请求成功再重置
-        ajaxPostRequestBody("/urlruleprocessor311config12/update",JSON.stringify(parameter),resetFormData,true,$("#form-edit")[0]);
+        ajaxPostRequestBody("/urlrulewebdriverconfig/update",JSON.stringify(parameter),resetFormData,true,$("#form-edit")[0]);
     }
 
 </script>

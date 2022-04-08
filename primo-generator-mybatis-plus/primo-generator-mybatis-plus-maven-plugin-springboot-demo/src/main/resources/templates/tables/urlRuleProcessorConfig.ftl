@@ -1084,7 +1084,7 @@
         lastTableCallback = callback;
         $.ajax({
             type: "POST",
-            url: "/urlruleprocessor311config12/page",
+            url: "/urlruleprocessorconfig/page",
             cache: false,	//禁用缓存
             data: param,	//传入已封装的参数
             dataType: "json",
@@ -1412,7 +1412,7 @@
     };
     // 添加数据
     function addItem(parameter){
-        ajaxPostRequestBody("/urlruleprocessor311config12/save",JSON.stringify(parameter),resetFormData,true,$("#form-add")[0]);
+        ajaxPostRequestBody("/urlruleprocessorconfig/save",JSON.stringify(parameter),resetFormData,true,$("#form-add")[0]);
 
     }
     function resetFormData(response,form){
@@ -1426,7 +1426,7 @@
     // 添加数据
     function editItem(parameter){
         //表单重置,应该是请求成功再重置
-        ajaxPostRequestBody("/urlruleprocessor311config12/update",JSON.stringify(parameter),resetFormData,true,$("#form-edit")[0]);
+        ajaxPostRequestBody("/urlruleprocessorconfig/update",JSON.stringify(parameter),resetFormData,true,$("#form-edit")[0]);
     }
 
 </script>
