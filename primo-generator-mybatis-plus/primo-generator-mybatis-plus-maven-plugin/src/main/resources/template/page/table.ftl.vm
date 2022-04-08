@@ -136,7 +136,7 @@
                 <li>
                     <a href="#"><i class="material-icons-two-tone">grid_on</i>表数据操作<i class="material-icons has-sub-menu">keyboard_arrow_right</i></a>
                     <ul class="sub-menu">
-                        #foreach (${list} in ${tablesMenu})
+                        #foreach (${list} in ${tablesMenuList})
                             <li>
                                 <a href="${list.url}">${list.name}</a>
                             </li>

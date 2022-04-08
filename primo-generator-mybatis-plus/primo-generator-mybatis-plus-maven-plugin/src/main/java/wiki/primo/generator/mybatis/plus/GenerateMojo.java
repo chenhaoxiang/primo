@@ -386,7 +386,7 @@ public class GenerateMojo extends AbstractGenerateMojo {
                 String temp = controllerPageBuilder.getTemplateFilePath();
                 VelocityContext context = new VelocityContext();
                 context.put("tablesData",controllerPageBuilder);
-                context.put("tablesMenu",controllerMenuBuilderList);
+                context.put("tablesMenuList",controllerMenuBuilderList);
                 vmToFile(context, temp, file);
             }
         } catch (IOException e) {
