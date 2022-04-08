@@ -153,7 +153,7 @@ public class ${table.controllerName} {
             #end
             #if(${field.propertyType.equals("String")})
                 if(req.get${field.capitalName}()!=null && req.get${field.capitalName}().length()>0) {
-                    entity.setReferer("");
+                    entity.set${field.capitalName}(req.get${field.capitalName}());
                 }
             #else
                 if(req.${getprefix}${field.capitalName}()!=null) {

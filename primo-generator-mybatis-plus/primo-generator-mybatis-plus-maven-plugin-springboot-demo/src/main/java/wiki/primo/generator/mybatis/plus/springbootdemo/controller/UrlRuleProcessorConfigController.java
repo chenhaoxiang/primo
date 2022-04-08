@@ -11,8 +11,10 @@ import wiki.primo.generator.mybatis.plus.springbootdemo.query.UrlRuleProcessorCo
 import wiki.primo.generator.mybatis.plus.springbootdemo.domain.req.UrlRuleProcessorConfigReq;
 import wiki.primo.generator.mybatis.plus.springbootdemo.domain.resp.UrlRuleProcessorConfigResp;
 import wiki.primo.generator.mybatis.plus.springbootdemo.entity.UrlRuleProcessorConfig;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import wiki.primo.generator.mybatis.plus.springbootdemo.domain.vo.resp.PageVOResp;
 import wiki.primo.generator.mybatis.plus.springbootdemo.domain.vo.req.UrlRuleProcessorConfigPageVOReq;
 import wiki.primo.generator.mybatis.plus.springbootdemo.domain.vo.req.UrlRuleProcessorConfigEntityVOReq;
@@ -33,11 +35,11 @@ public class UrlRuleProcessorConfigController {
     private IUrlRuleProcessorConfigService iUrlRuleProcessorConfigService;
 
     /**
-    * 表格页面
-    */
+     * 表格页面
+     */
     @RequestMapping({"tables"})
     public String tables() {
-        return "tables/urlRuleProcessorConfig";
+        return "tables/urlRuleProcessorConfig" ;
     }
 
     /**
@@ -49,7 +51,7 @@ public class UrlRuleProcessorConfigController {
     @PostMapping("save")
     @ResponseBody
     public ResultModel<Object> save(@RequestBody UrlRuleProcessorConfigEntityVOReq urlRuleProcessorConfigEntityVOReq) {
-        if(urlRuleProcessorConfigEntityVOReq==null){
+        if (urlRuleProcessorConfigEntityVOReq == null) {
             return ResultModel.parameterError();
         }
         UrlRuleProcessorConfig urlRuleProcessorConfig = getUrlRuleProcessorConfig(urlRuleProcessorConfigEntityVOReq);
@@ -66,13 +68,13 @@ public class UrlRuleProcessorConfigController {
     @GetMapping("removeById")
     @ResponseBody
     public ResultModel<Object> delete(@RequestParam Integer id) {
-        if(id==null || id<0){
+        if (id == null || id < 0) {
             return ResultModel.parameterError();
         }
         boolean success = iUrlRuleProcessorConfigService.removeById(id);
-        if(success) {
+        if (success) {
             return ResultModel.success();
-        }else {
+        } else {
             return ResultModel.fail();
         }
     }
@@ -86,14 +88,14 @@ public class UrlRuleProcessorConfigController {
     @PostMapping("update")
     @ResponseBody
     public ResultModel<Object> update(@RequestBody UrlRuleProcessorConfigEntityVOReq urlRuleProcessorConfigEntityVOReq) {
-        if(urlRuleProcessorConfigEntityVOReq==null || urlRuleProcessorConfigEntityVOReq.getId()==null){
+        if (urlRuleProcessorConfigEntityVOReq == null || urlRuleProcessorConfigEntityVOReq.getId() == null) {
             return ResultModel.parameterError();
         }
         UrlRuleProcessorConfig urlRuleProcessorConfig = getUrlRuleProcessorConfig(urlRuleProcessorConfigEntityVOReq);
         boolean success = iUrlRuleProcessorConfigService.updateById(urlRuleProcessorConfig);
-        if(success) {
+        if (success) {
             return ResultModel.success();
-        }else {
+        } else {
             return ResultModel.fail();
         }
     }
@@ -107,12 +109,12 @@ public class UrlRuleProcessorConfigController {
     @GetMapping("getById")
     @ResponseBody
     public ResultModel<UrlRuleProcessorConfigResp> getById(@RequestParam Integer id) {
-        if(id==null || id<0){
+        if (id == null || id < 0) {
             return ResultModel.parameterError();
         }
-        UrlRuleProcessorConfig urlRuleProcessorConfig= iUrlRuleProcessorConfigService.getById(id);
+        UrlRuleProcessorConfig urlRuleProcessorConfig = iUrlRuleProcessorConfigService.getById(id);
         UrlRuleProcessorConfigResp urlRuleProcessorConfigResp = new UrlRuleProcessorConfigResp();
-        BeanUtils.copyProperties(urlRuleProcessorConfig,urlRuleProcessorConfigResp);
+        BeanUtils.copyProperties(urlRuleProcessorConfig, urlRuleProcessorConfigResp);
         return ResultModel.success(urlRuleProcessorConfigResp);
     }
 
@@ -124,7 +126,7 @@ public class UrlRuleProcessorConfigController {
     @PostMapping("page")
     @ResponseBody
     public ResultModel<PageVOResp<UrlRuleProcessorConfigResp>> page(@RequestBody UrlRuleProcessorConfigPageVOReq pageVOReq) {
-        IPage<UrlRuleProcessorConfig> iPage = iUrlRuleProcessorConfigService.page(pageVOReq.getQueryBo(),pageVOReq.getPageNo(),pageVOReq.getPageSize());
+        IPage<UrlRuleProcessorConfig> iPage = iUrlRuleProcessorConfigService.page(pageVOReq.getQueryBo(), pageVOReq.getPageNo(), pageVOReq.getPageSize());
         PageVOResp<UrlRuleProcessorConfigResp> templateIPage = new PageVOResp<>();
         templateIPage.setPages(iPage.getPages());
         templateIPage.setCurrent(iPage.getCurrent());
@@ -134,7 +136,7 @@ public class UrlRuleProcessorConfigController {
         List<UrlRuleProcessorConfigResp> urlRuleProcessorConfigRespList = new ArrayList<>(urlRuleProcessorConfigList.size());
         for (UrlRuleProcessorConfig urlRuleProcessorConfig : urlRuleProcessorConfigList) {
             UrlRuleProcessorConfigResp urlRuleProcessorConfigResp = new UrlRuleProcessorConfigResp();
-            BeanUtils.copyProperties(urlRuleProcessorConfig,urlRuleProcessorConfigResp);
+            BeanUtils.copyProperties(urlRuleProcessorConfig, urlRuleProcessorConfigResp);
             urlRuleProcessorConfigRespList.add(urlRuleProcessorConfigResp);
         }
         templateIPage.setDraw(pageVOReq.getDraw());
@@ -143,54 +145,54 @@ public class UrlRuleProcessorConfigController {
     }
 
 
-    public UrlRuleProcessorConfig getUrlRuleProcessorConfig(UrlRuleProcessorConfigEntityVOReq req){
+    public UrlRuleProcessorConfig getUrlRuleProcessorConfig(UrlRuleProcessorConfigEntityVOReq req) {
         UrlRuleProcessorConfig entity = new UrlRuleProcessorConfig();
-                                                            if(req.getId()!=null) {
-                    entity.setId(req.getId());
-                }
-                                                                        if(req.getPlatformNameEn()!=null && req.getPlatformNameEn().length()>0) {
-                    entity.setReferer("");
-                }
-                                                                        if(req.getReferer()!=null && req.getReferer().length()>0) {
-                    entity.setReferer("");
-                }
-                                                                        if(req.getUrlPrefix()!=null && req.getUrlPrefix().length()>0) {
-                    entity.setReferer("");
-                }
-                                                                        if(req.getUrlRuleJson()!=null && req.getUrlRuleJson().length()>0) {
-                    entity.setReferer("");
-                }
-                                                                        if(req.getTitleRuleJson()!=null && req.getTitleRuleJson().length()>0) {
-                    entity.setReferer("");
-                }
-                                                                        if(req.getPulishTimeRuleJson()!=null && req.getPulishTimeRuleJson().length()>0) {
-                    entity.setReferer("");
-                }
-                                                                        if(req.getAuthorRuleJson()!=null && req.getAuthorRuleJson().length()>0) {
-                    entity.setReferer("");
-                }
-                                                                        if(req.getTagsRuleJson()!=null && req.getTagsRuleJson().length()>0) {
-                    entity.setReferer("");
-                }
-                                                                        if(req.getDateDelete()!=null) {
-                    entity.setDateDelete(req.getDateDelete());
-                }
-                                                                        if(req.getDomain()!=null && req.getDomain().length()>0) {
-                    entity.setReferer("");
-                }
-                                                                        if(req.getBlogsAuthorIndexUrlType()!=null) {
-                    entity.setBlogsAuthorIndexUrlType(req.getBlogsAuthorIndexUrlType());
-                }
-                                                                        if(req.getCreateTime()!=null) {
-                    entity.setCreateTime(req.getCreateTime());
-                }
-                                                                        if(req.getUpdateTime()!=null) {
-                    entity.setUpdateTime(req.getUpdateTime());
-                }
-                                                                        if(req.getStatus()!=null) {
-                    entity.setStatus(req.getStatus());
-                }
-                            return entity;
+        if (req.getId() != null) {
+            entity.setId(req.getId());
+        }
+        if (req.getPlatformNameEn() != null && req.getPlatformNameEn().length() > 0) {
+            entity.setReferer("");
+        }
+        if (req.getReferer() != null && req.getReferer().length() > 0) {
+            entity.setReferer("");
+        }
+        if (req.getUrlPrefix() != null && req.getUrlPrefix().length() > 0) {
+            entity.setReferer("");
+        }
+        if (req.getUrlRuleJson() != null && req.getUrlRuleJson().length() > 0) {
+            entity.setReferer("");
+        }
+        if (req.getTitleRuleJson() != null && req.getTitleRuleJson().length() > 0) {
+            entity.setReferer("");
+        }
+        if (req.getPulishTimeRuleJson() != null && req.getPulishTimeRuleJson().length() > 0) {
+            entity.setReferer("");
+        }
+        if (req.getAuthorRuleJson() != null && req.getAuthorRuleJson().length() > 0) {
+            entity.setReferer("");
+        }
+        if (req.getTagsRuleJson() != null && req.getTagsRuleJson().length() > 0) {
+            entity.setReferer("");
+        }
+        if (req.getDateDelete() != null) {
+            entity.setDateDelete(req.getDateDelete());
+        }
+        if (req.getDomain() != null && req.getDomain().length() > 0) {
+            entity.setReferer("");
+        }
+        if (req.getBlogsAuthorIndexUrlType() != null) {
+            entity.setBlogsAuthorIndexUrlType(req.getBlogsAuthorIndexUrlType());
+        }
+        if (req.getCreateTime() != null) {
+            entity.setCreateTime(req.getCreateTime());
+        }
+        if (req.getUpdateTime() != null) {
+            entity.setUpdateTime(req.getUpdateTime());
+        }
+        if (req.getStatus() != null) {
+            entity.setStatus(req.getStatus());
+        }
+        return entity;
     }
 
 }
