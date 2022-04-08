@@ -137,13 +137,13 @@
                     <a href="#"><i class="material-icons-two-tone">grid_on</i>表数据操作<i class="material-icons has-sub-menu">keyboard_arrow_right</i></a>
                     <ul class="sub-menu">
                                                     <li>
-                                <a href="/urlruleprocessor311config12/table">url_rule_processor_311_config_12</a>
+                                <a href="/urlruleprocessor311config12/tables">url_rule_processor_311_config_12</a>
                             </li>
                                                      <li>
-                                <a href="/urlruleprocessorconfig/table">url_rule_processor_config</a>
+                                <a href="/urlruleprocessorconfig/tables">url_rule_processor_config</a>
                             </li>
                                                      <li>
-                                <a href="/urlrulewebdriverconfig/table">url_rule_web_driver_config</a>
+                                <a href="/urlrulewebdriverconfig/tables">url_rule_web_driver_config</a>
                             </li>
                                              </ul>
                 </li>
@@ -1290,6 +1290,9 @@
         },
         // 显示具体行的数据
         showItemDetail: function (item) {
+            if(item===null || item === undefined){
+                return;
+            }
                     $("#id-view").text(item.id);
                     $("#platformNameEn-view").text(item.platformNameEn);
                     $("#referer-view").text(item.referer);

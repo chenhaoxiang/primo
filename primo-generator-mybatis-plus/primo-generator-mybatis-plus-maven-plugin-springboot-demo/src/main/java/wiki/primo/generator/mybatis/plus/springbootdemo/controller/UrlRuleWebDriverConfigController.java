@@ -23,7 +23,7 @@ import wiki.primo.generator.mybatis.plus.springbootdemo.domain.vo.req.UrlRuleWeb
  * </p>
  *
  * @author chenhx
- * @since 2022-04-08 14:02:39
+ * @since 2022-04-08 14:11:06
  */
 @Controller
 @RequestMapping("/urlrulewebdriverconfig")
