@@ -23,7 +23,7 @@ import wiki.primo.generator.mybatis.plus.springbootdemo.domain.vo.req.UrlRuleWeb
  * </p>
  *
  * @author chenhx
- * @since 2022-04-08 14:11:06
+ * @since 2022-04-08 14:34:43
  */
 @Controller
 @RequestMapping("/urlrulewebdriverconfig")
@@ -52,8 +52,7 @@ public class UrlRuleWebDriverConfigController {
         if(urlRuleWebDriverConfigEntityVOReq==null){
             return ResultModel.parameterError();
         }
-        UrlRuleWebDriverConfig urlRuleWebDriverConfig = new UrlRuleWebDriverConfig();
-        BeanUtils.copyProperties(urlRuleWebDriverConfigEntityVOReq,urlRuleWebDriverConfig);
+        UrlRuleWebDriverConfig urlRuleWebDriverConfig = getUrlRuleWebDriverConfig(urlRuleWebDriverConfigEntityVOReq);
         iUrlRuleWebDriverConfigService.save(urlRuleWebDriverConfig);
         return ResultModel.success();
     }
@@ -90,8 +89,7 @@ public class UrlRuleWebDriverConfigController {
         if(urlRuleWebDriverConfigEntityVOReq==null || urlRuleWebDriverConfigEntityVOReq.getId()==null){
             return ResultModel.parameterError();
         }
-        UrlRuleWebDriverConfig urlRuleWebDriverConfig = new UrlRuleWebDriverConfig();
-        BeanUtils.copyProperties(urlRuleWebDriverConfigEntityVOReq,urlRuleWebDriverConfig);
+        UrlRuleWebDriverConfig urlRuleWebDriverConfig = getUrlRuleWebDriverConfig(urlRuleWebDriverConfigEntityVOReq);
         boolean success = iUrlRuleWebDriverConfigService.updateById(urlRuleWebDriverConfig);
         if(success) {
             return ResultModel.success();
@@ -142,6 +140,54 @@ public class UrlRuleWebDriverConfigController {
         templateIPage.setDraw(pageVOReq.getDraw());
         templateIPage.setRecords(urlRuleWebDriverConfigRespList);
         return ResultModel.success(templateIPage);
+    }
+
+
+    public UrlRuleWebDriverConfig getUrlRuleWebDriverConfig(UrlRuleWebDriverConfigEntityVOReq req){
+        UrlRuleWebDriverConfig entity = new UrlRuleWebDriverConfig();
+                                                            if(req.getId()!=null) {
+                    entity.setId(req.getId());
+                }
+                                                                        if(req.getPlatformNameEn()!=null && req.getPlatformNameEn().length()>0) {
+                    entity.setReferer("");
+                }
+                                                                        if(req.getReferer()!=null && req.getReferer().length()>0) {
+                    entity.setReferer("");
+                }
+                                                                        if(req.getUrlRuleJson()!=null && req.getUrlRuleJson().length()>0) {
+                    entity.setReferer("");
+                }
+                                                                        if(req.getTitleRuleJson()!=null && req.getTitleRuleJson().length()>0) {
+                    entity.setReferer("");
+                }
+                                                                        if(req.getPulishTimeRuleJson()!=null && req.getPulishTimeRuleJson().length()>0) {
+                    entity.setReferer("");
+                }
+                                                                        if(req.getAuthorRuleJson()!=null && req.getAuthorRuleJson().length()>0) {
+                    entity.setReferer("");
+                }
+                                                                        if(req.getTagsRuleJson()!=null && req.getTagsRuleJson().length()>0) {
+                    entity.setReferer("");
+                }
+                                                                        if(req.getDateDelete()!=null) {
+                    entity.setDateDelete(req.getDateDelete());
+                }
+                                                                        if(req.getDomain()!=null && req.getDomain().length()>0) {
+                    entity.setReferer("");
+                }
+                                                                        if(req.getBlogsAuthorIndexUrlType()!=null) {
+                    entity.setBlogsAuthorIndexUrlType(req.getBlogsAuthorIndexUrlType());
+                }
+                                                                        if(req.getCreateTime()!=null) {
+                    entity.setCreateTime(req.getCreateTime());
+                }
+                                                                        if(req.getUpdateTime()!=null) {
+                    entity.setUpdateTime(req.getUpdateTime());
+                }
+                                                                        if(req.getStatus()!=null) {
+                    entity.setStatus(req.getStatus());
+                }
+                            return entity;
     }
 
 }

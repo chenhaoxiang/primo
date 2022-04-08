@@ -52,8 +52,7 @@ public class ${table.controllerName} {
         if(${table.strConvertLowerCamel(${table.entityVOReqName})}==null){
             return ResultModel.parameterError();
         }
-        ${entity} ${table.strConvertLowerCamel(${entity})} = new ${entity}();
-        BeanUtils.copyProperties(${table.strConvertLowerCamel(${table.entityVOReqName})},${table.strConvertLowerCamel(${entity})});
+        ${entity} ${table.strConvertLowerCamel(${entity})} = get${entity}(${table.strConvertLowerCamel(${table.entityVOReqName})});
         ${table.strConvertLowerCamel(${table.serviceName})}.save(${table.strConvertLowerCamel(${entity})});
         return ResultModel.success();
     }
@@ -90,8 +89,7 @@ public class ${table.controllerName} {
         if(${table.strConvertLowerCamel(${table.entityVOReqName})}==null || ${table.strConvertLowerCamel(${table.entityVOReqName})}.getId()==null){
             return ResultModel.parameterError();
         }
-        ${entity} ${table.strConvertLowerCamel(${entity})} = new ${entity}();
-        BeanUtils.copyProperties(${table.strConvertLowerCamel(${table.entityVOReqName})},${table.strConvertLowerCamel(${entity})});
+        ${entity} ${table.strConvertLowerCamel(${entity})} = get${entity}(${table.strConvertLowerCamel(${table.entityVOReqName})});
         boolean success = ${table.strConvertLowerCamel(${table.serviceName})}.updateById(${table.strConvertLowerCamel(${entity})});
         if(success) {
             return ResultModel.success();
@@ -142,6 +140,28 @@ public class ${table.controllerName} {
         templateIPage.setDraw(pageVOReq.getDraw());
         templateIPage.setRecords(${table.strConvertLowerCamel(${table.entityRespName})}List);
         return ResultModel.success(templateIPage);
+    }
+
+
+    public ${entity} get${entity}(${table.entityVOReqName} req){
+        ${entity} entity = new ${entity}();
+        #foreach($field in ${table.fields})
+            #if(${field.propertyType.equals("Boolean")})
+                #set($getprefix="is")
+            #else
+                #set($getprefix="get")
+            #end
+            #if(${field.propertyType.equals("String")})
+                if(req.get${field.capitalName}()!=null && req.get${field.capitalName}().length()>0) {
+                    entity.setReferer("");
+                }
+            #else
+                if(req.${getprefix}${field.capitalName}()!=null) {
+                    entity.set${field.capitalName}(req.get${field.capitalName}());
+                }
+            #end
+        #end
+        return entity;
     }
 
 }

@@ -288,6 +288,8 @@ mvn -DskipTests=true wiki.primo.generator:primo-generator-mybatis-plus-maven-plu
     <open>true</open>
 </ftlConfig>
 ```
+- 增加controller层实体的判空设置值  
+- 
 
 ## 1.2.3
 - 增加扩展配置 

@@ -23,7 +23,7 @@ import wiki.primo.generator.mybatis.plus.springbootdemo.domain.vo.req.UrlRulePro
  * </p>
  *
  * @author chenhx
- * @since 2022-04-08 14:11:06
+ * @since 2022-04-08 14:34:43
  */
 @Controller
 @RequestMapping("/urlruleprocessorconfig")
@@ -52,8 +52,7 @@ public class UrlRuleProcessorConfigController {
         if(urlRuleProcessorConfigEntityVOReq==null){
             return ResultModel.parameterError();
         }
-        UrlRuleProcessorConfig urlRuleProcessorConfig = new UrlRuleProcessorConfig();
-        BeanUtils.copyProperties(urlRuleProcessorConfigEntityVOReq,urlRuleProcessorConfig);
+        UrlRuleProcessorConfig urlRuleProcessorConfig = getUrlRuleProcessorConfig(urlRuleProcessorConfigEntityVOReq);
         iUrlRuleProcessorConfigService.save(urlRuleProcessorConfig);
         return ResultModel.success();
     }
@@ -90,8 +89,7 @@ public class UrlRuleProcessorConfigController {
         if(urlRuleProcessorConfigEntityVOReq==null || urlRuleProcessorConfigEntityVOReq.getId()==null){
             return ResultModel.parameterError();
         }
-        UrlRuleProcessorConfig urlRuleProcessorConfig = new UrlRuleProcessorConfig();
-        BeanUtils.copyProperties(urlRuleProcessorConfigEntityVOReq,urlRuleProcessorConfig);
+        UrlRuleProcessorConfig urlRuleProcessorConfig = getUrlRuleProcessorConfig(urlRuleProcessorConfigEntityVOReq);
         boolean success = iUrlRuleProcessorConfigService.updateById(urlRuleProcessorConfig);
         if(success) {
             return ResultModel.success();
@@ -142,6 +140,57 @@ public class UrlRuleProcessorConfigController {
         templateIPage.setDraw(pageVOReq.getDraw());
         templateIPage.setRecords(urlRuleProcessorConfigRespList);
         return ResultModel.success(templateIPage);
+    }
+
+
+    public UrlRuleProcessorConfig getUrlRuleProcessorConfig(UrlRuleProcessorConfigEntityVOReq req){
+        UrlRuleProcessorConfig entity = new UrlRuleProcessorConfig();
+                                                            if(req.getId()!=null) {
+                    entity.setId(req.getId());
+                }
+                                                                        if(req.getPlatformNameEn()!=null && req.getPlatformNameEn().length()>0) {
+                    entity.setReferer("");
+                }
+                                                                        if(req.getReferer()!=null && req.getReferer().length()>0) {
+                    entity.setReferer("");
+                }
+                                                                        if(req.getUrlPrefix()!=null && req.getUrlPrefix().length()>0) {
+                    entity.setReferer("");
+                }
+                                                                        if(req.getUrlRuleJson()!=null && req.getUrlRuleJson().length()>0) {
+                    entity.setReferer("");
+                }
+                                                                        if(req.getTitleRuleJson()!=null && req.getTitleRuleJson().length()>0) {
+                    entity.setReferer("");
+                }
+                                                                        if(req.getPulishTimeRuleJson()!=null && req.getPulishTimeRuleJson().length()>0) {
+                    entity.setReferer("");
+                }
+                                                                        if(req.getAuthorRuleJson()!=null && req.getAuthorRuleJson().length()>0) {
+                    entity.setReferer("");
+                }
+                                                                        if(req.getTagsRuleJson()!=null && req.getTagsRuleJson().length()>0) {
+                    entity.setReferer("");
+                }
+                                                                        if(req.getDateDelete()!=null) {
+                    entity.setDateDelete(req.getDateDelete());
+                }
+                                                                        if(req.getDomain()!=null && req.getDomain().length()>0) {
+                    entity.setReferer("");
+                }
+                                                                        if(req.getBlogsAuthorIndexUrlType()!=null) {
+                    entity.setBlogsAuthorIndexUrlType(req.getBlogsAuthorIndexUrlType());
+                }
+                                                                        if(req.getCreateTime()!=null) {
+                    entity.setCreateTime(req.getCreateTime());
+                }
+                                                                        if(req.getUpdateTime()!=null) {
+                    entity.setUpdateTime(req.getUpdateTime());
+                }
+                                                                        if(req.getStatus()!=null) {
+                    entity.setStatus(req.getStatus());
+                }
+                            return entity;
     }
 
 }
