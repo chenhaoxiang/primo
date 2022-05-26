@@ -69,6 +69,7 @@ public class FileUtils {
      * 将 InputStream 中的内容读入到字符串
      * @param is InputStream
      * @throws IOException 异常
+     * @return 读取的字符
      */
     public static String readInputStreamToString(InputStream is) throws IOException {
         StringBuilder builder = new StringBuilder();

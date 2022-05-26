@@ -13,11 +13,9 @@ import java.io.File;
 import java.io.Serializable;
 
 /**
+ * ftl文件配置
  * @author chenhx
  * @version 0.0.1
- * @className FtlConfig.java
- * @date 2022-03-31 3:42 下午
- * @description ftl文件配置
  */
 public class FtlConfig implements Serializable {
 

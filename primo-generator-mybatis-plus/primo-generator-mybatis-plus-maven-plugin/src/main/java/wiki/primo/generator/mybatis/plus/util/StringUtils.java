@@ -5,17 +5,15 @@
 package wiki.primo.generator.mybatis.plus.util;
 
 /**
+ * 字符串操作
  * @author chenhx
  * @version 0.0.1
- * @className StringUtils.java
- * @date 2022-04-07 4:08 下午
- * @description 字符串操作
  */
 public class StringUtils {
 
     /**
      * 获取数字
-     * @return
+     * @return 数字
      */
     public static Integer getNumber(String input){
         StringBuilder sb = new StringBuilder();

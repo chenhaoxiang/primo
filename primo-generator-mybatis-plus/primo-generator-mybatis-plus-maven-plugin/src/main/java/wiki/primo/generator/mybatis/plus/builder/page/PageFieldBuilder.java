@@ -11,9 +11,6 @@ import java.io.Serializable;
 /**
  * @author chenhx
  * @version 0.0.1
- * @className BlogsResp.java
- * @date 2022-04-06 2:39 下午
- * @description
  */
 @Data
 public class PageFieldBuilder implements Serializable {

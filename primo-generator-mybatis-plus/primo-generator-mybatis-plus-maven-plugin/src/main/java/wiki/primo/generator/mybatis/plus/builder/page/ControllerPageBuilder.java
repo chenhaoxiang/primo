@@ -60,7 +60,8 @@ public class ControllerPageBuilder implements Serializable {
 
     /**
      * 获取数量加1的值
-     * @return
+     * @param add 值
+     * @return 增加add
      */
     public Integer sizeAdd(Integer size,Integer add){
         return size+add;

@@ -83,6 +83,7 @@ public class ConfigBuilder {
      * @param outputDir        输出目录
      * @param template        模板配置
      * @param extConfig        扩展的配置
+     * @param ftlConfig ftl的配置
      */
     public ConfigBuilder(PackageConfig packageConfig, DataSourceConfig dataSourceConfig,
                          StrategyConfig strategyConfig, TemplateConfig template,
