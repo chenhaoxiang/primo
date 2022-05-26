@@ -28,7 +28,7 @@
 <plugin>
     <groupId>wiki.primo.generator</groupId>
     <artifactId>primo-generator-mybatis-plus-maven-plugin</artifactId>
-    <version>1.2.3</version> 
+    <version>3.0.1</version> 
     <configuration>
         <!-- 输出目录(默认java.io.tmpdir) ,项目路径下-->
         <outputDir>src/main/java/</outputDir>
