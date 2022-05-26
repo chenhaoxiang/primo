@@ -277,6 +277,9 @@ mvn -DskipTests=true wiki.primo.generator:primo-generator-mybatis-plus-maven-plu
 # 版本更新说明 
 请使用最新版本,从1.0.0开始上传到中央仓库
 
+## 3.0.1
+- 修改bug
+
 ## 3.0.0
 - 集成对于单表的增删改查页面操作。可视化修改表数据
 - 增加配置属性

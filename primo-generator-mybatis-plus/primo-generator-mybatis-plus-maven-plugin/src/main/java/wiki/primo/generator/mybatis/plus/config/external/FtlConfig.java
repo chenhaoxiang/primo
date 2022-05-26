@@ -48,6 +48,9 @@ public class FtlConfig implements Serializable {
     }
 
     public Boolean getOpen() {
+        if(open==null){
+            open = true;
+        }
         return open;
     }
 
