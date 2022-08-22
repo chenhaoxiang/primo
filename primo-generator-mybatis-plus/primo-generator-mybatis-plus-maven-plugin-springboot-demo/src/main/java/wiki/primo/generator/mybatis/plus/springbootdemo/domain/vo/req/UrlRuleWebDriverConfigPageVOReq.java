@@ -6,7 +6,7 @@ import java.io.Serializable;
 /**
  * 分页数据-请求
  * @author chenhx
- * @since 2022-08-22 21:13:31
+ * @since 2022-08-22 21:17:00
  */
 public class UrlRuleWebDriverConfigPageVOReq implements Serializable {
     private static final long serialVersionUID = -3324441151421460917L;

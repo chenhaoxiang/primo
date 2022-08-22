@@ -13,7 +13,7 @@ import java.util.Date;
  * </p>
  *
  * @author chenhx
- * @since 2022-08-22 21:13:31
+ * @since 2022-08-22 21:17:00
  */
 @TableName("`url_rule_web_driver_config`")
 public class UrlRuleWebDriverConfig implements Serializable {
