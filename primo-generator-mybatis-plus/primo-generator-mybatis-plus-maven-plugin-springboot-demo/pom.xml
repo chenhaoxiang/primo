@@ -99,7 +99,7 @@
             <plugin>
                 <groupId>wiki.primo.generator</groupId>
                 <artifactId>primo-generator-mybatis-plus-maven-plugin</artifactId>
-                <version>3.0.0</version>
+                <version>3.0.3</version>
                 <configuration>
                     <!-- 输出目录(默认java.io.tmpdir) ,项目路径下-->
                     <outputDir>src/main/java/</outputDir>
@@ -151,6 +151,7 @@
                         <!-- 父级包名称，如果不写，下面的service等就需要写全包名(默认com.baomidou) -->
                         <parent>wiki.primo.generator.mybatis.plus.springbootdemo</parent>
                         <!--service包名(默认service)-->
+                        <controller>controller.primo</controller>
                         <service>service</service>
                         <!--serviceImpl包名(默认service.impl)-->
                         <serviceImpl>service.impl</serviceImpl>

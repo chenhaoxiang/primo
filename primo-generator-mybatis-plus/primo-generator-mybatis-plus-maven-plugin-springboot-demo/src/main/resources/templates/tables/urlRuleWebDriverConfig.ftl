@@ -19,15 +19,15 @@
           rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
           rel="stylesheet">
-    <link href="/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/assets/plugins/perfectscroll/perfect-scrollbar.css" rel="stylesheet">
-    <link href="/assets/plugins/pace/pace.css" rel="stylesheet">
-    <link href="/assets/plugins/highlight/styles/github-gist.css" rel="stylesheet">
-    <link href="/assets/plugins/datatables/datatables.min.css" rel="stylesheet">
+    <link href="/assets/primo/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets/primo/plugins/perfectscroll/perfect-scrollbar.css" rel="stylesheet">
+    <link href="/assets/primo/plugins/pace/pace.css" rel="stylesheet">
+    <link href="/assets/primo/plugins/highlight/styles/github-gist.css" rel="stylesheet">
+    <link href="/assets/primo/plugins/datatables/datatables.min.css" rel="stylesheet">
 
     <!-- Theme Styles -->
-    <link href="/assets/css/main.min.css" rel="stylesheet">
-    <link href="/assets/css/custom.css" rel="stylesheet">
+    <link href="/assets/primo/css/main.min.css" rel="stylesheet">
+    <link href="/assets/primo/css/custom.css" rel="stylesheet">
     <!--    图表自定义的css-->
     <style>
         /* 单元格连续纯字母数字强制换行显示 */
@@ -100,8 +100,8 @@
 
     </style>
 
-    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/neptune.png"/>
-    <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/neptune.png"/>
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/primo/images/neptune.png"/>
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/primo/images/neptune.png"/>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -118,7 +118,7 @@
             <a href="index.html" class="logo-icon"><span class="logo-text">Neptune</span></a>
             <div class="sidebar-user-switcher user-activity-online">
                 <a href="#">
-                    <img src="/assets/images/avatars/avatar.png">
+                    <img src="/assets/primo/images/avatars/avatar.png">
                     <span class="activity-indicator"></span>
                     <span class="user-info-text">Chloe<br><span class="user-state-info">On a call</span></span>
                 </a>
@@ -137,13 +137,13 @@
                     <a href="#"><i class="material-icons-two-tone">grid_on</i>表数据操作<i class="material-icons has-sub-menu">keyboard_arrow_right</i></a>
                     <ul class="sub-menu">
                                                     <li>
-                                <a href="/urlruleprocessor311config12/tables">url_rule_processor_311_config_12</a>
+                                <a href="/primo/urlruleprocessor311config12/tables">url_rule_processor_311_config_12</a>
                             </li>
                                                      <li>
-                                <a href="/urlruleprocessorconfig/tables">url_rule_processor_config</a>
+                                <a href="/primo/urlruleprocessorconfig/tables">url_rule_processor_config</a>
                             </li>
                                                      <li>
-                                <a href="/urlrulewebdriverconfig/tables">url_rule_web_driver_config</a>
+                                <a href="/primo/urlrulewebdriverconfig/tables">url_rule_web_driver_config</a>
                             </li>
                                              </ul>
                 </li>
@@ -232,14 +232,14 @@
                             </li>
                             <li class="nav-item hidden-on-mobile">
                                 <a class="nav-link language-dropdown-toggle" href="#" id="languageDropDown"
-                                   data-bs-toggle="dropdown"><img src="/assets/images/flags/us.png" alt=""></a>
+                                   data-bs-toggle="dropdown"><img src="/assets/primo/images/flags/us.png" alt=""></a>
                                 <ul class="dropdown-menu dropdown-menu-end language-dropdown"
                                     aria-labelledby="languageDropDown">
                                     <li><a class="dropdown-item" href="#"><img
-                                                    src="/assets/images/flags/germany.png" alt="">German</a></li>
-                                    <li><a class="dropdown-item" href="#"><img src="/assets/images/flags/italy.png"
+                                                    src="/assets/primo/images/flags/germany.png" alt="">German</a></li>
+                                    <li><a class="dropdown-item" href="#"><img src="/assets/primo/images/flags/italy.png"
                                                                                alt="">Italian</a></li>
-                                    <li><a class="dropdown-item" href="#"><img src="/assets/images/flags/china.png"
+                                    <li><a class="dropdown-item" href="#"><img src="/assets/primo/images/flags/china.png"
                                                                                alt="">Chinese</a></li>
                                 </ul>
                             </li>
@@ -295,7 +295,7 @@
                                             <div class="notifications-dropdown-item">
                                                 <div class="notifications-dropdown-item-image">
                                                         <span class="notifications-badge">
-                                                            <img src="/assets/images/avatars/avatar.png" alt="">
+                                                            <img src="/assets/primo/images/avatars/avatar.png" alt="">
                                                         </span>
                                                 </div>
                                                 <div class="notifications-dropdown-item-text">
@@ -308,7 +308,7 @@
                                             <div class="notifications-dropdown-item">
                                                 <div class="notifications-dropdown-item-image">
                                                         <span class="notifications-badge">
-                                                            <img src="/assets/images/avatars/avatar.png" alt="">
+                                                            <img src="/assets/primo/images/avatars/avatar.png" alt="">
                                                         </span>
                                                 </div>
                                                 <div class="notifications-dropdown-item-text">
@@ -737,15 +737,15 @@
 </div>
 
 <!-- Javascripts -->
-<script src="/assets/plugins/jquery/jquery-3.5.1.min.js"></script>
-<script src="/assets/plugins/bootstrap/js/popper.min.js"></script>
-<script src="/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
-<script src="/assets/plugins/perfectscroll/perfect-scrollbar.min.js"></script>
-<script src="/assets/plugins/pace/pace.min.js"></script>
-<script src="/assets/plugins/highlight/highlight.pack.js"></script>
-<script src="/assets/plugins/datatables/datatables.min.js"></script>
-<script src="/assets/js/main.min.js"></script>
-<script src="/js/base.js"></script>
+<script src="/assets/primo/plugins/jquery/jquery-3.5.1.min.js"></script>
+<script src="/assets/primo/plugins/bootstrap/js/popper.min.js"></script>
+<script src="/assets/primo/plugins/bootstrap/js/bootstrap.min.js"></script>
+<script src="/assets/primo/plugins/perfectscroll/perfect-scrollbar.min.js"></script>
+<script src="/assets/primo/plugins/pace/pace.min.js"></script>
+<script src="/assets/primo/plugins/highlight/highlight.pack.js"></script>
+<script src="/assets/primo/plugins/datatables/datatables.min.js"></script>
+<script src="/assets/primo/js/main.min.js"></script>
+<script src="/assets/primo/js/base.js"></script>
 <script>
     /*常量*/
     var CONSTANT = {
@@ -1058,7 +1058,7 @@
         lastTableCallback = callback;
         $.ajax({
             type: "POST",
-            url: "/urlrulewebdriverconfig/page",
+            url: "/primo/urlrulewebdriverconfig/page",
             cache: false,	//禁用缓存
             data: param,	//传入已封装的参数
             dataType: "json",
@@ -1377,7 +1377,7 @@
     };
     // 添加数据
     function addItem(parameter){
-        ajaxPostRequestBody("/urlrulewebdriverconfig/save",JSON.stringify(parameter),resetFormData,true,$("#form-add")[0]);
+        ajaxPostRequestBody("/primo/urlrulewebdriverconfig/save",JSON.stringify(parameter),resetFormData,true,$("#form-add")[0]);
 
     }
     function resetFormData(response,form){
@@ -1391,7 +1391,7 @@
     // 添加数据
     function editItem(parameter){
         //表单重置,应该是请求成功再重置
-        ajaxPostRequestBody("/urlrulewebdriverconfig/update",JSON.stringify(parameter),resetFormData,true,$("#form-edit")[0]);
+        ajaxPostRequestBody("/primo/urlrulewebdriverconfig/update",JSON.stringify(parameter),resetFormData,true,$("#form-edit")[0]);
     }
 
 </script>

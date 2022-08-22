@@ -26,7 +26,7 @@ import ${package.EntityVOReq}.${table.entityVOReqName};
  * @since ${date}
  */
 @Controller
-@RequestMapping("#if(${package.ModuleName})/${package.ModuleName.toLowerCase()}#end/${table.entityName.toLowerCase()}")
+@RequestMapping("/primo#if(${package.ModuleName})/${package.ModuleName.toLowerCase()}#end/${table.entityName.toLowerCase()}")
 public class ${table.controllerName} {
 
     @Autowired

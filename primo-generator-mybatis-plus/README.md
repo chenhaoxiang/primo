@@ -277,6 +277,10 @@ mvn -DskipTests=true wiki.primo.generator:primo-generator-mybatis-plus-maven-plu
 # 版本更新说明 
 请使用最新版本,从1.0.0开始上传到中央仓库
 
+# 3.0.2
+- 修改ftl和controller静态资源的路径，指定特殊的位置 
+- 链接增加primo的前缀 
+
 ## 3.0.1
 - 修改bug
 

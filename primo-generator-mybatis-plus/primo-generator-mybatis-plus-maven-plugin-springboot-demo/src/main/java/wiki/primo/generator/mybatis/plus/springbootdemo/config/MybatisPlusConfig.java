@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * 分页插件
  *
  * @author chenhx
- * @since 2022-04-08 14:34:43
+ * @since 2022-08-22 21:13:32
  */
 @EnableTransactionManagement
 @Configuration
