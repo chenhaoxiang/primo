@@ -361,7 +361,7 @@
 <#--                                                不是主键-->
                                                 <div class="form-floating mb-3 mt-3">
                                                     <input type="text" class="form-control" id="${list.javaName}-add">
-                                                    <label for="${list.javaName}-add" class="form-label" title="${list.fieldDescribe}">${list.javaName}</label>
+                                                    <label for="${list.javaName}-add" class="form-label" title="${list.fieldDescribe}">${list.javaName}(${list.fieldDescribe})</label>
                                                 </div>
                                           #end
                                      #end
@@ -393,12 +393,12 @@
                                         #if(${list.majorKey}==true)
                                                 <div class="form-floating mb-3 mt-3">
                                                     <input type="text" class="form-control" id="${list.javaName}-edit" disabled>
-                                                    <label for="${list.javaName}-edit" class="form-label"  title="${list.fieldDescribe}">${list.javaName}</label>
+                                                    <label for="${list.javaName}-edit" class="form-label"  title="${list.fieldDescribe}">${list.javaName}(${list.fieldDescribe})</label>
                                                 </div>
                                         #else
                                                 <div class="form-floating mb-3 mt-3">
                                                     <input type="text" class="form-control" id="${list.javaName}-edit">
-                                                    <label for="${list.javaName}-edit" class="form-label"  title="${list.fieldDescribe}">${list.javaName}</label>
+                                                    <label for="${list.javaName}-edit" class="form-label"  title="${list.fieldDescribe}">${list.javaName}(${list.fieldDescribe})</label>
                                                 </div>
                                         #end
                                      #end

@@ -1,0 +1,167 @@
+package ${package.Controller};
+
+import ${package.Service}.${table.serviceName};
+import ${package.ResultModel}.ResultModel;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import ${package.QueryBo}.${table.queryName};
+import ${package.EntityReq}.${table.entityReqName};
+import ${package.EntityResp}.${table.entityRespName};
+import ${package.Entity}.${entity};
+import java.util.ArrayList;
+import java.util.List;
+import ${package.PageVOResp}.PageVOResp;
+import ${package.PageVOReq}.${table.pageVOReqName};
+import ${package.EntityVOReq}.${table.entityVOReqName};
+
+/**
+ * <p>
+ * ${table.comment}  前端控制器
+ * </p>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+@Controller
+@RequestMapping("/primo#if(${package.ModuleName})/${package.ModuleName.toLowerCase()}#end/${table.entityName.toLowerCase()}")
+public class ${table.controllerName} {
+
+    @Autowired
+    private ${table.serviceName} ${table.strConvertLowerCamel(${table.serviceName})};
+
+    /**
+    * 表格页面
+    */
+    @RequestMapping({"tables"})
+    public String tables() {
+        return "tables/${table.strConvertLowerCamel(${table.entityName})}";
+    }
+
+    /**
+     * 添加对象
+     *
+     * @param ${table.strConvertLowerCamel(${table.entityVOReqName})} 对象
+     * @return ResultModel统一响应结果
+     */
+    @PostMapping("save")
+    @ResponseBody
+    public ResultModel<Object> save(@RequestBody ${table.entityVOReqName} ${table.strConvertLowerCamel(${table.entityVOReqName})}) {
+        if(${table.strConvertLowerCamel(${table.entityVOReqName})}==null){
+            return ResultModel.parameterError();
+        }
+        ${entity} ${table.strConvertLowerCamel(${entity})} = get${entity}(${table.strConvertLowerCamel(${table.entityVOReqName})});
+        ${table.strConvertLowerCamel(${table.serviceName})}.save(${table.strConvertLowerCamel(${entity})});
+        return ResultModel.success();
+    }
+
+    /**
+     * 根据ID进行删除
+     *
+     * @param id 主键
+     * @return ResultModel统一响应结果
+     */
+    @GetMapping("removeById")
+    @ResponseBody
+    public ResultModel<Object> delete(@RequestParam Integer id) {
+        if(id==null || id<0){
+            return ResultModel.parameterError();
+        }
+        boolean success = ${table.strConvertLowerCamel(${table.serviceName})}.removeById(id);
+        if(success) {
+            return ResultModel.success();
+        }else {
+            return ResultModel.fail();
+        }
+    }
+
+    /**
+     * 根据ID进行修改对象
+     *
+     * @param ${table.strConvertLowerCamel(${table.entityVOReqName})} 对象中必须有ID主键
+     * @return ResultModel统一响应结果
+     */
+    @PostMapping("update")
+    @ResponseBody
+    public ResultModel<Object> update(@RequestBody ${table.entityVOReqName} ${table.strConvertLowerCamel(${table.entityVOReqName})}) {
+        if(${table.strConvertLowerCamel(${table.entityVOReqName})}==null || ${table.strConvertLowerCamel(${table.entityVOReqName})}.getId()==null){
+            return ResultModel.parameterError();
+        }
+        ${entity} ${table.strConvertLowerCamel(${entity})} = get${entity}(${table.strConvertLowerCamel(${table.entityVOReqName})});
+        boolean success = ${table.strConvertLowerCamel(${table.serviceName})}.updateById(${table.strConvertLowerCamel(${entity})});
+        if(success) {
+            return ResultModel.success();
+        }else {
+            return ResultModel.fail();
+        }
+    }
+
+    /**
+     * 查询详情
+     *
+     * @param id 主键
+     * @return ResultModel统一响应结果
+     */
+    @GetMapping("getById")
+    @ResponseBody
+    public ResultModel<${table.entityRespName}> getById(@RequestParam Integer id) {
+        if(id==null || id<0){
+            return ResultModel.parameterError();
+        }
+        ${entity} ${table.strConvertLowerCamel(${entity})}= ${table.strConvertLowerCamel(${table.serviceName})}.getById(id);
+        ${table.entityRespName} ${table.strConvertLowerCamel(${table.entityRespName})} = new ${table.entityRespName}();
+        BeanUtils.copyProperties(${table.strConvertLowerCamel(${entity})},${table.strConvertLowerCamel(${table.entityRespName})});
+        return ResultModel.success(${table.strConvertLowerCamel(${table.entityRespName})});
+    }
+
+    /**
+     * 分页查询
+     *
+     * @return ResultModel统一响应结果
+     */
+    @PostMapping("page")
+    @ResponseBody
+    public ResultModel<PageVOResp<${table.entityRespName}>> page(@RequestBody ${table.pageVOReqName} pageVOReq) {
+        IPage<${entity}> iPage = ${table.strConvertLowerCamel(${table.serviceName})}.page(pageVOReq.getQueryBo(),pageVOReq.getPageNo(),pageVOReq.getPageSize());
+        PageVOResp<${table.entityRespName}> templateIPage = new PageVOResp<>();
+        templateIPage.setPages(iPage.getPages());
+        templateIPage.setCurrent(iPage.getCurrent());
+        templateIPage.setSize(iPage.getSize());
+        templateIPage.setTotal(iPage.getTotal());
+        List<${entity}> ${table.strConvertLowerCamel(${entity})}List = iPage.getRecords();
+        List<${table.entityRespName}> ${table.strConvertLowerCamel(${table.entityRespName})}List = new ArrayList<>(${table.strConvertLowerCamel(${entity})}List.size());
+        for (${entity} ${table.strConvertLowerCamel(${entity})} : ${table.strConvertLowerCamel(${entity})}List) {
+            ${table.entityRespName} ${table.strConvertLowerCamel(${table.entityRespName})} = new ${table.entityRespName}();
+            BeanUtils.copyProperties(${table.strConvertLowerCamel(${entity})},${table.strConvertLowerCamel(${table.entityRespName})});
+            ${table.strConvertLowerCamel(${table.entityRespName})}List.add(${table.strConvertLowerCamel(${table.entityRespName})});
+        }
+        templateIPage.setDraw(pageVOReq.getDraw());
+        templateIPage.setRecords(${table.strConvertLowerCamel(${table.entityRespName})}List);
+        return ResultModel.success(templateIPage);
+    }
+
+
+    public ${entity} get${entity}(${table.entityVOReqName} req){
+        ${entity} entity = new ${entity}();
+        #foreach($field in ${table.fields})
+            #if(${field.propertyType.equals("Boolean")})
+                #set($getprefix="is")
+            #else
+                #set($getprefix="get")
+            #end
+            #if(${field.propertyType.equals("String")})
+                if(req.get${field.capitalName}()!=null && req.get${field.capitalName}().length()>0) {
+                    entity.set${field.capitalName}(req.get${field.capitalName}());
+                }
+            #else
+                if(req.${getprefix}${field.capitalName}()!=null) {
+                    entity.set${field.capitalName}(req.get${field.capitalName}());
+                }
+            #end
+        #end
+        return entity;
+    }
+
+}
