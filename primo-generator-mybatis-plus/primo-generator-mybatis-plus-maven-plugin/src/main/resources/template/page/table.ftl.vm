@@ -359,7 +359,7 @@
                                     #foreach (${list} in ${tablesData.fieldResps})
                                         #if (${list.majorKey}==false)
 <#--                                                不是主键-->
-                                            #if(${list.fieldType}=='mediumtext')
+                                            #if(${list.fieldType}=='mediumtext' || ${list.fieldType}=='text')
                                             <div class="input-group">
                                                 <span class="input-group-text">${list.javaName}(${list.fieldDescribe})</span>
                                                 <textarea class="form-control" aria-label="With textarea" id="${list.javaName}-add"></textarea>
@@ -404,7 +404,7 @@
                                                     <label for="${list.javaName}-edit" class="form-label"  title="${list.fieldDescribe}">${list.javaName}(${list.fieldDescribe})</label>
                                                 </div>
                                         #else
-                                            #if(${list.fieldType}=='mediumtext')
+                                            #if(${list.fieldType}=='mediumtext' || ${list.fieldType}=='text')
                                                 <div class="input-group">
                                                     <span class="input-group-text">${list.javaName}(${list.fieldDescribe})</span>
                                                     <textarea class="form-control" aria-label="With textarea" id="${list.javaName}-edit"></textarea>
