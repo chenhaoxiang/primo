@@ -359,10 +359,17 @@
                                     #foreach (${list} in ${tablesData.fieldResps})
                                         #if (${list.majorKey}==false)
 <#--                                                不是主键-->
-                                                <div class="form-floating mb-3 mt-3">
-                                                    <input type="text" class="form-control" id="${list.javaName}-add">
-                                                    <label for="${list.javaName}-add" class="form-label" title="${list.fieldDescribe}">${list.javaName}(${list.fieldDescribe})</label>
-                                                </div>
+                                            #if(${list.fieldType}=='mediumtext')
+                                            <div class="input-group">
+                                                <span class="input-group-text">${list.javaName}(${list.fieldDescribe})</span>
+                                                <textarea class="form-control" aria-label="With textarea" id="${list.javaName}-add"></textarea>
+                                            </div>
+                                            #else
+                                            <div class="form-floating mb-3 mt-3">
+                                                <input type="text" class="form-control" id="${list.javaName}-add">
+                                                <label for="${list.javaName}-add" class="form-label" title="${list.fieldDescribe}">${list.javaName}(${list.fieldDescribe})</label>
+                                            </div>
+                                            #end
                                           #end
                                      #end
                                         <button type="button" class="btn btn-success" id="btn-add">
@@ -391,15 +398,23 @@
                                     <form id="form-edit">
                                     #foreach (${list} in ${tablesData.fieldResps})
                                         #if(${list.majorKey}==true)
+##                                        主键
                                                 <div class="form-floating mb-3 mt-3">
                                                     <input type="text" class="form-control" id="${list.javaName}-edit" disabled>
                                                     <label for="${list.javaName}-edit" class="form-label"  title="${list.fieldDescribe}">${list.javaName}(${list.fieldDescribe})</label>
                                                 </div>
                                         #else
+                                            #if(${list.fieldType}=='mediumtext')
+                                                <div class="input-group">
+                                                    <span class="input-group-text">${list.javaName}(${list.fieldDescribe})</span>
+                                                    <textarea class="form-control" aria-label="With textarea" id="${list.javaName}-edit"></textarea>
+                                                </div>
+                                            #else
                                                 <div class="form-floating mb-3 mt-3">
                                                     <input type="text" class="form-control" id="${list.javaName}-edit">
                                                     <label for="${list.javaName}-edit" class="form-label"  title="${list.fieldDescribe}">${list.javaName}(${list.fieldDescribe})</label>
                                                 </div>
+                                            #end
                                         #end
                                      #end
                                         <button type="button" class="btn btn-success" id="btn-edit">
